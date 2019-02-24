@@ -23,6 +23,10 @@
             </feature>
         </config-file>
 
+        <dependency id="cordova-support-google-services" version="~1.2.0"/>
+
+        <framework src="com.google.firebase:firebase-database:16.0.6" />
+
         <source-file src="src/android/Hello.java" target-dir="src/com/example/plugin/"/>
     </platform>
 
