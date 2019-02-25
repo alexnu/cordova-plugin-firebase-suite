@@ -37,9 +37,11 @@ public class Hello extends CordovaPlugin {
 
         } else if ("once".equals(action)) {
 
+            String ref = data.getString(0);
+
             cordova.getThreadPool().execute(new Runnable() {
                 public void run() {
-                    String ref = data.getString(0);
+
                     Log.d(TAG, "Reading from ref: " + ref);
 
                     database.getReference(ref).addListenerForSingleValueEvent(new ValueEventListener() {
