@@ -42,12 +42,13 @@ public class Hello extends CordovaPlugin {
                     String ref = data.getString(0);
                     Log.d(TAG, "Reading from ref: " + ref);
 
-                    this.database.getReference(ref).addListenerForSingleValueEvent(new ValueEventListener() {
+                    database.getReference(ref).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             String data = dataSnapshot.getValue(String.class);
                             Log.d(TAG, "Got value from DB: " + data);
-                            callbackContext.sendPluginResult(data);
+                            PluginResult result = new PluginResult(PluginResult.Status.OK, data);
+                            callbackContext.sendPluginResult(result);
                         }
 
                         @Override
