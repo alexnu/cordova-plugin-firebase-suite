@@ -50,6 +50,7 @@ public class Hello extends CordovaPlugin {
                             String data = dataSnapshot.getValue(String.class);
                             Log.d(TAG, "Got value from DB: " + data);
                             PluginResult result = new PluginResult(PluginResult.Status.OK, data);
+                            result.setKeepCallback(false);
                             callbackContext.sendPluginResult(result);
                         }
 
@@ -63,9 +64,9 @@ public class Hello extends CordovaPlugin {
                 }
             });
 
-            PluginResult result = new PluginResult(PluginResult.Status.NO_RESULT);
-            result.setKeepCallback(true);
-            callbackContext.sendPluginResult(result);
+            PluginResult noResult = new PluginResult(PluginResult.Status.NO_RESULT);
+            noResult.setKeepCallback(true);
+            callbackContext.sendPluginResult(noResult);
 
             return true;
 
