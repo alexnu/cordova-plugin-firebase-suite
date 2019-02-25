@@ -53,6 +53,8 @@ public class Hello extends CordovaPlugin {
                 }
             });
 
+            return true;
+
         } else {
 
             return false;
