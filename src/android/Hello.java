@@ -1,5 +1,7 @@
 package com.example.plugin;
 
+import android.util.Log;
+
 import org.apache.cordova.*;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -8,7 +10,11 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 
+
 public class Hello extends CordovaPlugin {
+
+    private static final String TAG = "FirebaseNative";
+    private FirebaseDatabase database;
 
     @Override
     protected void pluginInitialize() {
@@ -31,7 +37,7 @@ public class Hello extends CordovaPlugin {
 
             String ref = data.getString(0);
             Log.d(TAG, "Reading from ref: " + ref);
-            database.getReference(ref).addListenerForSingleValueEvent(new ValueEventListener() {
+            this.database.getReference(ref).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     String data = dataSnapshot.getValue(String.class);
