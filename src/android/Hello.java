@@ -55,6 +55,39 @@ public class Hello extends CordovaPlugin {
                 }
             });
 
+            PluginResult result = new PluginResult(PluginResult.Status.NO_RESULT);
+            result.setKeepCallback(true);
+            this.callbackContext.sendPluginResult(result);
+
+            return true;
+
+        } else if ("test".equals(action)) {
+
+            Log.d(TAG, "Test request");
+
+            // Execute an asynchronous task
+            cordova.getThreadPool().execute(new Runnable() {
+                public void run() {
+                    // Then you're allowed to execute more than twice a callback.
+                    Log.d(TAG, "Sending 1st async reply");
+                    PluginResult resultA = new PluginResult(PluginResult.Status.OK, "myfirstJSONResponse");
+                    resultA.setKeepCallback(true);
+                    callbackContext.sendPluginResult(resultA);
+
+                    // Some more code
+
+                    Log.d(TAG, "Sending 2nd async reply");
+                    PluginResult resultB = new PluginResult(PluginResult.Status.OK, "secondJSONResponse");
+                    resultB.setKeepCallback(false);
+                    callbackContext.sendPluginResult(resultB);
+                }
+            });
+
+            Log.d(TAG, "Sending sync reply");
+            PluginResult pluginResult = new  PluginResult(PluginResult.Status.NO_RESULT);
+            pluginResult.setKeepCallback(true); // Keep callback
+            callbackContext.sendPluginResult(pluginResult);
+
             return true;
 
         } else {
