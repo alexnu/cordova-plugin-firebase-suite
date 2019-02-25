@@ -57,7 +57,7 @@ public class Hello extends CordovaPlugin {
 
             PluginResult result = new PluginResult(PluginResult.Status.NO_RESULT);
             result.setKeepCallback(true);
-            this.callbackContext.sendPluginResult(result);
+            callbackContext.sendPluginResult(result);
 
             return true;
 
