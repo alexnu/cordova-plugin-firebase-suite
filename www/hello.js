@@ -7,7 +7,9 @@ module.exports = {
     once: function(ref, successCallback, errorCallback) {
         cordova.exec(successCallback, errorCallback, "Hello", "once", [ref]);
     },
-    test: function(successCallback, errorCallback) {
-        cordova.exec(successCallback, errorCallback, "Hello", "test", ["dasdas"]);
+    test: function() {
+        return new Promise(function(resolve, reject) {
+            cordova.exec(resolve, reject, "Hello", "test", []);
+        });
     }
 };
