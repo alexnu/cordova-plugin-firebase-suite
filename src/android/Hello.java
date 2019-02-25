@@ -37,21 +37,26 @@ public class Hello extends CordovaPlugin {
 
         } else if ("once".equals(action)) {
 
-            String ref = data.getString(0);
-            Log.d(TAG, "Reading from ref: " + ref);
-            this.database.getReference(ref).addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    String data = dataSnapshot.getValue(String.class);
-                    Log.d(TAG, "Got value from DB: " + data);
-                    callbackContext.success(data);
-                }
+            cordova.getThreadPool().execute(new Runnable() {
+                public void run() {
+                    String ref = data.getString(0);
+                    Log.d(TAG, "Reading from ref: " + ref);
 
-                @Override
-                public void onCancelled(DatabaseError error) {
-                    // Failed to read value
-                    Log.d(TAG, "Error from DB");
-                    callbackContext.error(error.getCode());
+                    this.database.getReference(ref).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            String data = dataSnapshot.getValue(String.class);
+                            Log.d(TAG, "Got value from DB: " + data);
+                            callbackContext.sendPluginResult(data);
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError error) {
+                            // Failed to read value
+                            Log.d(TAG, "Error from DB");
+                            callbackContext.error(error.getCode());
+                        }
+                    });
                 }
             });
 
