@@ -43,35 +43,24 @@ public class Hello extends CordovaPlugin {
                 public void run() {
 
                     Log.d(TAG, "Reading from ref: " + ref);
-                    Log.d(TAG, "Sending 1st async reply");
-                    PluginResult resultA = new PluginResult(PluginResult.Status.OK, "myfirstJSONResponse");
-                    resultA.setKeepCallback(true);
-                    callbackContext.sendPluginResult(resultA);
 
-                    // Some more code
+                    database.getReference(ref).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            String data = dataSnapshot.getValue(String.class);
+                            Log.d(TAG, "Got value from DB: " + data);
+                            PluginResult result = new PluginResult(PluginResult.Status.OK, data);
+                            //result.setKeepCallback(false);
+                            callbackContext.sendPluginResult(result);
+                        }
 
-                    Log.d(TAG, "Sending 2nd async reply");
-                    PluginResult resultB = new PluginResult(PluginResult.Status.OK, "secondJSONResponse");
-                    resultB.setKeepCallback(false);
-                    callbackContext.sendPluginResult(resultB);
-
-//                    database.getReference(ref).addListenerForSingleValueEvent(new ValueEventListener() {
-//                        @Override
-//                        public void onDataChange(DataSnapshot dataSnapshot) {
-//                            String data = dataSnapshot.getValue(String.class);
-//                            Log.d(TAG, "Got value from DB: " + data);
-//                            PluginResult result = new PluginResult(PluginResult.Status.OK, data);
-//                            result.setKeepCallback(true);
-//                            callbackContext.sendPluginResult(result);
-//                        }
-//
-//                        @Override
-//                        public void onCancelled(DatabaseError error) {
-//                            // Failed to read value
-//                            Log.d(TAG, "Error from DB");
-//                            callbackContext.error(error.getCode());
-//                        }
-//                    });
+                        @Override
+                        public void onCancelled(DatabaseError error) {
+                            // Failed to read value
+                            Log.d(TAG, "Error from DB");
+                            callbackContext.error(error.getCode());
+                        }
+                    });
                 }
             });
 
