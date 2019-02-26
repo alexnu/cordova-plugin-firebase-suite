@@ -9,6 +9,9 @@ module.exports = {
             cordova.exec(resolve, reject, "Hello", "once", [ref]);
         });
     },
+    on: function(ref, successCallback, errorCallback) {
+        exec(successCallback, errorCallback, "Hello", "on", [ref]);
+    },
     test: function() {
         return new Promise(function(resolve, reject) {
             cordova.exec(resolve, reject, "Hello", "test", []);
