@@ -10,7 +10,7 @@ module.exports = {
         });
     },
     on: function(ref, successCallback, errorCallback) {
-        exec(successCallback, errorCallback, "Hello", "on", [ref]);
+        cordova.exec(successCallback, errorCallback, "Hello", "on", [ref]);
     },
     test: function() {
         return new Promise(function(resolve, reject) {
