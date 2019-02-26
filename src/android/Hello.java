@@ -79,7 +79,7 @@ public class Hello extends CordovaPlugin {
 
                     Log.d(TAG, "Listening from ref: " + ref);
 
-                    database.getReference(ref).addListenerForValueEvent(new ValueEventListener() {
+                    database.getReference(ref).addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             String data = dataSnapshot.getValue(String.class);
