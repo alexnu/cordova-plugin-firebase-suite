@@ -3,22 +3,31 @@ package com.example.plugin;
 import android.util.Log;
 
 import org.apache.cordova.*;
+import org.json.JSONObject;
 import org.json.JSONArray;
 import org.json.JSONException;
+
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 
+import java.util.List;
+import java.util.Map;
+
 
 public class Hello extends CordovaPlugin {
 
     private static final String TAG = "FirebaseNative";
+
     private FirebaseDatabase database;
+    private Gson gson;
 
     @Override
     protected void pluginInitialize() {
         Log.d(TAG, "Starting Firebase-native plugin");
+
+        this.gson = new Gson();
         this.database = FirebaseDatabase.getInstance();
     }
 
