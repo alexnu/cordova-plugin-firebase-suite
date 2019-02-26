@@ -47,10 +47,8 @@ public class Hello extends CordovaPlugin {
                     database.getReference(ref).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
-                            String data = dataSnapshot.getValue(String.class);
-                            Log.d(TAG, "Got value from DB: " + data);
-                            PluginResult result = new PluginResult(PluginResult.Status.OK, data);
-                            //result.setKeepCallback(false);
+                            Log.d(TAG, "Got value from ref: " + ref);
+                            PluginResult result = transformToResult(dataSnapshot);
                             callbackContext.sendPluginResult(result);
                         }
 
@@ -82,9 +80,8 @@ public class Hello extends CordovaPlugin {
                     database.getReference(ref).addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
-                            String data = dataSnapshot.getValue(String.class);
-                            Log.d(TAG, "Got value from DB: " + data);
-                            PluginResult result = new PluginResult(PluginResult.Status.OK, data);
+                            Log.d(TAG, "Got value from ref: " + ref);
+                            PluginResult result = transformToResult(dataSnapshot);
                             result.setKeepCallback(true);
                             callbackContext.sendPluginResult(result);
                         }
@@ -111,4 +108,23 @@ public class Hello extends CordovaPlugin {
 
         }
     }
+
+    private PluginResult transformToResult(DataSnapshot dataSnapshot) {
+            JSONObject data = new JSONObject();
+            Object value = dataSnapshot.getValue(false);
+
+            try {
+                data.put("priority", dataSnapshot.getPriority());
+                data.put("key", dataSnapshot.getKey());
+                if (value instanceof Map) {
+                    value = new JSONObject(this.gson.toJson(value));
+                } else if (value instanceof List) {
+                    value = new JSONArray(this.gson.toJson(value));
+                }
+                data.put("value", value);
+            } catch (JSONException e) {}
+
+            return new PluginResult(PluginResult.Status.OK, data);
+        }
+
 }
