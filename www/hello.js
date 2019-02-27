@@ -16,5 +16,8 @@ module.exports = {
         return new Promise(function(resolve, reject) {
             cordova.exec(resolve, reject, "Hello", "test", []);
         });
+    },
+    push: function(ref, value, successCallback, errorCallback) {
+        cordova.exec(successCallback, errorCallback, "Hello", "set", [ref, value]);
     }
 };

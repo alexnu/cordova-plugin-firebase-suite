@@ -12,6 +12,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.util.List;
 import java.util.Map;
@@ -20,6 +21,7 @@ import java.util.Map;
 public class Hello extends CordovaPlugin {
 
     private static final String TAG = "FirebaseNative";
+    private final static Type settableType = new TypeToken<Map<String, Object>>() {}.getType();
 
     private FirebaseDatabase database;
     private Gson gson;
@@ -112,6 +114,23 @@ public class Hello extends CordovaPlugin {
 
             return true;
 
+        } else if ("push".equals(action)) {
+
+            String ref = data.getString(0);
+            Object value = data.getObject(1);
+
+            cordova.getThreadPool().execute(new Runnable() {
+                public void run() {
+                    Log.d(TAG, "Pushing to ref: " + ref);
+                    database.getReference(ref).push().setValue(toSettable(value));
+                }
+            });
+
+            PluginResult noResult = new PluginResult(PluginResult.Status.OK, "");
+            callbackContext.sendPluginResult(noResult);
+
+            return true;
+
         } else {
 
             return false;
@@ -120,21 +139,31 @@ public class Hello extends CordovaPlugin {
     }
 
     private PluginResult transformToResult(DataSnapshot dataSnapshot) {
-            JSONObject data = new JSONObject();
-            Object value = dataSnapshot.getValue(false);
+        JSONObject data = new JSONObject();
+        Object value = dataSnapshot.getValue(false);
 
-            try {
-                data.put("priority", dataSnapshot.getPriority());
-                data.put("key", dataSnapshot.getKey());
-                if (value instanceof Map) {
-                    value = new JSONObject(this.gson.toJson(value));
-                } else if (value instanceof List) {
-                    value = new JSONArray(this.gson.toJson(value));
-                }
-                data.put("value", value);
-            } catch (JSONException e) {}
+        try {
+            data.put("priority", dataSnapshot.getPriority());
+            data.put("key", dataSnapshot.getKey());
+            if (value instanceof Map) {
+                value = new JSONObject(this.gson.toJson(value));
+            } else if (value instanceof List) {
+                value = new JSONArray(this.gson.toJson(value));
+            }
+            data.put("value", value);
+        } catch (JSONException e) {}
 
-            return new PluginResult(PluginResult.Status.OK, data);
+        return new PluginResult(PluginResult.Status.OK, data);
+    }
+
+    private Object toSettable(Object value) {
+        Object result = value;
+
+        if (value instanceof JSONObject) {
+            result = this.gson.fromJson(value.toString(), settableType);
         }
+
+        return result;
+    }
 
 }
