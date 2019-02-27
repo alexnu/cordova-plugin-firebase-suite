@@ -17,6 +17,8 @@ import com.google.gson.reflect.TypeToken;
 import java.util.List;
 import java.util.Map;
 
+import java.lang.reflect.Type;
+
 
 public class Hello extends CordovaPlugin {
 
