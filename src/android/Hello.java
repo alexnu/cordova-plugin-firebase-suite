@@ -117,7 +117,7 @@ public class Hello extends CordovaPlugin {
         } else if ("push".equals(action)) {
 
             String ref = data.getString(0);
-            Object value = data.getObject(1);
+            Object value = data.get(1);
 
             cordova.getThreadPool().execute(new Runnable() {
                 public void run() {
