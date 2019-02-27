@@ -18,6 +18,6 @@ module.exports = {
         });
     },
     push: function(ref, value, successCallback, errorCallback) {
-        cordova.exec(successCallback, errorCallback, "Hello", "set", [ref, value]);
+        cordova.exec(successCallback, errorCallback, "Hello", "push", [ref, value]);
     }
 };
