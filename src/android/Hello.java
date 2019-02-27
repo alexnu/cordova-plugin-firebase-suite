@@ -34,6 +34,7 @@ public class Hello extends CordovaPlugin {
 
         this.gson = new Gson();
         this.database = FirebaseDatabase.getInstance();
+        this.database.setPersistenceEnabled(true);
     }
 
     @Override
