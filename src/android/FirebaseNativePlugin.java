@@ -1,4 +1,4 @@
-package com.example.plugin;
+package com.alexnu.plugin;
 
 import android.util.Log;
 
@@ -20,7 +20,7 @@ import java.util.Map;
 import java.lang.reflect.Type;
 
 
-public class Hello extends CordovaPlugin {
+public class FirebaseNativePlugin extends CordovaPlugin {
 
     private static final String TAG = "FirebaseNative";
     private final static Type settableType = new TypeToken<Map<String, Object>>() {}.getType();
@@ -42,27 +42,19 @@ public class Hello extends CordovaPlugin {
 
         Log.d(TAG, "Got new action " + action);
 
-        if ("greet".equals(action)) {
+        if ("once".equals(action)) {
 
-            String name = data.getString(0);
-            String message = "Hello, " + name;
-            callbackContext.success(message);
-
-            return true;
-
-        } else if ("once".equals(action)) {
-
-            String ref = data.getString(0);
+            String path = data.getString(0);
 
             cordova.getThreadPool().execute(new Runnable() {
                 public void run() {
 
-                    Log.d(TAG, "Reading from ref: " + ref);
+                    Log.d(TAG, "Reading from path: " + path);
 
-                    database.getReference(ref).addListenerForSingleValueEvent(new ValueEventListener() {
+                    database.getReference(path).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
-                            Log.d(TAG, "Got value from ref: " + ref);
+                            Log.d(TAG, "Got value from path: " + path);
                             PluginResult result = transformToResult(dataSnapshot);
                             callbackContext.sendPluginResult(result);
                         }
@@ -85,17 +77,17 @@ public class Hello extends CordovaPlugin {
 
         } else if ("on".equals(action)) {
 
-            String ref = data.getString(0);
+            String path = data.getString(0);
 
             cordova.getThreadPool().execute(new Runnable() {
                 public void run() {
 
-                    Log.d(TAG, "Listening from ref: " + ref);
+                    Log.d(TAG, "Listening from path: " + path);
 
-                    database.getReference(ref).addValueEventListener(new ValueEventListener() {
+                    database.getReference(path).addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
-                            Log.d(TAG, "Got value from ref: " + ref);
+                            Log.d(TAG, "Got value from path: " + path);
                             PluginResult result = transformToResult(dataSnapshot);
                             result.setKeepCallback(true);
                             callbackContext.sendPluginResult(result);
@@ -119,13 +111,13 @@ public class Hello extends CordovaPlugin {
 
         } else if ("push".equals(action)) {
 
-            String ref = data.getString(0);
+            String path = data.getString(0);
             Object value = data.get(1);
 
             cordova.getThreadPool().execute(new Runnable() {
                 public void run() {
-                    Log.d(TAG, "Pushing to ref: " + ref);
-                    database.getReference(ref).push().setValue(toSettable(value));
+                    Log.d(TAG, "Pushing to path: " + path);
+                    database.getReference(path).push().setValue(toSettable(value));
                 }
             });
 
