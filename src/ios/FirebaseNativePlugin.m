@@ -10,7 +10,7 @@
         [FIRApp configure];
     }
 
-    Database.database().isPersistenceEnabled = true
+    [FIRDatabase database].persistenceEnabled = YES;
 }
 
 - (void)push:(CDVInvokedUrlCommand *)command {
@@ -38,7 +38,6 @@
 - (void)on:(CDVInvokedUrlCommand *)command {
     FIRDatabase* database = [FIRDatabase database];
     NSString *path = [command argumentAtIndex:0];
-    FIRDataEventType type = [self stringToType:[command.arguments objectAtIndex:1]];
     FIRDatabaseReference *ref = [database referenceWithPath:path];
 
     id handler = ^(FIRDataSnapshot *_Nonnull snapshot) {
