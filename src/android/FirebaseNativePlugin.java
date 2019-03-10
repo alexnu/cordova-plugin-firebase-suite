@@ -104,7 +104,7 @@ public class FirebaseNativePlugin extends CordovaPlugin {
                             Log.d(TAG, "Error while reading from path " + path);
                             callbackContext.error(error.getCode());
                         }
-                    });
+                    };
                     database.getReference(path).addValueEventListener(listener);
                     listeners.put(path, listener);
                 }
