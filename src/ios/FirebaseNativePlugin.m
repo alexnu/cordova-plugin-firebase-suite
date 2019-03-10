@@ -80,9 +80,10 @@
 
 - (void)off:(CDVInvokedUrlCommand *)command {
 
+    FIRDatabase* database = [FIRDatabase database];
     FIRDatabaseReference *ref = [database referenceWithPath:path];
     NSString *path = [command argumentAtIndex:0];
-    FIRDatabaseHandle listener = [self.listeners objectForKey:path]
+    FIRDatabaseHandle listener = [self.listeners objectForKey:path];
 
     if (listener) {
         NSLog(@"Removing listener from path %@", path);
