@@ -74,8 +74,26 @@
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     };
 
-    FIRDatabaseHandle handle = [ref observeEventType:FIRDataEventTypeValue withBlock:handler withCancelBlock:errorHandler];
-    [self.listeners setObject:@(handle) forKey:path];
+    FIRDatabaseHandle listener = [ref observeEventType:FIRDataEventTypeValue withBlock:handler withCancelBlock:errorHandler];
+    [self.listeners setObject:@(listener) forKey:path];
+}
+
+- (void)off:(CDVInvokedUrlCommand *)command {
+
+    FIRDatabaseReference *ref = [database referenceWithPath:path];
+    NSString *path = [command argumentAtIndex:0];
+    FIRDatabaseHandle listener = [self.listeners objectForKey:path]
+
+    if (listener) {
+        NSLog(@"Removing listener from path %@", path);
+        [ref removeObserverWithHandle:listener];
+        [self.listeners removeObjectForKey:path];
+        CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+    } else {
+        NSLog(@"No listener found for path %@", path);
+        CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"No listener found for path %@"];
+    }
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
 - (void)once:(CDVInvokedUrlCommand *)command {
