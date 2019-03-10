@@ -44,7 +44,7 @@
     NSString *path = [command argumentAtIndex:0];
 
     if ([self.listeners objectForKey:path]) {
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:"Listener already exists for path"];
+        CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Listener already exists for path"];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
         return;
     }
@@ -67,7 +67,7 @@
 
     id errorHandler = ^(NSError * _Nonnull error) {
         NSLog(@"Error while reading from path %@", path);
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:error.localizedDescription];
+        CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:error.localizedDescription];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     };
 
@@ -96,7 +96,7 @@
 
     id errorHandler = ^(NSError * _Nonnull error) {
         NSLog(@"Error while reading from path %@", path);
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:error.localizedDescription];
+        CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:error.localizedDescription];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     };
 

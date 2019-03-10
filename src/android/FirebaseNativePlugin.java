@@ -127,6 +127,7 @@ public class FirebaseNativePlugin extends CordovaPlugin {
             ValueEventListener listener = listeners.get(path);
 
             if (listener == null) {
+                Log.d("No listener found for " + path);
                 callbackContext.error("No listener found for " + path);
             } else {
                 Log.d(TAG, "Removing listener from path: " + path);
