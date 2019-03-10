@@ -85,6 +85,7 @@ public class FirebaseNativePlugin extends CordovaPlugin {
 
             String path = data.getString(0);
             if (listeners.containsKey(path)) {
+                Log.d(TAG, "Listener already exists for path " + path);
                 callbackContext.error("Listener already exists for " + path);
                 return true;
             }
@@ -93,7 +94,6 @@ public class FirebaseNativePlugin extends CordovaPlugin {
                 public void run() {
 
                     Log.d(TAG, "Listening from path: " + path);
-
                     ValueEventListener listener = new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
