@@ -100,7 +100,7 @@
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     };
 
-    FIRDatabaseHandle handle = [ref observeSingleEventOfType:FIRDataEventTypeValue withBlock:handler withCancelBlock:errorHandler];
+    [ref observeSingleEventOfType:FIRDataEventTypeValue withBlock:handler withCancelBlock:errorHandler];
 }
 
 @end
