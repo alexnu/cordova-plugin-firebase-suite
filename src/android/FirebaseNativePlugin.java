@@ -26,6 +26,7 @@ public class FirebaseNativePlugin extends CordovaPlugin {
     private final static Type settableType = new TypeToken<Map<String, Object>>() {}.getType();
 
     private FirebaseDatabase database;
+    private Map<String, ValueEventListener> listeners;
     private Gson gson;
 
     @Override
@@ -78,13 +79,17 @@ public class FirebaseNativePlugin extends CordovaPlugin {
         } else if ("on".equals(action)) {
 
             String path = data.getString(0);
+            if (listeners.containsKey(path)) {
+                callbackContext.error("Listener already exists for " + path);
+                return true;
+            }
 
             cordova.getThreadPool().execute(new Runnable() {
                 public void run() {
 
                     Log.d(TAG, "Listening from path: " + path);
 
-                    database.getReference(path).addValueEventListener(new ValueEventListener() {
+                    ValueEventListener listener = new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             Log.d(TAG, "Got value from path: " + path);
@@ -96,16 +101,35 @@ public class FirebaseNativePlugin extends CordovaPlugin {
                         @Override
                         public void onCancelled(DatabaseError error) {
                             // Failed to read value
-                            Log.d(TAG, "Error from DB");
+                            Log.d(TAG, "Error while reading from path " + path);
                             callbackContext.error(error.getCode());
                         }
                     });
+                    database.getReference(path).addValueEventListener(listener);
+                    listeners.put(path, listener);
                 }
             });
 
             PluginResult noResult = new PluginResult(PluginResult.Status.NO_RESULT);
             noResult.setKeepCallback(true);
             callbackContext.sendPluginResult(noResult);
+
+            return true;
+
+        } else if ("off".equals(action)) {
+
+            String path = data.getString(0);
+            ValueEventListener listener = listeners.get(path);
+
+            if (listener == null) {
+                callbackContext.error("No listener found for " + path);
+            } else {
+                Log.d(TAG, "Removing listener from path: " + path);
+                database.getReference(path).removeEventListener(listener);
+                listeners.remove(path);
+                PluginResult noResult = new PluginResult(PluginResult.Status.OK, "");
+                callbackContext.sendPluginResult(noResult);
+            }
 
             return true;
 
@@ -117,7 +141,22 @@ public class FirebaseNativePlugin extends CordovaPlugin {
             cordova.getThreadPool().execute(new Runnable() {
                 public void run() {
                     Log.d(TAG, "Pushing to path: " + path);
-                    database.getReference(path).push().setValue(toSettable(value));
+                    database.getReference(path).push().setValue(toSettable(value))
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Log.d(TAG, "Write was successful");
+                                PluginResult noResult = new PluginResult(PluginResult.Status.OK, "");
+                                callbackContext.sendPluginResult(noResult);
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.d(TAG, "Error while writing to DB");
+                                callbackContext.error(error.getCode());
+                            }
+                        });;
                 }
             });
 

@@ -9,6 +9,9 @@ module.exports = {
     on: function(path, successCallback, errorCallback) {
         cordova.exec(successCallback, errorCallback, "FirebaseNative", "on", [path]);
     },
+    off: function(path, successCallback, errorCallback) {
+        cordova.exec(successCallback, errorCallback, "FirebaseNative", "off", [path]);
+    },
     push: function(path, value, successCallback, errorCallback) {
         cordova.exec(successCallback, errorCallback, "FirebaseNative", "push", [path, value]);
     }
