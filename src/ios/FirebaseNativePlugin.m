@@ -87,7 +87,7 @@
 
     if (listener) {
         NSLog(@"Removing listener from path %@", path);
-        [ref removeObserverWithHandle:listener];
+        [ref removeAllObservers];
         [self.listeners removeObjectForKey:path];
         CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
