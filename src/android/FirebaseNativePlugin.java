@@ -39,6 +39,7 @@ public class FirebaseNativePlugin extends CordovaPlugin {
         this.gson = new Gson();
         this.database = FirebaseDatabase.getInstance();
         this.database.setPersistenceEnabled(true);
+        this.listeners = new HashMap<>();
     }
 
     @Override
