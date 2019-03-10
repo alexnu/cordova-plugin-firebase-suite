@@ -151,8 +151,8 @@ public class FirebaseNativePlugin extends CordovaPlugin {
                             @Override
                             public void onSuccess(Void aVoid) {
                                 Log.d(TAG, "Write was successful");
-                                PluginResult noResult = new PluginResult(PluginResult.Status.OK, "");
-                                callbackContext.sendPluginResult(noResult);
+                                PluginResult okResult = new PluginResult(PluginResult.Status.OK, "");
+                                callbackContext.sendPluginResult(okResult);
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
@@ -165,7 +165,8 @@ public class FirebaseNativePlugin extends CordovaPlugin {
                 }
             });
 
-            PluginResult noResult = new PluginResult(PluginResult.Status.OK, "");
+            PluginResult noResult = new PluginResult(PluginResult.Status.NO_RESULT);
+            noResult.setKeepCallback(true);
             callbackContext.sendPluginResult(noResult);
 
             return true;
