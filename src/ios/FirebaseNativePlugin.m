@@ -81,8 +81,8 @@
 - (void)off:(CDVInvokedUrlCommand *)command {
 
     FIRDatabase* database = [FIRDatabase database];
-    FIRDatabaseReference *ref = [database referenceWithPath:path];
     NSString *path = [command argumentAtIndex:0];
+    FIRDatabaseReference *ref = [database referenceWithPath:path];
     FIRDatabaseHandle listener = [self.listeners objectForKey:path];
 
     if (listener) {
@@ -90,11 +90,12 @@
         [ref removeObserverWithHandle:listener];
         [self.listeners removeObjectForKey:path];
         CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
         NSLog(@"No listener found for path %@", path);
         CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"No listener found for path %@"];
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     }
-    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
 - (void)once:(CDVInvokedUrlCommand *)command {
