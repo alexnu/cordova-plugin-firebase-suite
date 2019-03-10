@@ -7,6 +7,7 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import android.support.annotation.NonNull;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.database.FirebaseDatabase;
@@ -66,7 +67,7 @@ public class FirebaseNativePlugin extends CordovaPlugin {
                         public void onCancelled(DatabaseError error) {
                             // Failed to read value
                             Log.d(TAG, "Error from DB");
-                            callbackContext.error(error.getCode());
+                            callbackContext.error(error.getMessage());
                         }
                     });
                 }
@@ -104,7 +105,7 @@ public class FirebaseNativePlugin extends CordovaPlugin {
                         public void onCancelled(DatabaseError error) {
                             // Failed to read value
                             Log.d(TAG, "Error while reading from path " + path);
-                            callbackContext.error(error.getCode());
+                            callbackContext.error(error.getMessage());
                         }
                     };
                     database.getReference(path).addValueEventListener(listener);
@@ -154,9 +155,9 @@ public class FirebaseNativePlugin extends CordovaPlugin {
                         })
                         .addOnFailureListener(new OnFailureListener() {
                             @Override
-                            public void onFailure(@NonNull Exception e) {
+                            public void onFailure(@NonNull Exception error) {
                                 Log.d(TAG, "Error while writing to DB");
-                                callbackContext.error(error.getCode());
+                                callbackContext.error(error.getMessage());
                             }
                         });;
                 }
