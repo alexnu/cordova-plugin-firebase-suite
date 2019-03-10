@@ -44,6 +44,7 @@
     NSString *path = [command argumentAtIndex:0];
 
     if ([self.listeners objectForKey:path]) {
+        NSLog(@"Listener already exists for path %@", path);
         CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Listener already exists for path"];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
         return;
