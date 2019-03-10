@@ -6,6 +6,8 @@
 - (void)pluginInitialize {
     NSLog(@"Starting Firebase Native plugin");
 
+    self.listeners = [NSMutableDictionary dictionary];
+
     if(![FIRApp defaultApp]) {
         [FIRApp configure];
     }
