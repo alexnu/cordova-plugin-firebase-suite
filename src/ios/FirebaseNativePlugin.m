@@ -15,32 +15,6 @@
     [FIRDatabase database].persistenceEnabled = YES;
 }
 
-- (void)push:(CDVInvokedUrlCommand *)command {
-    FIRDatabase* database = [FIRDatabase database];
-    NSString *path = [command argumentAtIndex:0];
-    id value = [command argumentAtIndex:1];
-
-    NSLog(@"Pushing to path %@", path);
-    FIRDatabaseReference *ref = [database referenceWithPath:path];
-
-    [[ref childByAutoId] setValue:value withCompletionBlock:^(NSError *error, FIRDatabaseReference *ref) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            CDVPluginResult *pluginResult;
-            if (error) {
-                NSLog(@"Error while writing to DB");
-                pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:@{
-                        @"code": @(error.code),
-                        @"message": error.description
-                }];
-            } else {
-                NSLog(@"Write was successful");
-                pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:[NSString stringWithFormat:@"%@", path]];
-            }
-            [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-        });
-    }];
-}
-
 - (void)on:(CDVInvokedUrlCommand *)command {
     FIRDatabase* database = [FIRDatabase database];
     NSString *path = [command argumentAtIndex:0];
@@ -124,6 +98,109 @@
     };
 
     [ref observeSingleEventOfType:FIRDataEventTypeValue withBlock:handler withCancelBlock:errorHandler];
+}
+
+- (void)push:(CDVInvokedUrlCommand *)command {
+    FIRDatabase* database = [FIRDatabase database];
+    NSString *path = [command argumentAtIndex:0];
+    id value = [command argumentAtIndex:1];
+
+    NSLog(@"Pushing to path %@", path);
+    FIRDatabaseReference *ref = [database referenceWithPath:path];
+
+    [[ref childByAutoId] setValue:value withCompletionBlock:^(NSError *error, FIRDatabaseReference *ref) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            CDVPluginResult *pluginResult;
+            if (error) {
+                NSLog(@"Error while writing to DB");
+                pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:@{
+                        @"code": @(error.code),
+                        @"message": error.description
+                }];
+            } else {
+                NSLog(@"Write was successful");
+                pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:[NSString stringWithFormat:@"%@", path]];
+            }
+            [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+        });
+    }];
+}
+
+- (void)set:(CDVInvokedUrlCommand *)command {
+    FIRDatabase* database = [FIRDatabase database];
+    NSString *path = [command argumentAtIndex:0];
+    id value = [command argumentAtIndex:1];
+
+    NSLog(@"Setting path %@", path);
+    FIRDatabaseReference *ref = [database referenceWithPath:path];
+
+    [ref setValue:value withCompletionBlock:^(NSError *error, FIRDatabaseReference *ref) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            CDVPluginResult *pluginResult;
+            if (error) {
+                NSLog(@"Error while writing to DB");
+                pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:@{
+                        @"code": @(error.code),
+                        @"message": error.description
+                }];
+            } else {
+                NSLog(@"Write was successful");
+                pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:[NSString stringWithFormat:@"%@", path]];
+            }
+            [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+        });
+    }];
+}
+
+- (void)update:(CDVInvokedUrlCommand *)command {
+    FIRDatabase* database = [FIRDatabase database];
+    NSString *path = [command argumentAtIndex:0];
+    id value = [command argumentAtIndex:1];
+
+    NSLog(@"Updating path %@", path);
+    FIRDatabaseReference *ref = [database referenceWithPath:path];
+
+    [ref updateChildValues:value withCompletionBlock:^(NSError *error, FIRDatabaseReference *ref) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            CDVPluginResult *pluginResult;
+            if (error) {
+                NSLog(@"Error while writing to DB");
+                pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:@{
+                        @"code": @(error.code),
+                        @"message": error.description
+                }];
+            } else {
+                NSLog(@"Write was successful");
+                pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:[NSString stringWithFormat:@"%@", path]];
+            }
+            [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+        });
+    }];
+}
+
+- (void)remove:(CDVInvokedUrlCommand *)command {
+    FIRDatabase* database = [FIRDatabase database];
+    NSString *path = [command argumentAtIndex:0];
+
+    NSLog(@"Removing path %@", path);
+    FIRDatabaseReference *ref = [database referenceWithPath:path];
+
+    [ref removeValueWithCompletionBlock:^(NSError *error, FIRDatabaseReference *ref) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            CDVPluginResult *pluginResult;
+            if (error) {
+                NSLog(@"Error while writing to DB");
+                pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:@{
+                        @"code": @(error.code),
+                        @"message": error.description
+                }];
+            } else {
+                NSLog(@"Write was successful");
+                pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:[NSString stringWithFormat:@"%@", path]];
+            }
+            [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+        });
+    }];
 }
 
 @end

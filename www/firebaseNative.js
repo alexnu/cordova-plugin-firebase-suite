@@ -12,7 +12,24 @@ module.exports = {
     off: function(path, successCallback, errorCallback) {
         cordova.exec(successCallback, errorCallback, "FirebaseNative", "off", [path]);
     },
-    push: function(path, value, successCallback, errorCallback) {
-        cordova.exec(successCallback, errorCallback, "FirebaseNative", "push", [path, value]);
+    push: function(path, value) {
+        return new Promise(function(resolve, reject) {
+            cordova.exec(resolve, reject, "FirebaseNative", "push", [path, value]);
+        });
+    },
+    set: function(path, value) {
+        return new Promise(function(resolve, reject) {
+            cordova.exec(resolve, reject, "FirebaseNative", "set", [path, value]);
+        });
+    },
+    update: function(path, value) {
+        return new Promise(function(resolve, reject) {
+            cordova.exec(resolve, reject, "FirebaseNative", "update", [path, value]);
+        });
+    },
+    remove: function(path) {
+        return new Promise(function(resolve, reject) {
+            cordova.exec(resolve, reject, "FirebaseNative", "remove", [path]);
+        });
     }
 };

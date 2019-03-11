@@ -172,6 +172,109 @@ public class FirebaseNativePlugin extends CordovaPlugin {
 
             return true;
 
+        } else if ("set".equals(action)) {
+
+            String path = data.getString(0);
+            Object value = data.get(1);
+
+            cordova.getThreadPool().execute(new Runnable() {
+                public void run() {
+                    Log.d(TAG, "Setting path: " + path);
+                    database.getReference(path).setValue(toSettable(value))
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Log.d(TAG, "Write was successful");
+                                PluginResult okResult = new PluginResult(PluginResult.Status.OK, "");
+                                callbackContext.sendPluginResult(okResult);
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception error) {
+                                Log.d(TAG, "Error while writing to DB");
+                                callbackContext.error(error.getMessage());
+                            }
+                        });;
+                }
+            });
+
+            PluginResult noResult = new PluginResult(PluginResult.Status.NO_RESULT);
+            noResult.setKeepCallback(true);
+            callbackContext.sendPluginResult(noResult);
+
+            return true;
+
+        } else if ("update".equals(action)) {
+
+            String path = data.getString(0);
+            Object value = data.get(1);
+
+            if (!(value instanceof JSONObject)) {
+                callbackContext.error("Value should be json");
+                return true;
+            }
+
+            cordova.getThreadPool().execute(new Runnable() {
+                public void run() {
+                    Log.d(TAG, "Updating path: " + path);
+                    database.getReference(path).updateChildren(toSettable(value))
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Log.d(TAG, "Write was successful");
+                                PluginResult okResult = new PluginResult(PluginResult.Status.OK, "");
+                                callbackContext.sendPluginResult(okResult);
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception error) {
+                                Log.d(TAG, "Error while writing to DB");
+                                callbackContext.error(error.getMessage());
+                            }
+                        });;
+                }
+            });
+
+            PluginResult noResult = new PluginResult(PluginResult.Status.NO_RESULT);
+            noResult.setKeepCallback(true);
+            callbackContext.sendPluginResult(noResult);
+
+            return true;
+
+        } else if ("remove".equals(action)) {
+
+            String path = data.getString(0);
+
+            cordova.getThreadPool().execute(new Runnable() {
+                public void run() {
+                    Log.d(TAG, "Removing path: " + path);
+                    database.getReference(path).removeValue()
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Log.d(TAG, "Write was successful");
+                                PluginResult okResult = new PluginResult(PluginResult.Status.OK, "");
+                                callbackContext.sendPluginResult(okResult);
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception error) {
+                                Log.d(TAG, "Error while writing to DB");
+                                callbackContext.error(error.getMessage());
+                            }
+                        });;
+                }
+            });
+
+            PluginResult noResult = new PluginResult(PluginResult.Status.NO_RESULT);
+            noResult.setKeepCallback(true);
+            callbackContext.sendPluginResult(noResult);
+
+            return true;
+
         } else {
 
             return false;
