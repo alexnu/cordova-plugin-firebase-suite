@@ -127,7 +127,7 @@ public class FirebaseNativePlugin extends CordovaPlugin {
             ValueEventListener listener = listeners.get(path);
 
             if (listener == null) {
-                Log.d("No listener found for " + path);
+                Log.d(TAG, "No listener found for " + path);
                 callbackContext.error("No listener found for " + path);
             } else {
                 Log.d(TAG, "Removing listener from path: " + path);
@@ -218,7 +218,9 @@ public class FirebaseNativePlugin extends CordovaPlugin {
             cordova.getThreadPool().execute(new Runnable() {
                 public void run() {
                     Log.d(TAG, "Updating path: " + path);
-                    database.getReference(path).updateChildren(toSettable(value))
+                    Map<String, Object> mapValue = gson.fromJson(value.toString(), settableType);
+                    
+                    database.getReference(path).updateChildren(mapValue)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
