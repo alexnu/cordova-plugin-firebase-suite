@@ -303,7 +303,7 @@ public class FirebaseNativePlugin extends CordovaPlugin {
                                 } else {
                                     // If sign in fails, display a message to the user.
                                     Log.w(TAG, "signInWithEmail:failure", task.getException());
-                                    callbackContext.error(task.getException());
+                                    callbackContext.error(task.getException().getMessage());
                                 }
                             }
                         });
