@@ -12,11 +12,12 @@
         [FIRApp configure];
     }
 
-    [FIRDatabase database].persistenceEnabled = YES;
+    self.auth = [FIRAuth auth];
+    self.database = [FIRDatabase database];
+    self.database.persistenceEnabled = YES;
 }
 
 - (void)on:(CDVInvokedUrlCommand *)command {
-    FIRDatabase* database = [FIRDatabase database];
     NSString *path = [command argumentAtIndex:0];
 
     if ([self.listeners objectForKey:path]) {
@@ -27,7 +28,7 @@
     }
 
     NSLog(@"Listening from path %@", path);
-    FIRDatabaseReference *ref = [database referenceWithPath:path];
+    FIRDatabaseReference *ref = [self.database referenceWithPath:path];
 
     id handler = ^(FIRDataSnapshot *_Nonnull snapshot) {
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -54,9 +55,8 @@
 
 - (void)off:(CDVInvokedUrlCommand *)command {
 
-    FIRDatabase* database = [FIRDatabase database];
     NSString *path = [command argumentAtIndex:0];
-    FIRDatabaseReference *ref = [database referenceWithPath:path];
+    FIRDatabaseReference *ref = [self.database referenceWithPath:path];
     FIRDatabaseHandle listener = [self.listeners objectForKey:path];
 
     if (listener) {
@@ -73,11 +73,10 @@
 }
 
 - (void)once:(CDVInvokedUrlCommand *)command {
-    FIRDatabase* database = [FIRDatabase database];
     NSString *path = [command argumentAtIndex:0];
 
     NSLog(@"Reading from path %@", path);
-    FIRDatabaseReference *ref = [database referenceWithPath:path];
+    FIRDatabaseReference *ref = [self.database referenceWithPath:path];
 
     id handler = ^(FIRDataSnapshot *_Nonnull snapshot) {
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -101,12 +100,11 @@
 }
 
 - (void)push:(CDVInvokedUrlCommand *)command {
-    FIRDatabase* database = [FIRDatabase database];
     NSString *path = [command argumentAtIndex:0];
     id value = [command argumentAtIndex:1];
 
     NSLog(@"Pushing to path %@", path);
-    FIRDatabaseReference *ref = [database referenceWithPath:path];
+    FIRDatabaseReference *ref = [self.database referenceWithPath:path];
 
     [[ref childByAutoId] setValue:value withCompletionBlock:^(NSError *error, FIRDatabaseReference *ref) {
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -127,12 +125,11 @@
 }
 
 - (void)set:(CDVInvokedUrlCommand *)command {
-    FIRDatabase* database = [FIRDatabase database];
     NSString *path = [command argumentAtIndex:0];
     id value = [command argumentAtIndex:1];
 
     NSLog(@"Setting path %@", path);
-    FIRDatabaseReference *ref = [database referenceWithPath:path];
+    FIRDatabaseReference *ref = [self.database referenceWithPath:path];
 
     [ref setValue:value withCompletionBlock:^(NSError *error, FIRDatabaseReference *ref) {
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -153,12 +150,11 @@
 }
 
 - (void)update:(CDVInvokedUrlCommand *)command {
-    FIRDatabase* database = [FIRDatabase database];
     NSString *path = [command argumentAtIndex:0];
     id value = [command argumentAtIndex:1];
 
     NSLog(@"Updating path %@", path);
-    FIRDatabaseReference *ref = [database referenceWithPath:path];
+    FIRDatabaseReference *ref = [self.database referenceWithPath:path];
 
     [ref updateChildValues:value withCompletionBlock:^(NSError *error, FIRDatabaseReference *ref) {
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -179,11 +175,10 @@
 }
 
 - (void)remove:(CDVInvokedUrlCommand *)command {
-    FIRDatabase* database = [FIRDatabase database];
     NSString *path = [command argumentAtIndex:0];
 
     NSLog(@"Removing path %@", path);
-    FIRDatabaseReference *ref = [database referenceWithPath:path];
+    FIRDatabaseReference *ref = [self.database referenceWithPath:path];
 
     [ref removeValueWithCompletionBlock:^(NSError *error, FIRDatabaseReference *ref) {
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -200,6 +195,27 @@
             }
             [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
         });
+    }];
+}
+
+- (void)signInWithEmailAndPassword:(CDVInvokedUrlCommand *)command {
+    NSString* email = [command.arguments objectAtIndex:0];
+    NSString* password = [command.arguments objectAtIndex:1];
+    NSLog(@"Signing in with email and password");
+
+    [self.auth signInWithEmail:email password:password completion:^(FIRAuthDataResult *result, NSError *error) {
+        CDVPluginResult *pluginResult;
+            if (error) {
+                NSLog(@"Sign in was not successful");
+                pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:@{
+                        @"code": @(error.code),
+                        @"message": error.description
+                }];
+            } else {
+                NSLog(@"Sign in was successful");
+                pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:[NSString stringWithFormat:@"%@", path]];
+            }
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     }];
 }
 

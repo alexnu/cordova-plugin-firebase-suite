@@ -10,6 +10,10 @@
 - (void)update:(CDVInvokedUrlCommand *)command;
 - (void)remove:(CDVInvokedUrlCommand *)command;
 
+- (void)signInWithEmailAndPassword:(CDVInvokedUrlCommand *)command;
+
 @property(strong) NSMutableDictionary *listeners;
+@property(strong) FIRAuth* auth;
+@property(strong) FIRDatabase* database;
 
 @end

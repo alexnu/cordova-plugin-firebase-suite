@@ -25,7 +25,9 @@
 
         <dependency id="cordova-support-google-services" version="~1.2.0"/>
 
-        <framework src="com.google.firebase:firebase-database:16.0.6" />
+        <framework src="com.google.firebase:firebase-core:16.0.7" />
+        <framework src="com.google.firebase:firebase-auth:16.1.0" />
+        <framework src="com.google.firebase:firebase-database:16.1.0" />
         <framework src="com.google.code.gson:gson:2+"/>
 
         <source-file src="src/android/FirebaseNativePlugin.java" target-dir="src/com/alexnu/plugin/"/>
@@ -41,8 +43,9 @@
         <header-file src="src/ios/FirebaseNativePlugin.h" />
         <source-file src="src/ios/FirebaseNativePlugin.m" />
 
-        <framework src="Firebase/Core" type="podspec" spec="~> 5.0"/>
-        <framework src="Firebase/Database" type="podspec" spec="~> 5.0"/>
+        <framework src="Firebase/Core" type="podspec" spec="~> 5.18"/>
+        <framework src="Firebase/Auth" type="podspec" spec="~> 5.18"/>
+        <framework src="Firebase/Database" type="podspec" spec="~> 5.18"/>
     </platform>
 
 </plugin>

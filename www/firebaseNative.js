@@ -31,5 +31,11 @@ module.exports = {
         return new Promise(function(resolve, reject) {
             cordova.exec(resolve, reject, "FirebaseNative", "remove", [path]);
         });
+    },
+
+    signInWithEmailAndPassword: function(email, password) {
+        return new Promise(function(resolve, reject) {
+            cordova.exec(resolve, reject, "FirebaseNative", "signInWithEmailAndPassword", [email, password]);
+        });
     }
 };

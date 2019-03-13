@@ -10,6 +10,7 @@ import org.json.JSONException;
 import android.support.annotation.NonNull;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -30,6 +31,7 @@ public class FirebaseNativePlugin extends CordovaPlugin {
     private final static Type settableType = new TypeToken<Map<String, Object>>() {}.getType();
 
     private FirebaseDatabase database;
+    private FirebaseAuth auth;
     private Map<String, ValueEventListener> listeners;
     private Gson gson;
 
@@ -38,6 +40,7 @@ public class FirebaseNativePlugin extends CordovaPlugin {
         Log.d(TAG, "Starting Firebase-native plugin");
 
         this.gson = new Gson();
+        this.auth = FirebaseAuth.getInstance();
         this.database = FirebaseDatabase.getInstance();
         this.database.setPersistenceEnabled(true);
         this.listeners = new HashMap<>();
@@ -219,7 +222,7 @@ public class FirebaseNativePlugin extends CordovaPlugin {
                 public void run() {
                     Log.d(TAG, "Updating path: " + path);
                     Map<String, Object> mapValue = gson.fromJson(value.toString(), settableType);
-                    
+
                     database.getReference(path).updateChildren(mapValue)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
@@ -268,6 +271,39 @@ public class FirebaseNativePlugin extends CordovaPlugin {
                                 callbackContext.error(error.getMessage());
                             }
                         });;
+                }
+            });
+
+            PluginResult noResult = new PluginResult(PluginResult.Status.NO_RESULT);
+            noResult.setKeepCallback(true);
+            callbackContext.sendPluginResult(noResult);
+
+            return true;
+
+        } else if ("signInWithEmailAndPassword".equals(action)) {
+
+            String email = data.getString(0);
+            String password = data.getString(1);
+
+            cordova.getThreadPool().execute(new Runnable() {
+                public void run() {
+                    Log.d(TAG, "Signing in with email");
+
+                    auth.signInWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(cordova.getActivity(), new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    Log.d(TAG, "signInWithEmail:success");
+                                    PluginResult okResult = new PluginResult(PluginResult.Status.OK, "");
+                                    callbackContext.sendPluginResult(okResult);
+                                } else {
+                                    // If sign in fails, display a message to the user.
+                                    Log.w(TAG, "signInWithEmail:failure", task.getException());
+                                    callbackContext.error(task.getException());
+                                }
+                            }
+                        });
                 }
             });
 
