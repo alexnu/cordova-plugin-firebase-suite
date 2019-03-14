@@ -1,3 +1,5 @@
+package com.alexnu.plugin;
+
 import android.util.Log;
 
 import com.google.firebase.auth.FirebaseAuth.AuthStateListener;
