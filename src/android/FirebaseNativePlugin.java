@@ -49,15 +49,7 @@ public class FirebaseNativePlugin extends CordovaPlugin {
         this.database = FirebaseDatabase.getInstance();
         this.database.setPersistenceEnabled(true);
 
-        this.authListener = new AuthListener();
-        this.auth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
-           @Override
-           public void onAuthStateChanged(FirebaseAuth auth) {
-               Log.d(TAG, "Auth state changed!!!");
-           }
-        });
         this.listeners = new HashMap<>();
-
         this.gson = new Gson();
     }
 
@@ -330,7 +322,13 @@ public class FirebaseNativePlugin extends CordovaPlugin {
 
         } else if ("addAuthStateListener".equals(action)) {
 
-            this.authListener.setCallbackContext(callbackContext);
+            if (this.authListener == null) {
+                this.authListener = new AuthListener(callbackContext);
+                this.auth.addAuthStateListener(this.authListener);
+            } else {
+                this.authListener.setCallbackContext(callbackContext);
+            }
+
             PluginResult noResult = new PluginResult(PluginResult.Status.NO_RESULT);
             noResult.setKeepCallback(true);
             callbackContext.sendPluginResult(noResult);
@@ -338,7 +336,9 @@ public class FirebaseNativePlugin extends CordovaPlugin {
 
         } else if ("removeAuthStateListener".equals(action)) {
 
-            this.authListener.setCallbackContext(null);
+            this.auth.removeAuthStateListener(this.authListener);
+            this.authListener = null;
+
             PluginResult okResult = new PluginResult(PluginResult.Status.OK, "");
             callbackContext.sendPluginResult(okResult);
             return true;

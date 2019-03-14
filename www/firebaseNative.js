@@ -33,11 +33,12 @@ module.exports = {
         });
     },
 
-    addAuthStateListener: function(successCallback, errorCallback) {
+    onAuthStateChanged: function(successCallback, errorCallback) {
         cordova.exec(successCallback, errorCallback, "FirebaseNative", "addAuthStateListener", []);
-    },
-    removeAuthStateListener: function(successCallback, errorCallback) {
-        cordova.exec(successCallback, errorCallback, "FirebaseNative", "removeAuthStateListener", []);
+
+        return function() {
+            cordova.exec(successCallback, errorCallback, "FirebaseNative", "removeAuthStateListener", []);
+        };
     },
     signInWithEmailAndPassword: function(email, password) {
         return new Promise(function(resolve, reject) {

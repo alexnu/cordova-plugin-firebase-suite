@@ -17,7 +17,11 @@ public class AuthListener implements AuthStateListener {
 
     private static final String TAG = "FirebaseAuthListener";
 
-    private CallbackContext callbackContext = null;
+    private CallbackContext callbackContext;
+
+    public AuthListener(CallbackContext callbackContext) {
+        this.callbackContext = callbackContext;
+    }
 
     public void setCallbackContext(CallbackContext callbackContext) {
         this.callbackContext = callbackContext;
@@ -26,12 +30,9 @@ public class AuthListener implements AuthStateListener {
     @Override
     public void onAuthStateChanged(FirebaseAuth auth) {
         Log.d(TAG, "Auth state changed");
-
-        if (this.callbackContext != null) {
-            PluginResult pluginResult = getProfileResult(auth.getCurrentUser());
-            pluginResult.setKeepCallback(true);
-            this.callbackContext.sendPluginResult(pluginResult);
-        }
+        PluginResult pluginResult = getProfileResult(auth.getCurrentUser());
+        pluginResult.setKeepCallback(true);
+        this.callbackContext.sendPluginResult(pluginResult);
     }
 
     private static PluginResult getProfileResult(FirebaseUser user) {
