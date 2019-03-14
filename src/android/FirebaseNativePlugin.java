@@ -326,9 +326,9 @@ public class FirebaseNativePlugin extends CordovaPlugin {
         } else if ("addAuthStateListener".equals(action)) {
 
             this.authListener.setCallbackContext(callbackContext);
-            PluginResult okResult = new PluginResult(PluginResult.Status.OK, "");
+            PluginResult noResult = new PluginResult(PluginResult.Status.NO_RESULT);
             noResult.setKeepCallback(true);
-            callbackContext.sendPluginResult(okResult);
+            callbackContext.sendPluginResult(noResult);
             return true;
 
         } else if ("removeAuthStateListener".equals(action)) {
