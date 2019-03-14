@@ -327,6 +327,7 @@ public class FirebaseNativePlugin extends CordovaPlugin {
 
             this.authListener.setCallbackContext(callbackContext);
             PluginResult okResult = new PluginResult(PluginResult.Status.OK, "");
+            noResult.setKeepCallback(true);
             callbackContext.sendPluginResult(okResult);
             return true;
 
