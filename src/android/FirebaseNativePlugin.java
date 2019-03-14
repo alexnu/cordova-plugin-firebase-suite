@@ -50,7 +50,12 @@ public class FirebaseNativePlugin extends CordovaPlugin {
         this.database.setPersistenceEnabled(true);
 
         this.authListener = new AuthListener();
-        this.auth.addAuthStateListener(this.authListener);
+        this.auth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
+           @Override
+           public void onAuthStateChanged(FirebaseAuth auth) {
+               Log.d(TAG, "Auth state changed!!!");
+           }
+        });
         this.listeners = new HashMap<>();
 
         this.gson = new Gson();
@@ -295,8 +300,8 @@ public class FirebaseNativePlugin extends CordovaPlugin {
             String email = data.getString(0);
             String password = data.getString(1);
 
-//            cordova.getThreadPool().execute(new Runnable() {
-//                public void run() {
+            cordova.getThreadPool().execute(new Runnable() {
+                public void run() {
                     Log.d(TAG, "Signing in with email");
 
                     auth.signInWithEmailAndPassword(email, password)
@@ -314,8 +319,8 @@ public class FirebaseNativePlugin extends CordovaPlugin {
                                 }
                             }
                         });
- //               }
- //           });
+                }
+            });
 
             PluginResult noResult = new PluginResult(PluginResult.Status.NO_RESULT);
             noResult.setKeepCallback(true);
