@@ -19,7 +19,7 @@ public class AuthListener implements AuthStateListener {
 
     private CallbackContext callbackContext = null;
 
-    private void setCallbackContext(CallbackContext callbackContext) {
+    public void setCallbackContext(CallbackContext callbackContext) {
         this.callbackContext = callbackContext;
     }
 
