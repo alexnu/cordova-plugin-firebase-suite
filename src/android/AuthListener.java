@@ -25,7 +25,7 @@ public class AuthListener implements AuthStateListener {
 
     @Override
     public void onAuthStateChanged(FirebaseAuth auth) {
-        Log.d(TAG, "Auth state changed!");
+        Log.d(TAG, "Auth state changed");
 
         if (this.callbackContext != null) {
             PluginResult pluginResult = getProfileResult(auth.getCurrentUser());
@@ -36,9 +36,11 @@ public class AuthListener implements AuthStateListener {
 
     private static PluginResult getProfileResult(FirebaseUser user) {
         if (user == null) {
+            Log.d(TAG, "User is not logged in");
             return new PluginResult(PluginResult.Status.OK, (String) null);
         }
 
+        Log.d(TAG, "User is logged in");
         JSONObject result = new JSONObject();
 
         try {
