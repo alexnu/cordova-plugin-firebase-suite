@@ -333,6 +333,13 @@ public class FirebaseNativePlugin extends CordovaPlugin {
             this.authListener.setCallbackContext(null);
             return true;
 
+        } else if ("signOut".equals(action)) {
+
+            this.auth.signOut();
+            PluginResult okResult = new PluginResult(PluginResult.Status.OK, "");
+            callbackContext.sendPluginResult(noResult);
+            return true;
+
         } else {
 
             return false;
