@@ -36,7 +36,7 @@ public class FirebaseNativePlugin extends CordovaPlugin {
     private FirebaseAuth auth;
     private FirebaseDatabase database;
 
-    private FirebaseAuthStateListener authListener;
+    private AuthListener authListener;
     private Map<String, ValueEventListener> listeners;
 
     private Gson gson;
