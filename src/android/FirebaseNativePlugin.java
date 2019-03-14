@@ -33,20 +33,27 @@ public class FirebaseNativePlugin extends CordovaPlugin {
     private static final String TAG = "FirebaseNative";
     private final static Type settableType = new TypeToken<Map<String, Object>>() {}.getType();
 
-    private FirebaseDatabase database;
     private FirebaseAuth auth;
+    private FirebaseDatabase database;
+
+    private FirebaseAuthStateListener authListener;
     private Map<String, ValueEventListener> listeners;
+
     private Gson gson;
 
     @Override
     protected void pluginInitialize() {
         Log.d(TAG, "Starting Firebase-native plugin");
 
-        this.gson = new Gson();
         this.auth = FirebaseAuth.getInstance();
         this.database = FirebaseDatabase.getInstance();
         this.database.setPersistenceEnabled(true);
+
+        this.authListener = new AuthListener();
+        this.auth.addAuthStateListener(this.authListener);
         this.listeners = new HashMap<>();
+
+        this.gson = new Gson();
     }
 
     @Override
@@ -314,6 +321,16 @@ public class FirebaseNativePlugin extends CordovaPlugin {
             noResult.setKeepCallback(true);
             callbackContext.sendPluginResult(noResult);
 
+            return true;
+
+        } else if ("addAuthStateListener".equals(action)) {
+
+            this.authListener.setCallbackContext(callbackContext);
+            return true;
+
+        } else if ("removeAuthStateListener".equals(action)) {
+
+            this.authListener.setCallbackContext(null);
             return true;
 
         } else {
