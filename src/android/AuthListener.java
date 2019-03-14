@@ -13,6 +13,8 @@ import org.json.JSONObject;
 
 public class AuthListener implements AuthStateListener {
 
+    private static final String TAG = "AuthListener";
+
     private CallbackContext callbackContext = null;
 
     private void setCallbackContext(CallbackContext callbackContext) {
