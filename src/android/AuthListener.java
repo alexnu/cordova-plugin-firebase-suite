@@ -15,7 +15,7 @@ import org.json.JSONObject;
 
 public class AuthListener implements AuthStateListener {
 
-    private static final String TAG = "AuthListener";
+    private static final String TAG = "FirebaseAuthListener";
 
     private CallbackContext callbackContext = null;
 
@@ -25,6 +25,8 @@ public class AuthListener implements AuthStateListener {
 
     @Override
     public void onAuthStateChanged(FirebaseAuth auth) {
+        Log.d(TAG, "Auth state changed!");
+
         if (this.callbackContext != null) {
             PluginResult pluginResult = getProfileResult(auth.getCurrentUser());
             pluginResult.setKeepCallback(true);
