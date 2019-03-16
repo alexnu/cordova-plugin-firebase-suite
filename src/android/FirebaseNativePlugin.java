@@ -298,13 +298,26 @@ public class FirebaseNativePlugin extends CordovaPlugin {
 
                     auth.signInWithEmailAndPassword(email, password)
                         .addOnCompleteListener(cordova.getActivity(),
-                            new CordovaCompleteListener<AuthResult>(callbackContext, action));
+                            new AuthCompleteListener(callbackContext, action));
                 }
             });
 
-            PluginResult noResult = new PluginResult(PluginResult.Status.NO_RESULT);
-            noResult.setKeepCallback(true);
-            callbackContext.sendPluginResult(noResult);
+            return true;
+
+        } else if ("createUserWithEmailAndPassword".equals.(action)) {
+
+            String email = data.getString(0);
+            String password = data.getString(1);
+
+            cordova.getThreadPool().execute(new Runnable() {
+                public void run() {
+                    Log.d(TAG, "Creating account");
+
+                    auth.signInWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(cordova.getActivity(),
+                            new AuthCompleteListener(callbackContext, action));
+                }
+            });
 
             return true;
 
