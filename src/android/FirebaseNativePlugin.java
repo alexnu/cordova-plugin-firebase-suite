@@ -297,20 +297,8 @@ public class FirebaseNativePlugin extends CordovaPlugin {
                     Log.d(TAG, "Signing in with email");
 
                     auth.signInWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(cordova.getActivity(), new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
-                                    Log.d(TAG, "signInWithEmail:success");
-                                    PluginResult okResult = new PluginResult(PluginResult.Status.OK, "");
-                                    callbackContext.sendPluginResult(okResult);
-                                } else {
-                                    // If sign in fails, display a message to the user.
-                                    Log.w(TAG, "signInWithEmail:failure", task.getException());
-                                    callbackContext.error(task.getException().getMessage());
-                                }
-                            }
-                        });
+                        .addOnCompleteListener(cordova.getActivity(),
+                            new CordovaCompleteListener<AuthResult>(callbackContext, action));
                 }
             });
 
