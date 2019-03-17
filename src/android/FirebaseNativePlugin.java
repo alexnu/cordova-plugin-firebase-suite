@@ -304,7 +304,7 @@ public class FirebaseNativePlugin extends CordovaPlugin {
 
             return true;
 
-        } else if ("createUserWithEmailAndPassword".equals.(action)) {
+        } else if ("createUserWithEmailAndPassword".equals(action)) {
 
             String email = data.getString(0);
             String password = data.getString(1);

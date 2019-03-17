@@ -32,6 +32,7 @@
 
         <source-file src="src/android/FirebaseNativePlugin.java" target-dir="src/com/alexnu/plugin/"/>
         <source-file src="src/android/AuthListener.java" target-dir="src/com/alexnu/plugin/"/>
+        <source-file src="src/android/AuthCompleteListener.java" target-dir="src/com/alexnu/plugin/"/>
     </platform>
 
     <platform name="ios">
