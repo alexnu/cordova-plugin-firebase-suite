@@ -31,7 +31,7 @@ public class AuthStatusListener implements AuthStateListener {
         this.callbackContext.sendPluginResult(pluginResult);
     }
 
-    private static PluginResult getProfileResult(FirebaseUser user) {
+    public static PluginResult getProfileResult(FirebaseUser user) {
         if (user == null) {
             Log.d(TAG, "User is not logged in");
             return new PluginResult(PluginResult.Status.OK, (String) null);
