@@ -198,27 +198,6 @@
     }];
 }
 
-- (void)signInWithEmailAndPassword:(CDVInvokedUrlCommand *)command {
-    NSString* email = [command.arguments objectAtIndex:0];
-    NSString* password = [command.arguments objectAtIndex:1];
-    NSLog(@"Signing in with email and password");
-
-    [self.auth signInWithEmail:email password:password completion:^(FIRAuthDataResult *result, NSError *error) {
-        CDVPluginResult *pluginResult;
-            if (error) {
-                NSLog(@"Sign in was not successful");
-                pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:@{
-                        @"code": @(error.code),
-                        @"message": error.description
-                }];
-            } else {
-                NSLog(@"Sign in was successful");
-                pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:[NSString stringWithFormat:@"%@", path]];
-            }
-        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-    }];
-}
-
 - (void)createUserWithEmailAndPassword:(CDVInvokedUrlCommand *)command {
     NSString* email = [command.arguments objectAtIndex:0];
     NSString* password = [command.arguments objectAtIndex:1];
