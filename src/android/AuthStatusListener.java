@@ -13,17 +13,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
-public class AuthListener implements AuthStateListener {
+public class AuthStatusListener implements AuthStateListener {
 
-    private static final String TAG = "FirebaseAuthListener";
+    private static final String TAG = "FirebaseAuthStatusListener";
 
     private CallbackContext callbackContext;
 
-    public AuthListener(CallbackContext callbackContext) {
-        this.callbackContext = callbackContext;
-    }
-
-    public void setCallbackContext(CallbackContext callbackContext) {
+    public AuthStatusListener(CallbackContext callbackContext) {
         this.callbackContext = callbackContext;
     }
 

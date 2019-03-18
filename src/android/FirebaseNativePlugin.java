@@ -36,7 +36,7 @@ public class FirebaseNativePlugin extends CordovaPlugin {
     private FirebaseAuth auth;
     private FirebaseDatabase database;
 
-    private AuthListener authListener;
+    private AuthStatusListener authStatusListener;
     private Map<String, ValueEventListener> listeners;
 
     private Gson gson;
@@ -61,27 +61,11 @@ public class FirebaseNativePlugin extends CordovaPlugin {
         if ("once".equals(action)) {
 
             String path = data.getString(0);
-
             cordova.getThreadPool().execute(new Runnable() {
                 public void run() {
-
                     Log.d(TAG, "Reading from path: " + path);
-
-                    database.getReference(path).addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            Log.d(TAG, "Got value from path: " + path);
-                            PluginResult result = transformToResult(dataSnapshot);
-                            callbackContext.sendPluginResult(result);
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError error) {
-                            // Failed to read value
-                            Log.d(TAG, "Error from DB");
-                            callbackContext.error(error.getMessage());
-                        }
-                    });
+                    database.getReference(path).addListenerForSingleValueEvent(
+                        new DatabaseReadListener(callbackContext, false));
                 }
             });
 
@@ -102,24 +86,8 @@ public class FirebaseNativePlugin extends CordovaPlugin {
 
             cordova.getThreadPool().execute(new Runnable() {
                 public void run() {
-
                     Log.d(TAG, "Listening from path: " + path);
-                    ValueEventListener listener = new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            Log.d(TAG, "Got value from path: " + path);
-                            PluginResult result = transformToResult(dataSnapshot);
-                            result.setKeepCallback(true);
-                            callbackContext.sendPluginResult(result);
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError error) {
-                            // Failed to read value
-                            Log.d(TAG, "Error while reading from path " + path);
-                            callbackContext.error(error.getMessage());
-                        }
-                    };
+                    ValueEventListener listener = new DatabaseReadListener(callbackContext, true);
                     database.getReference(path).addValueEventListener(listener);
                     listeners.put(path, listener);
                 }
@@ -158,27 +126,9 @@ public class FirebaseNativePlugin extends CordovaPlugin {
                 public void run() {
                     Log.d(TAG, "Pushing to path: " + path);
                     database.getReference(path).push().setValue(toSettable(value))
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                Log.d(TAG, "Write was successful");
-                                PluginResult okResult = new PluginResult(PluginResult.Status.OK, "");
-                                callbackContext.sendPluginResult(okResult);
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception error) {
-                                Log.d(TAG, "Error while writing to DB");
-                                callbackContext.error(error.getMessage());
-                            }
-                        });;
+                        .addOnCompleteListener(new DatabaseWriteListener(callbackContext, action));
                 }
             });
-
-            PluginResult noResult = new PluginResult(PluginResult.Status.NO_RESULT);
-            noResult.setKeepCallback(true);
-            callbackContext.sendPluginResult(noResult);
 
             return true;
 
@@ -191,21 +141,7 @@ public class FirebaseNativePlugin extends CordovaPlugin {
                 public void run() {
                     Log.d(TAG, "Setting path: " + path);
                     database.getReference(path).setValue(toSettable(value))
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                Log.d(TAG, "Write was successful");
-                                PluginResult okResult = new PluginResult(PluginResult.Status.OK, "");
-                                callbackContext.sendPluginResult(okResult);
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception error) {
-                                Log.d(TAG, "Error while writing to DB");
-                                callbackContext.error(error.getMessage());
-                            }
-                        });;
+                        .addOnCompleteListener(new DatabaseWriteListener(callbackContext, action));
                 }
             });
 
@@ -231,21 +167,7 @@ public class FirebaseNativePlugin extends CordovaPlugin {
                     Map<String, Object> mapValue = gson.fromJson(value.toString(), settableType);
 
                     database.getReference(path).updateChildren(mapValue)
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                Log.d(TAG, "Write was successful");
-                                PluginResult okResult = new PluginResult(PluginResult.Status.OK, "");
-                                callbackContext.sendPluginResult(okResult);
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception error) {
-                                Log.d(TAG, "Error while writing to DB");
-                                callbackContext.error(error.getMessage());
-                            }
-                        });;
+                        .addOnCompleteListener(new DatabaseWriteListener(callbackContext, action));
                 }
             });
 
@@ -263,21 +185,7 @@ public class FirebaseNativePlugin extends CordovaPlugin {
                 public void run() {
                     Log.d(TAG, "Removing path: " + path);
                     database.getReference(path).removeValue()
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                Log.d(TAG, "Write was successful");
-                                PluginResult okResult = new PluginResult(PluginResult.Status.OK, "");
-                                callbackContext.sendPluginResult(okResult);
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception error) {
-                                Log.d(TAG, "Error while writing to DB");
-                                callbackContext.error(error.getMessage());
-                            }
-                        });;
+                        .addOnCompleteListener(new DatabaseWriteListener(callbackContext, action));
                 }
             });
 
@@ -313,7 +221,7 @@ public class FirebaseNativePlugin extends CordovaPlugin {
                 public void run() {
                     Log.d(TAG, "Creating account");
 
-                    auth.signInWithEmailAndPassword(email, password)
+                    auth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener(cordova.getActivity(),
                             new AuthCompleteListener(callbackContext, action));
                 }
@@ -323,22 +231,22 @@ public class FirebaseNativePlugin extends CordovaPlugin {
 
         } else if ("addAuthStateListener".equals(action)) {
 
-            if (this.authListener == null) {
-                this.authListener = new AuthListener(callbackContext);
-                this.auth.addAuthStateListener(this.authListener);
-            } else {
-                this.authListener.setCallbackContext(callbackContext);
+            if (this.authStatusListener != null) {
+                this.auth.removeAuthStateListener(this.authStatusListener);
+                this.authStatusListener = null;
             }
 
-            PluginResult noResult = new PluginResult(PluginResult.Status.NO_RESULT);
-            noResult.setKeepCallback(true);
-            callbackContext.sendPluginResult(noResult);
+            this.authStatusListener = new AuthStatusListener(callbackContext);
+            this.auth.addAuthStateListener(this.authStatusListener);
+
             return true;
 
         } else if ("removeAuthStateListener".equals(action)) {
 
-            this.auth.removeAuthStateListener(this.authListener);
-            this.authListener = null;
+            if (this.authStatusListener != null) {
+                this.auth.removeAuthStateListener(this.authStatusListener);
+                this.authStatusListener = null;
+            }
 
             PluginResult okResult = new PluginResult(PluginResult.Status.OK, "");
             callbackContext.sendPluginResult(okResult);
@@ -356,24 +264,6 @@ public class FirebaseNativePlugin extends CordovaPlugin {
             return false;
 
         }
-    }
-
-    private PluginResult transformToResult(DataSnapshot dataSnapshot) {
-        JSONObject data = new JSONObject();
-        Object value = dataSnapshot.getValue(false);
-
-        try {
-            data.put("priority", dataSnapshot.getPriority());
-            data.put("key", dataSnapshot.getKey());
-            if (value instanceof Map) {
-                value = new JSONObject(this.gson.toJson(value));
-            } else if (value instanceof List) {
-                value = new JSONArray(this.gson.toJson(value));
-            }
-            data.put("value", value);
-        } catch (JSONException e) {}
-
-        return new PluginResult(PluginResult.Status.OK, data);
     }
 
     private Object toSettable(Object value) {
