@@ -19,7 +19,7 @@ public class DatabaseWriteListener implements OnCompleteListener<Void> {
     }
 
     @Override
-    public void onComplete(@NonNull Task<T> task) {
+    public void onComplete(@NonNull Task<Void> task) {
         if (task.isSuccessful()) {
             Log.d(TAG, this.action + ":success");
             PluginResult okResult = new PluginResult(PluginResult.Status.OK, "");

@@ -21,10 +21,10 @@ public class AuthCompleteListener implements OnCompleteListener<AuthResult> {
     }
 
     @Override
-    public void onComplete(@NonNull Task<T> task) {
+    public void onComplete(@NonNull Task<AuthResult> task) {
         if (task.isSuccessful()) {
             Log.d(TAG, this.action + ":success");
-            PluginResult pluginResult = AuthListener.getProfileResult(task.getResult().getUser());
+            PluginResult pluginResult = AuthStatusListener.getProfileResult(task.getResult().getUser());
             callbackContext.sendPluginResult(pluginResult);
         } else {
             // If sign in fails, display a message to the user.
