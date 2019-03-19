@@ -250,12 +250,12 @@
 }
 
 - (void)addAuthStateListener:(CDVInvokedUrlCommand*)command {
-    if (self.handle) {
-        [[FIRAuth auth] removeAuthStateDidChangeListener:self.handle];
-        self.handle = nil;
+    if (self.authListener) {
+        [[FIRAuth auth] removeAuthStateDidChangeListener:self.authListener];
+        self.authListener = nil;
     }
 
-    self.handle = [[FIRAuth auth]
+    self.authListener = [[FIRAuth auth]
         addAuthStateDidChangeListener:^(FIRAuth *_Nonnull auth, FIRUser *_Nullable user) {
             CDVPluginResult *pluginResult = [self getProfileResult:user];
             [pluginResult setKeepCallbackAsBool:YES];
@@ -264,9 +264,9 @@
 }
 
 - (void)removeAuthStateListener:(CDVInvokedUrlCommand*)command {
-    if (self.handle) {
-        [[FIRAuth auth] removeAuthStateDidChangeListener:self.handle];
-        self.handle = nil;
+    if (self.authListener) {
+        [[FIRAuth auth] removeAuthStateDidChangeListener:self.authListener];
+        self.authListener = nil;
     }
 }
 
