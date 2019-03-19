@@ -1,4 +1,5 @@
 #import <Cordova/CDV.h>
+@import Firebase;
 
 @interface FirebaseNativePlugin : CDVPlugin
 
