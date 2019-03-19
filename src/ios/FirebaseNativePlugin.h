@@ -19,6 +19,6 @@
 @property(strong) NSMutableDictionary *listeners;
 @property(strong) FIRAuth* auth;
 @property(strong) FIRDatabase* database;
-@property(strong) FIRAuthStateDidChangeListenerHandle* authListener;
+@property(strong, nonatomic) FIRAuthStateDidChangeListenerHandle authListener;
 
 @end
