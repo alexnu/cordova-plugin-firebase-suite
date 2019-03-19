@@ -250,8 +250,8 @@
 }
 
 - (void)addAuthStateListener:(CDVInvokedUrlCommand*)command {
-    if (_handle) {
-        [[FIRAuth auth] removeAuthStateDidChangeListener:_handle];
+    if (self.handle) {
+        [[FIRAuth auth] removeAuthStateDidChangeListener:self.handle];
         self.handle = nil;
     }
 
@@ -264,8 +264,8 @@
 }
 
 - (void)removeAuthStateListener:(CDVInvokedUrlCommand*)command {
-    if (_handle) {
-        [[FIRAuth auth] removeAuthStateDidChangeListener:_handle];
+    if (self.handle) {
+        [[FIRAuth auth] removeAuthStateDidChangeListener:self.handle];
         self.handle = nil;
     }
 }
