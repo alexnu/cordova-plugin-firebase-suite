@@ -28,7 +28,7 @@ import java.util.HashMap;
 import java.lang.reflect.Type;
 
 
-public class FirebaseNativePlugin extends CordovaPlugin {
+public class FirebaseAuthPlugin extends CordovaPlugin {
 
     private static final String TAG = "FirebaseAuth";
 
