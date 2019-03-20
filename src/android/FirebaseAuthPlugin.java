@@ -45,6 +45,7 @@ public class FirebaseAuthPlugin extends CordovaPlugin {
     public boolean execute(String action, JSONArray data, CallbackContext callbackContext) throws JSONException {
 
         Log.d(TAG, "Got new action " + action);
+        return true;
 
     }
 
