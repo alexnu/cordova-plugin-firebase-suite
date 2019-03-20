@@ -47,5 +47,9 @@ module.exports = {
     },
     signOut: function(successCallback, errorCallback) {
         cordova.exec(successCallback, errorCallback, "FirebaseNative", "signOut", []);
+    },
+
+    test: function(successCallback, errorCallback) {
+        cordova.exec(successCallback, errorCallback, "FirebaseAuth", "test", []);
     }
 };
