@@ -270,4 +270,17 @@
     }
 }
 
+- (void)signOut:(CDVInvokedUrlCommand*)command {
+    NSError *signOutError;
+    CDVPluginResult *pluginResult;
+
+    if ([[FIRAuth auth] signOut:&signOutError]) {
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+    } else {
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:signOutError.localizedDescription];
+    }
+
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+}
+
 @end

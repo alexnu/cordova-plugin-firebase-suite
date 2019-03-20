@@ -15,6 +15,7 @@
 - (void)createUserWithEmailAndPassword:(CDVInvokedUrlCommand *)command;
 - (void)addAuthStateListener:(CDVInvokedUrlCommand *)command;
 - (void)removeAuthStateListener:(CDVInvokedUrlCommand *)command;
+- (void)signOut:(CDVInvokedUrlCommand *)command;
 
 @property(strong) NSMutableDictionary *listeners;
 @property(strong) FIRAuth* auth;
