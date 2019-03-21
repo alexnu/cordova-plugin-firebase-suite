@@ -33,23 +33,21 @@ module.exports = {
         });
     },
 
-    onAuthStateChanged: function(successCallback, errorCallback) {
-        cordova.exec(successCallback, errorCallback, "FirebaseNative", "addAuthStateListener", []);
+    auth: {
+        onAuthStateChanged: function (successCallback, errorCallback) {
+            cordova.exec(successCallback, errorCallback, "FirebaseAuth", "addAuthStateListener", []);
 
-        return function() {
-            cordova.exec(successCallback, errorCallback, "FirebaseNative", "removeAuthStateListener", []);
-        };
-    },
-    signInWithEmailAndPassword: function(email, password) {
-        return new Promise(function(resolve, reject) {
-            cordova.exec(resolve, reject, "FirebaseNative", "signInWithEmailAndPassword", [email, password]);
-        });
-    },
-    signOut: function(successCallback, errorCallback) {
-        cordova.exec(successCallback, errorCallback, "FirebaseNative", "signOut", []);
-    },
-
-    test: function(successCallback, errorCallback) {
-        cordova.exec(successCallback, errorCallback, "FirebaseAuth", "test", []);
+            return function () {
+                cordova.exec(successCallback, errorCallback, "FirebaseAuth", "removeAuthStateListener", []);
+            };
+        },
+        signInWithEmailAndPassword: function (email, password) {
+            return new Promise(function (resolve, reject) {
+                cordova.exec(resolve, reject, "FirebaseAuth", "signInWithEmailAndPassword", [email, password]);
+            });
+        },
+        signOut: function (successCallback, errorCallback) {
+            cordova.exec(successCallback, errorCallback, "FirebaseAuth", "signOut", []);
+        }
     }
 };

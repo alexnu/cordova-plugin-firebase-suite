@@ -12,8 +12,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -33,22 +31,16 @@ public class FirebaseNativePlugin extends CordovaPlugin {
     private static final String TAG = "FirebaseNative";
     private final static Type settableType = new TypeToken<Map<String, Object>>() {}.getType();
 
-    private FirebaseAuth auth;
     private FirebaseDatabase database;
-
-    private AuthStatusListener authStatusListener;
     private Map<String, ValueEventListener> listeners;
-
     private Gson gson;
 
     @Override
     protected void pluginInitialize() {
         Log.d(TAG, "Starting Firebase-native plugin");
 
-        this.auth = FirebaseAuth.getInstance();
         this.database = FirebaseDatabase.getInstance();
         this.database.setPersistenceEnabled(true);
-
         this.listeners = new HashMap<>();
         this.gson = new Gson();
     }
@@ -193,70 +185,6 @@ public class FirebaseNativePlugin extends CordovaPlugin {
             noResult.setKeepCallback(true);
             callbackContext.sendPluginResult(noResult);
 
-            return true;
-
-        } else if ("signInWithEmailAndPassword".equals(action)) {
-
-            String email = data.getString(0);
-            String password = data.getString(1);
-
-            cordova.getThreadPool().execute(new Runnable() {
-                public void run() {
-                    Log.d(TAG, "Signing in with email");
-
-                    auth.signInWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(cordova.getActivity(),
-                            new AuthCompleteListener(callbackContext, action));
-                }
-            });
-
-            return true;
-
-        } else if ("createUserWithEmailAndPassword".equals(action)) {
-
-            String email = data.getString(0);
-            String password = data.getString(1);
-
-            cordova.getThreadPool().execute(new Runnable() {
-                public void run() {
-                    Log.d(TAG, "Creating account");
-
-                    auth.createUserWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(cordova.getActivity(),
-                            new AuthCompleteListener(callbackContext, action));
-                }
-            });
-
-            return true;
-
-        } else if ("addAuthStateListener".equals(action)) {
-
-            if (this.authStatusListener != null) {
-                this.auth.removeAuthStateListener(this.authStatusListener);
-                this.authStatusListener = null;
-            }
-
-            this.authStatusListener = new AuthStatusListener(callbackContext);
-            this.auth.addAuthStateListener(this.authStatusListener);
-
-            return true;
-
-        } else if ("removeAuthStateListener".equals(action)) {
-
-            if (this.authStatusListener != null) {
-                this.auth.removeAuthStateListener(this.authStatusListener);
-                this.authStatusListener = null;
-            }
-
-            PluginResult okResult = new PluginResult(PluginResult.Status.OK, "");
-            callbackContext.sendPluginResult(okResult);
-            return true;
-
-        } else if ("signOut".equals(action)) {
-
-            this.auth.signOut();
-            PluginResult okResult = new PluginResult(PluginResult.Status.OK, "");
-            callbackContext.sendPluginResult(okResult);
             return true;
 
         } else {
