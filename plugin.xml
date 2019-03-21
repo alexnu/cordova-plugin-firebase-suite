@@ -24,6 +24,9 @@
             <feature name="FirebaseAuth">
                 <param name="android-package" value="com.alexnu.plugin.FirebaseAuthPlugin"/>
             </feature>
+            <feature name="FirebaseGoogleAuth">
+                <param name="android-package" value="com.alexnu.plugin.FirebaseGoogleAuthPlugin"/>
+            </feature>
         </config-file>
 
         <dependency id="cordova-support-google-services" version="~1.2.0"/>
@@ -39,7 +42,9 @@
         <source-file src="src/android/AuthStatusListener.java" target-dir="src/com/alexnu/plugin/"/>
         <source-file src="src/android/DatabaseReadListener.java" target-dir="src/com/alexnu/plugin/"/>
         <source-file src="src/android/DatabaseWriteListener.java" target-dir="src/com/alexnu/plugin/"/>
+
         <source-file src="src/android/FirebaseAuthPlugin.java" target-dir="src/com/alexnu/plugin/"/>
+        <source-file src="src/android/FirebaseGoogleAuthPlugin.java" target-dir="src/com/alexnu/plugin/"/>
     </platform>
 
     <platform name="ios">

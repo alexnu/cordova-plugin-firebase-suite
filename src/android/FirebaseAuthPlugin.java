@@ -14,7 +14,7 @@ public class FirebaseAuthPlugin extends CordovaPlugin {
     private static final String TAG = "FirebaseAuth";
 
     private FirebaseAuth auth;
-        private AuthStatusListener authStatusListener;
+    private AuthStatusListener authStatusListener;
 
 
     @Override
