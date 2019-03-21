@@ -53,6 +53,8 @@ public class FirebaseGoogleAuthPlugin extends CordovaPlugin {
             this.callbackContext = callbackContext;
             this.cordova.startActivityForResult(this, signInIntent, RC_SIGN_IN);
 
+            return true;
+
         } else {
             return false;
         }
