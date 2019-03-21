@@ -8,11 +8,12 @@ import org.json.JSONException;
 
 import android.content.Intent;
 
-import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.Task;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.AuthCredential;
@@ -25,8 +26,8 @@ public class FirebaseGoogleAuthPlugin extends CordovaPlugin {
     private static final int RC_SIGN_IN = 9001;
 
     private FirebaseAuth auth;
-    private GoogleApiClient mGoogleSignInClient;
-
+    private GoogleSignInClient mGoogleSignInClient;
+    private CallbackContext callbackContext;
 
     @Override
     protected void pluginInitialize() {
@@ -49,6 +50,7 @@ public class FirebaseGoogleAuthPlugin extends CordovaPlugin {
         if ("signIn".equals(action)) {
 
             Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+            this.callbackContext = callbackContext;
             this.cordova.startActivityForResult(this, signInIntent, RC_SIGN_IN);
 
         } else {
@@ -80,6 +82,6 @@ public class FirebaseGoogleAuthPlugin extends CordovaPlugin {
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         auth.signInWithCredential(credential)
             .addOnCompleteListener(cordova.getActivity(),
-                new AuthCompleteListener(callbackContext, action));
+                new AuthCompleteListener(this.callbackContext, "signInWithGoogle"));
     }
 }
