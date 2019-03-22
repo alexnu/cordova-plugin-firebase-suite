@@ -46,7 +46,7 @@ public class FirebaseGoogleAuthPlugin extends CordovaPlugin {
         Context context = cordova.getActivity().getApplicationContext();
         String packageName = context.getPackageName();
         int id = context.getResources().getIdentifier("default_web_client_id", "string", packageName);
-        Log.d(TAG, "Client id: " id + " value: " + context.getString(id));
+        Log.d(TAG, "Client id: " + id + " value: " + context.getString(id));
         return context.getString(id);
     }
 
