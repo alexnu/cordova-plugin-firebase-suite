@@ -35,11 +35,19 @@ public class FirebaseGoogleAuthPlugin extends CordovaPlugin {
         this.auth = FirebaseAuth.getInstance();
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                        .requestIdToken("empty-for-now")
+                        .requestIdToken(getDefaultClientId())
                         .requestEmail()
                         .build();
 
         mGoogleSignInClient = GoogleSignIn.getClient(this.cordova.getActivity(), gso);
+    }
+
+    private String getDefaultClientId() {
+        Context context = cordova.getActivity().getApplicationContext();
+        String packageName = context.getPackageName();
+        int id = context.getResources().getIdentifier("default_web_client_id", "string", packageName);
+        Log.d(TAG, "Client id: " id + " value: " + context.getString(id));
+        return context.getString(id);
     }
 
     @Override
