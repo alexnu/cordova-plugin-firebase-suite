@@ -46,13 +46,13 @@ public class FirebaseNativePlugin extends CordovaPlugin {
     }
 
     @Override
-    public boolean execute(String action, JSONArray data, CallbackContext callbackContext) throws JSONException {
+    public boolean execute(final String action, final JSONArray data, final CallbackContext callbackContext) throws JSONException {
 
         Log.d(TAG, "Got new action " + action);
 
         if ("once".equals(action)) {
 
-            String path = data.getString(0);
+            final String path = data.getString(0);
             cordova.getThreadPool().execute(new Runnable() {
                 public void run() {
                     Log.d(TAG, "Reading from path: " + path);
@@ -69,7 +69,7 @@ public class FirebaseNativePlugin extends CordovaPlugin {
 
         } else if ("on".equals(action)) {
 
-            String path = data.getString(0);
+            final String path = data.getString(0);
             if (listeners.containsKey(path)) {
                 Log.d(TAG, "Listener already exists for path " + path);
                 callbackContext.error("Listener already exists for " + path);
@@ -111,8 +111,8 @@ public class FirebaseNativePlugin extends CordovaPlugin {
 
         } else if ("push".equals(action)) {
 
-            String path = data.getString(0);
-            Object value = data.get(1);
+            final String path = data.getString(0);
+            final Object value = data.get(1);
 
             cordova.getThreadPool().execute(new Runnable() {
                 public void run() {
@@ -126,8 +126,8 @@ public class FirebaseNativePlugin extends CordovaPlugin {
 
         } else if ("set".equals(action)) {
 
-            String path = data.getString(0);
-            Object value = data.get(1);
+            final String path = data.getString(0);
+            final Object value = data.get(1);
 
             cordova.getThreadPool().execute(new Runnable() {
                 public void run() {
@@ -145,8 +145,8 @@ public class FirebaseNativePlugin extends CordovaPlugin {
 
         } else if ("update".equals(action)) {
 
-            String path = data.getString(0);
-            Object value = data.get(1);
+            final String path = data.getString(0);
+            final Object value = data.get(1);
 
             if (!(value instanceof JSONObject)) {
                 callbackContext.error("Value should be json");
@@ -171,7 +171,7 @@ public class FirebaseNativePlugin extends CordovaPlugin {
 
         } else if ("remove".equals(action)) {
 
-            String path = data.getString(0);
+            final String path = data.getString(0);
 
             cordova.getThreadPool().execute(new Runnable() {
                 public void run() {

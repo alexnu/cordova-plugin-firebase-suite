@@ -52,7 +52,7 @@ public class FirebaseGoogleAuthPlugin extends CordovaPlugin {
     }
 
     @Override
-    public boolean execute(String action, JSONArray data, CallbackContext callbackContext) throws JSONException {
+    public boolean execute(String action, final JSONArray data, CallbackContext callbackContext) throws JSONException {
 
         Log.d(TAG, "Got new action " + action);
 
