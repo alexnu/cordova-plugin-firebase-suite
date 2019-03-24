@@ -25,14 +25,14 @@ public class FirebaseAuthPlugin extends CordovaPlugin {
     }
 
     @Override
-    public boolean execute(String action, JSONArray data, CallbackContext callbackContext) throws JSONException {
+    public boolean execute(final String action, JSONArray data, final CallbackContext callbackContext) throws JSONException {
 
         Log.d(TAG, "Got new action " + action);
 
         if ("signInWithEmailAndPassword".equals(action)) {
 
-            String email = data.getString(0);
-            String password = data.getString(1);
+            final String email = data.getString(0);
+            final String password = data.getString(1);
 
             cordova.getThreadPool().execute(new Runnable() {
                 public void run() {
@@ -48,8 +48,8 @@ public class FirebaseAuthPlugin extends CordovaPlugin {
 
         } else if ("createUserWithEmailAndPassword".equals(action)) {
 
-            String email = data.getString(0);
-            String password = data.getString(1);
+            final String email = data.getString(0);
+            final String password = data.getString(1);
 
             cordova.getThreadPool().execute(new Runnable() {
                 public void run() {
