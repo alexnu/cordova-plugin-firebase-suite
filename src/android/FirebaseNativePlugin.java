@@ -112,11 +112,11 @@ public class FirebaseNativePlugin extends CordovaPlugin {
         } else if ("generateKey".equals(action)) {
 
             final String path = data.getString(0);
-            String key = database.getReference(path).push().getKey()
+            String key = database.getReference(path).push().getKey();
 
             PluginResult result = new PluginResult(PluginResult.Status.OK, key);
             callbackContext.sendPluginResult(result);
-            
+
             return true;
 
         } else if ("push".equals(action)) {
