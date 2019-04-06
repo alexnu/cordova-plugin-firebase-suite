@@ -109,6 +109,16 @@ public class FirebaseNativePlugin extends CordovaPlugin {
 
             return true;
 
+        } else if ("generateKey".equals(action)) {
+
+            final String path = data.getString(0);
+            String key = database.getReference(path).push().getKey()
+
+            PluginResult result = new PluginResult(PluginResult.Status.OK, key);
+            callbackContext.sendPluginResult(result);
+            
+            return true;
+
         } else if ("push".equals(action)) {
 
             final String path = data.getString(0);
@@ -137,10 +147,6 @@ public class FirebaseNativePlugin extends CordovaPlugin {
                 }
             });
 
-            PluginResult noResult = new PluginResult(PluginResult.Status.NO_RESULT);
-            noResult.setKeepCallback(true);
-            callbackContext.sendPluginResult(noResult);
-
             return true;
 
         } else if ("update".equals(action)) {
@@ -162,10 +168,6 @@ public class FirebaseNativePlugin extends CordovaPlugin {
                         .addOnCompleteListener(new DatabaseWriteListener(callbackContext, action));
                 }
             });
-
-            PluginResult noResult = new PluginResult(PluginResult.Status.NO_RESULT);
-            noResult.setKeepCallback(true);
-            callbackContext.sendPluginResult(noResult);
 
             return true;
 
