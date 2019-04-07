@@ -99,6 +99,16 @@
     [ref observeSingleEventOfType:FIRDataEventTypeValue withBlock:handler withCancelBlock:errorHandler];
 }
 
+- (void)generateKey:(CDVInvokedUrlCommand *)command {
+    NSString *path = [command argumentAtIndex:0];
+
+    NSLog(@"Generating key to path %@", path);
+    FIRDatabaseReference *ref = [self.database referenceWithPath:path];
+    NSString *key = [ref childByAutoId].key;
+    CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:key];
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+}
+
 - (void)push:(CDVInvokedUrlCommand *)command {
     NSString *path = [command argumentAtIndex:0];
     id value = [command argumentAtIndex:1];
