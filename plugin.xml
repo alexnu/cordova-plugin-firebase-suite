@@ -52,10 +52,15 @@
             <feature name="FirebaseNative">
                 <param name="ios-package" value="FirebaseNativePlugin" />
             </feature>
+            <feature name="FirebaseAuth">
+                <param name="ios-package" value="FirebaseAuthPlugin" />
+            </feature>
         </config-file>
 
         <header-file src="src/ios/FirebaseNativePlugin.h" />
         <source-file src="src/ios/FirebaseNativePlugin.m" />
+        <header-file src="src/ios/FirebaseAuthPlugin.h" />
+        <source-file src="src/ios/FirebaseAuthPlugin.m" />
 
         <framework src="Firebase/Core" type="podspec" spec="~> 5.0"/>
         <framework src="Firebase/Auth" type="podspec" spec="~> 5.0"/>

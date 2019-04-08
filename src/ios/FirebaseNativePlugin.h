@@ -12,15 +12,7 @@
 - (void)update:(CDVInvokedUrlCommand *)command;
 - (void)remove:(CDVInvokedUrlCommand *)command;
 
-- (void)signInWithEmailAndPassword:(CDVInvokedUrlCommand *)command;
-- (void)createUserWithEmailAndPassword:(CDVInvokedUrlCommand *)command;
-- (void)addAuthStateListener:(CDVInvokedUrlCommand *)command;
-- (void)removeAuthStateListener:(CDVInvokedUrlCommand *)command;
-- (void)signOut:(CDVInvokedUrlCommand *)command;
-
 @property(strong) NSMutableDictionary *listeners;
-@property(strong) FIRAuth* auth;
 @property(strong) FIRDatabase* database;
-@property(strong, nonatomic) FIRAuthStateDidChangeListenerHandle authListener;
 
 @end
