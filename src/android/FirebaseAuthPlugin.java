@@ -7,6 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 
 public class FirebaseAuthPlugin extends CordovaPlugin {
@@ -68,12 +69,12 @@ public class FirebaseAuthPlugin extends CordovaPlugin {
             cordova.getThreadPool().execute(new Runnable() {
                 public void run() {
                     Log.d(TAG, "Getting token id");
-                    FirebaseUser user = firebaseAuth.getCurrentUser();
+                    FirebaseUser user = auth.getCurrentUser();
 
                     if (user == null) {
                         callbackContext.error("User is not authorized");
                     } else {
-                        auth.getCurrentUser().getIdToken()
+                        auth.getCurrentUser().getIdToken(false)
                             .addOnCompleteListener(new AuthTokenListener(callbackContext, action));
                     }
                 }

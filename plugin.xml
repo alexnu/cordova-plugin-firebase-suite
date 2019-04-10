@@ -42,6 +42,7 @@
         <source-file src="src/android/AuthStatusListener.java" target-dir="src/com/alexnu/plugin/"/>
         <source-file src="src/android/DatabaseReadListener.java" target-dir="src/com/alexnu/plugin/"/>
         <source-file src="src/android/DatabaseWriteListener.java" target-dir="src/com/alexnu/plugin/"/>
+        <source-file src="src/android/AuthTokenListener.java" target-dir="src/com/alexnu/plugin/"/>
 
         <source-file src="src/android/FirebaseAuthPlugin.java" target-dir="src/com/alexnu/plugin/"/>
         <source-file src="src/android/FirebaseGoogleAuthPlugin.java" target-dir="src/com/alexnu/plugin/"/>
