@@ -25,7 +25,7 @@
     }];
 }
 
-- (void)getIdToken:(CDVInvokedUrlCommand *)command {
+- (void)getTokenId:(CDVInvokedUrlCommand *)command {
     FIRUser *user = [FIRAuth auth].currentUser;
 
     if (user) {
