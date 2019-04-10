@@ -63,6 +63,24 @@ public class FirebaseAuthPlugin extends CordovaPlugin {
 
             return true;
 
+        } else if ("getTokenId".equals(action)) {
+
+            cordova.getThreadPool().execute(new Runnable() {
+                public void run() {
+                    Log.d(TAG, "Getting token id");
+                    FirebaseUser user = firebaseAuth.getCurrentUser();
+
+                    if (user == null) {
+                        callbackContext.error("User is not authorized");
+                    } else {
+                        auth.getCurrentUser().getIdToken()
+                            .addOnCompleteListener(new AuthTokenListener(callbackContext, action));
+                    }
+                }
+            });
+
+            return true;
+
         } else if ("addAuthStateListener".equals(action)) {
 
             if (this.authStatusListener != null) {

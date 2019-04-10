@@ -54,9 +54,19 @@ module.exports = {
                 cordova.exec(resolve, reject, "FirebaseAuth", "signInWithEmailAndPassword", [email, password]);
             });
         },
+        createUserWithEmailAndPassword: function (email, password) {
+            return new Promise(function (resolve, reject) {
+                cordova.exec(resolve, reject, "FirebaseAuth", "createUserWithEmailAndPassword", [email, password]);
+            });
+        },
         signInWithGoogle: function () {
             return new Promise(function (resolve, reject) {
                 cordova.exec(resolve, reject, "FirebaseGoogleAuth", "signIn", []);
+            });
+        },
+        getTokenId: function () {
+            return new Promise(function (resolve, reject) {
+                cordova.exec(resolve, reject, "FirebaseAuth", "getTokenId", []);
             });
         },
         signOut: function (successCallback, errorCallback) {
