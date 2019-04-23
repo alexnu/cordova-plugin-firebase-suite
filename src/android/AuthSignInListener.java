@@ -11,6 +11,7 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 
 import org.json.JSONObject;
+import org.json.JSONException;
 
 
 public class AuthSignInListener implements OnCompleteListener<AuthResult> {
