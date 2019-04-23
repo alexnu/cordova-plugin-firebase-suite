@@ -60,15 +60,14 @@
 - (CDVPluginResult*) createAuthResult:(FIRAuthDataResult*)result withError:(NSError*)error {
     CDVPluginResult *pluginResult;
     if (error) {
-        NSString* initialCode = error.code;
-        NSLog(@"Got error: %s", initialCode);
+        NSLog(@"Got error: %d", error.code);
         NSString* finalCode;
 
-        if ([code isEqualToString:@"FIRAuthErrorCodeInvalidEmail"]) {
+        if (error.code == FIRAuthErrorCodeInvalidEmail) {
             finalCode = @"auth/invalid-email";
-        } else if ([code isEqualToString:@"FIRAuthErrorCodeEmailAlreadyInUse"]) {
+        } else if (error.code == FIRAuthErrorCodeEmailAlreadyInUse) {
             finalCode = @"auth/email-already-in-use";
-        } else if ([code isEqualToString:@"FIRAuthErrorCodeWeakPassword"]) {
+        } else if (error.code == FIRAuthErrorCodeWeakPassword) {
             finalCode = @"auth/weak-password";
         } else {
             finalCode = @"auth/unexpected";
