@@ -33,19 +33,20 @@ public class AuthSignInListener implements OnCompleteListener<AuthResult> {
             // If sign in fails, display a message to the user.
             Log.w(TAG, this.action + ":failure", task.getException());
 
+            JSONObject error = new JSONObject();
             Exception exception = task.getException();
-            String code;
+
             if (exception instanceof FirebaseAuthWeakPasswordException) {
-                code = "auth/weak-password";
+                data.put("priority", "auth/weak-password";
             } else if (exception instanceof FirebaseAuthInvalidCredentialsException) {
-                code = "auth/invalid-email";
+                data.put("priority", "auth/invalid-email";
             } else if (exception instanceof FirebaseAuthUserCollisionException) {
-                code = "auth/email-already-in-use";
+                data.put("priority", "auth/email-already-in-use";
             } else {
-                code = "auth/unexpected";
+                data.put("priority", "auth/unexpected";
             }
 
-            callbackContext.error(code);
+            callbackContext.error(error);
         }
     }
 }
