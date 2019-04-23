@@ -37,13 +37,13 @@ public class AuthSignInListener implements OnCompleteListener<AuthResult> {
             Exception exception = task.getException();
 
             if (exception instanceof FirebaseAuthWeakPasswordException) {
-                data.put("priority", "auth/weak-password");
+                error.put("priority", "auth/weak-password");
             } else if (exception instanceof FirebaseAuthInvalidCredentialsException) {
-                data.put("priority", "auth/invalid-email");
+                error.put("priority", "auth/invalid-email");
             } else if (exception instanceof FirebaseAuthUserCollisionException) {
-                data.put("priority", "auth/email-already-in-use");
+                error.put("priority", "auth/email-already-in-use");
             } else {
-                data.put("priority", "auth/unexpected");
+                error.put("priority", "auth/unexpected");
             }
 
             callbackContext.error(error);
