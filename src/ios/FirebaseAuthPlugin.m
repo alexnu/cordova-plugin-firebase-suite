@@ -74,7 +74,9 @@
             finalCode = @"auth/unexpected";
         }
 
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:finalCode];
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:@{
+            @"code": finalCode
+        }];
     } else {
         pluginResult = [self getProfileResult:result.user];
     }
