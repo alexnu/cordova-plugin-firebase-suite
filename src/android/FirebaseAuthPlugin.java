@@ -41,7 +41,7 @@ public class FirebaseAuthPlugin extends CordovaPlugin {
 
                     auth.signInWithEmailAndPassword(email, password)
                         .addOnCompleteListener(cordova.getActivity(),
-                            new AuthCompleteListener(callbackContext, action));
+                            new AuthSignInListener(callbackContext, action));
                 }
             });
 
@@ -58,7 +58,7 @@ public class FirebaseAuthPlugin extends CordovaPlugin {
 
                     auth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener(cordova.getActivity(),
-                            new AuthCompleteListener(callbackContext, action));
+                            new AuthSignInListener(callbackContext, action));
                 }
             });
 

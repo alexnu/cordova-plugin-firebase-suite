@@ -38,7 +38,7 @@
         <framework src="com.google.code.gson:gson:2+"/>
 
         <source-file src="src/android/FirebaseNativePlugin.java" target-dir="src/com/alexnu/plugin/"/>
-        <source-file src="src/android/AuthCompleteListener.java" target-dir="src/com/alexnu/plugin/"/>
+        <source-file src="src/android/AuthSignInListener.java" target-dir="src/com/alexnu/plugin/"/>
         <source-file src="src/android/AuthStatusListener.java" target-dir="src/com/alexnu/plugin/"/>
         <source-file src="src/android/DatabaseReadListener.java" target-dir="src/com/alexnu/plugin/"/>
         <source-file src="src/android/DatabaseWriteListener.java" target-dir="src/com/alexnu/plugin/"/>

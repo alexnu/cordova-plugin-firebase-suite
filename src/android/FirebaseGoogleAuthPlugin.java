@@ -93,6 +93,6 @@ public class FirebaseGoogleAuthPlugin extends CordovaPlugin {
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         auth.signInWithCredential(credential)
             .addOnCompleteListener(cordova.getActivity(),
-                new AuthCompleteListener(this.callbackContext, "signInWithGoogle"));
+                new AuthSignInListener(this.callbackContext, "signInWithGoogle"));
     }
 }

@@ -8,14 +8,14 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 
 
-public class AuthCompleteListener implements OnCompleteListener<AuthResult> {
+public class AuthSignInListener implements OnCompleteListener<AuthResult> {
 
-    private static final String TAG = "AuthCompleteListener";
+    private static final String TAG = "AuthSignInListener";
 
     private CallbackContext callbackContext;
     private String action;
 
-    public AuthCompleteListener(CallbackContext callbackContext, String action) {
+    public AuthSignInListener(CallbackContext callbackContext, String action) {
         this.callbackContext = callbackContext;
         this.action = action;
     }
@@ -29,7 +29,20 @@ public class AuthCompleteListener implements OnCompleteListener<AuthResult> {
         } else {
             // If sign in fails, display a message to the user.
             Log.w(TAG, this.action + ":failure", task.getException());
-            callbackContext.error(task.getException().getMessage());
+
+            Exception exception = task.getException();
+            String code;
+            if (exception instanceof FirebaseAuthWeakPasswordException) {
+                code = "auth/weak-password";
+            } else if (exception instanceof FirebaseAuthInvalidCredentialsException) {
+                code = "auth/invalid-email";
+            } else if (exception instanceof FirebaseAuthUserCollisionException) {
+                code = "auth/email-already-in-use";
+            } else {
+                code = "auth/unexpected";
+            }
+
+            callbackContext.error(code);
         }
     }
 }
