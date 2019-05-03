@@ -18,14 +18,14 @@
     <platform name="android">
 
         <config-file target="res/xml/config.xml" parent="/*">
-            <feature name="FirebaseNative">
-                <param name="android-package" value="com.alexnu.plugin.FirebaseNativePlugin"/>
+            <feature name="FirebaseDatabase">
+                <param name="android-package" value="com.alexnu.firebasenative.FirebaseDatabasePlugin"/>
             </feature>
             <feature name="FirebaseAuth">
-                <param name="android-package" value="com.alexnu.plugin.FirebaseAuthPlugin"/>
+                <param name="android-package" value="com.alexnu.firebasenative.FirebaseAuthPlugin"/>
             </feature>
             <feature name="FirebaseGoogleAuth">
-                <param name="android-package" value="com.alexnu.plugin.FirebaseGoogleAuthPlugin"/>
+                <param name="android-package" value="com.alexnu.firebasenative.FirebaseGoogleAuthPlugin"/>
             </feature>
         </config-file>
 
@@ -37,29 +37,29 @@
         <framework src="com.google.android.gms:play-services-auth:16.0.1" />
         <framework src="com.google.code.gson:gson:2+"/>
 
-        <source-file src="src/android/FirebaseNativePlugin.java" target-dir="src/com/alexnu/plugin/"/>
-        <source-file src="src/android/AuthSignInListener.java" target-dir="src/com/alexnu/plugin/"/>
-        <source-file src="src/android/AuthStatusListener.java" target-dir="src/com/alexnu/plugin/"/>
-        <source-file src="src/android/DatabaseReadListener.java" target-dir="src/com/alexnu/plugin/"/>
-        <source-file src="src/android/DatabaseWriteListener.java" target-dir="src/com/alexnu/plugin/"/>
-        <source-file src="src/android/AuthTokenListener.java" target-dir="src/com/alexnu/plugin/"/>
+        <source-file src="src/android/FirebaseDatabasePlugin.java" target-dir="src/com/alexnu/firebasenative/"/>
+        <source-file src="src/android/AuthSignInListener.java" target-dir="src/com/alexnu/firebasenative/"/>
+        <source-file src="src/android/AuthStatusListener.java" target-dir="src/com/alexnu/firebasenative/"/>
+        <source-file src="src/android/DatabaseReadListener.java" target-dir="src/com/alexnu/firebasenative/"/>
+        <source-file src="src/android/DatabaseWriteListener.java" target-dir="src/com/alexnu/firebasenative/"/>
+        <source-file src="src/android/AuthTokenListener.java" target-dir="src/com/alexnu/firebasenative/"/>
 
-        <source-file src="src/android/FirebaseAuthPlugin.java" target-dir="src/com/alexnu/plugin/"/>
-        <source-file src="src/android/FirebaseGoogleAuthPlugin.java" target-dir="src/com/alexnu/plugin/"/>
+        <source-file src="src/android/FirebaseAuthPlugin.java" target-dir="src/com/alexnu/firebasenative/"/>
+        <source-file src="src/android/FirebaseGoogleAuthPlugin.java" target-dir="src/com/alexnu/firebasenative/"/>
     </platform>
 
     <platform name="ios">
         <config-file target="config.xml" parent="/*">
-            <feature name="FirebaseNative">
-                <param name="ios-package" value="FirebaseNativePlugin" />
+            <feature name="FirebaseDatabase">
+                <param name="ios-package" value="FirebaseDatabasePlugin" />
             </feature>
             <feature name="FirebaseAuth">
                 <param name="ios-package" value="FirebaseAuthPlugin" />
             </feature>
         </config-file>
 
-        <header-file src="src/ios/FirebaseNativePlugin.h" />
-        <source-file src="src/ios/FirebaseNativePlugin.m" />
+        <header-file src="src/ios/FirebaseDatabasePlugin.h" />
+        <source-file src="src/ios/FirebaseDatabasePlugin.m" />
         <header-file src="src/ios/FirebaseAuthPlugin.h" />
         <source-file src="src/ios/FirebaseAuthPlugin.m" />
 

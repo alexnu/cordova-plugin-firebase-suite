@@ -1,4 +1,4 @@
-package com.alexnu.plugin;
+package com.alexnu.firebasenative;
 
 import android.util.Log;
 
@@ -58,6 +58,7 @@ public class FirebaseGoogleAuthPlugin extends CordovaPlugin {
 
         if ("signIn".equals(action)) {
 
+            mGoogleSignInClient.signOut();
             Intent signInIntent = mGoogleSignInClient.getSignInIntent();
             this.callbackContext = callbackContext;
             this.cordova.startActivityForResult(this, signInIntent, RC_SIGN_IN);

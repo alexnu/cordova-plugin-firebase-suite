@@ -1,4 +1,4 @@
-package com.alexnu.plugin;
+package com.alexnu.firebasenative;
 
 import android.util.Log;
 

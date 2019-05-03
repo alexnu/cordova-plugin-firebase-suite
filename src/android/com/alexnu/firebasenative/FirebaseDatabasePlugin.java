@@ -1,4 +1,4 @@
-package com.alexnu.plugin;
+package com.alexnu.firebasenative;
 
 import android.util.Log;
 
@@ -7,7 +7,6 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import android.support.annotation.NonNull;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -19,14 +18,13 @@ import com.google.firebase.database.DatabaseError;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 
 import java.lang.reflect.Type;
 
 
-public class FirebaseNativePlugin extends CordovaPlugin {
+public class FirebaseDatabasePlugin extends CordovaPlugin {
 
     private static final String TAG = "FirebaseNative";
     private final static Type settableType = new TypeToken<Map<String, Object>>() {}.getType();

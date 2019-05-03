@@ -5,38 +5,38 @@ module.exports = {
     database: {
         once: function(path) {
             return new Promise(function(resolve, reject) {
-                cordova.exec(resolve, reject, "FirebaseNative", "once", [path]);
+                cordova.exec(resolve, reject, "FirebaseDatabase", "once", [path]);
             });
         },
         on: function(path, successCallback, errorCallback) {
-            cordova.exec(successCallback, errorCallback, "FirebaseNative", "on", [path]);
+            cordova.exec(successCallback, errorCallback, "FirebaseDatabase", "on", [path]);
         },
         off: function(path, successCallback, errorCallback) {
-            cordova.exec(successCallback, errorCallback, "FirebaseNative", "off", [path]);
+            cordova.exec(successCallback, errorCallback, "FirebaseDatabase", "off", [path]);
         },
         generateKey: function(path) {
             return new Promise(function(resolve, reject) {
-                cordova.exec(resolve, reject, "FirebaseNative", "generateKey", [path]);
+                cordova.exec(resolve, reject, "FirebaseDatabase", "generateKey", [path]);
             });
         },
         push: function(path, value) {
             return new Promise(function(resolve, reject) {
-                cordova.exec(resolve, reject, "FirebaseNative", "push", [path, value]);
+                cordova.exec(resolve, reject, "FirebaseDatabase", "push", [path, value]);
             });
         },
         set: function(path, value) {
             return new Promise(function(resolve, reject) {
-                cordova.exec(resolve, reject, "FirebaseNative", "set", [path, value]);
+                cordova.exec(resolve, reject, "FirebaseDatabase", "set", [path, value]);
             });
         },
         update: function(path, value) {
             return new Promise(function(resolve, reject) {
-                cordova.exec(resolve, reject, "FirebaseNative", "update", [path, value]);
+                cordova.exec(resolve, reject, "FirebaseDatabase", "update", [path, value]);
             });
         },
         remove: function(path) {
             return new Promise(function(resolve, reject) {
-                cordova.exec(resolve, reject, "FirebaseNative", "remove", [path]);
+                cordova.exec(resolve, reject, "FirebaseDatabase", "remove", [path]);
             });
         }
     },
