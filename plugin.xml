@@ -37,15 +37,15 @@
         <framework src="com.google.android.gms:play-services-auth:16.0.1" />
         <framework src="com.google.code.gson:gson:2+"/>
 
-        <source-file src="src/android/FirebaseDatabasePlugin.java" target-dir="src/com/alexnu/firebasenative/"/>
-        <source-file src="src/android/AuthSignInListener.java" target-dir="src/com/alexnu/firebasenative/"/>
-        <source-file src="src/android/AuthStatusListener.java" target-dir="src/com/alexnu/firebasenative/"/>
-        <source-file src="src/android/DatabaseReadListener.java" target-dir="src/com/alexnu/firebasenative/"/>
-        <source-file src="src/android/DatabaseWriteListener.java" target-dir="src/com/alexnu/firebasenative/"/>
-        <source-file src="src/android/AuthTokenListener.java" target-dir="src/com/alexnu/firebasenative/"/>
+        <source-file src="src/android/com/alexnu/firebasenative/FirebaseDatabasePlugin.java" target-dir="src/com/alexnu/firebasenative/"/>
+        <source-file src="src/android/com/alexnu/firebasenative/AuthSignInListener.java" target-dir="src/com/alexnu/firebasenative/"/>
+        <source-file src="src/android/com/alexnu/firebasenative/AuthStatusListener.java" target-dir="src/com/alexnu/firebasenative/"/>
+        <source-file src="src/android/com/alexnu/firebasenative/DatabaseReadListener.java" target-dir="src/com/alexnu/firebasenative/"/>
+        <source-file src="src/android/com/alexnu/firebasenative/DatabaseWriteListener.java" target-dir="src/com/alexnu/firebasenative/"/>
+        <source-file src="src/android/com/alexnu/firebasenative/AuthTokenListener.java" target-dir="src/com/alexnu/firebasenative/"/>
 
-        <source-file src="src/android/FirebaseAuthPlugin.java" target-dir="src/com/alexnu/firebasenative/"/>
-        <source-file src="src/android/FirebaseGoogleAuthPlugin.java" target-dir="src/com/alexnu/firebasenative/"/>
+        <source-file src="src/android/com/alexnu/firebasenative/FirebaseAuthPlugin.java" target-dir="src/com/alexnu/firebasenative/"/>
+        <source-file src="src/android/com/alexnu/firebasenative/FirebaseGoogleAuthPlugin.java" target-dir="src/com/alexnu/firebasenative/"/>
     </platform>
 
     <platform name="ios">
