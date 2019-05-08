@@ -1,4 +1,4 @@
-#import "FirebaseNativePlugin.h"
+#import "FirebaseDatabasePlugin.h"
 @import Firebase;
 
 @implementation FirebaseNativePlugin
