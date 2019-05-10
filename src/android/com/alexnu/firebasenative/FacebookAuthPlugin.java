@@ -63,8 +63,11 @@ public class FacebookAuthPlugin extends CordovaPlugin {
         Log.d(TAG, "Got new action " + action);
 
         if ("signIn".equals(action)) {
+            // Set up the activity result callback to this class
             this.callbackContext = callbackContext;
-            LoginManager.getInstance().logInWithReadPermissions(cordova.getActivity(), Arrays.asList("email", "public_profile"));
+            cordova.setActivityResultCallback(this);
+            LoginManager.getInstance().logInWithReadPermissions(cordova.getActivity(),
+                Arrays.asList("email", "public_profile"));
             return true;
 
         } else {
