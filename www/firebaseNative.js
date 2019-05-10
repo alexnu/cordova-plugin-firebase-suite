@@ -64,6 +64,11 @@ module.exports = {
                 cordova.exec(resolve, reject, "FirebaseGoogleAuth", "signIn", []);
             });
         },
+        signInWithFacebook: function () {
+            return new Promise(function (resolve, reject) {
+                cordova.exec(resolve, reject, "FacebookAuth", "signIn", []);
+            });
+        },
         getTokenId: function () {
             return new Promise(function (resolve, reject) {
                 cordova.exec(resolve, reject, "FirebaseAuth", "getTokenId", []);

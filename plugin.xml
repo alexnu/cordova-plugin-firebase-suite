@@ -27,6 +27,9 @@
             <feature name="FirebaseGoogleAuth">
                 <param name="android-package" value="com.alexnu.firebasenative.FirebaseGoogleAuthPlugin"/>
             </feature>
+            <feature name="FacebookAuth">
+                <param name="android-package" value="com.alexnu.firebasenative.FacebookAuthPlugin"/>
+            </feature>
         </config-file>
 
         <dependency id="cordova-support-google-services" version="~1.2.0"/>
