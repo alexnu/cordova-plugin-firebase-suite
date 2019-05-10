@@ -39,7 +39,7 @@
         <framework src="com.google.firebase:firebase-database:16.1.0" />
         <framework src="com.google.android.gms:play-services-auth:16.0.1" />
         <framework src="com.google.code.gson:gson:2+"/>
-        <framework src="com.facebook.android:facebook-login:[5,6)"/>
+        <framework src="com.facebook.android:facebook-login:4.42.0"/>
 
         <source-file src="src/android/com/alexnu/firebasenative/FirebaseDatabasePlugin.java" target-dir="src/com/alexnu/firebasenative/"/>
         <source-file src="src/android/com/alexnu/firebasenative/AuthSignInListener.java" target-dir="src/com/alexnu/firebasenative/"/>
