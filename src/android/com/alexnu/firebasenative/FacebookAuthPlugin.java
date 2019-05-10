@@ -66,6 +66,7 @@ public class FacebookAuthPlugin extends CordovaPlugin {
             // Set up the activity result callback to this class
             this.callbackContext = callbackContext;
             cordova.setActivityResultCallback(this);
+            LoginManager.getInstance().logOut();
             LoginManager.getInstance().logInWithReadPermissions(cordova.getActivity(),
                 Arrays.asList("email", "public_profile"));
             return true;
