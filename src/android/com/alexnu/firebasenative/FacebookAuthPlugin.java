@@ -13,11 +13,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FacebookAuthProvider;
 
+import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.login.LoginManager;
 import com.facebook.FacebookCallback;
 import com.facebook.login.LoginResult;
 import com.facebook.FacebookException;
+
+import java.util.Arrays;
 
 
 public class FacebookAuthPlugin extends CordovaPlugin {
@@ -27,7 +30,6 @@ public class FacebookAuthPlugin extends CordovaPlugin {
     private FirebaseAuth auth;
     private CallbackManager mCallbackManager;
     private CallbackContext callbackContext;
-    Set<String> permissions = new HashSet<String>(Arrays.asList("email", "public_profile"));
 
     @Override
     protected void pluginInitialize() {
@@ -71,7 +73,7 @@ public class FacebookAuthPlugin extends CordovaPlugin {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         // Pass the activity result back to the Facebook SDK
