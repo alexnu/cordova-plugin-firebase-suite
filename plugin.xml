@@ -50,7 +50,7 @@
 
         <source-file src="src/android/com/alexnu/firebasenative/FirebaseAuthPlugin.java" target-dir="src/com/alexnu/firebasenative/"/>
         <source-file src="src/android/com/alexnu/firebasenative/FirebaseGoogleAuthPlugin.java" target-dir="src/com/alexnu/firebasenative/"/>
-        <source-file src="src/android/com/alexnu/firebasenative/FasebookAuthPlugin.java" target-dir="src/com/alexnu/firebasenative/"/>
+        <source-file src="src/android/com/alexnu/firebasenative/FacebookAuthPlugin.java" target-dir="src/com/alexnu/firebasenative/"/>
 
         <source-file src="src/android/com/alexnu/firebasenative/facebookconnect.xml" target-dir="res/values" />
         <!-- Used for cordova-android 6 -->
