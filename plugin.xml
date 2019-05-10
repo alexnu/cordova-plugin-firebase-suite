@@ -5,6 +5,9 @@
 
     <name>cordova-plugin-firebase-native</name>
 
+    <preference name="APP_ID" />
+    <preference name="APP_NAME" />
+
     <engines>
         <engine name="cordova" version=">=3.4.0"/>
     </engines>
