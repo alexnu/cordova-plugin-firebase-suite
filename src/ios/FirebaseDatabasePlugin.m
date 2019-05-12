@@ -1,7 +1,7 @@
 #import "FirebaseDatabasePlugin.h"
 @import Firebase;
 
-@implementation FirebaseNativePlugin
+@implementation FirebaseDatabasePlugin
 
 - (void)pluginInitialize {
     NSLog(@"Starting Firebase Native plugin");
