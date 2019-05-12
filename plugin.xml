@@ -97,9 +97,9 @@
         <header-file src="src/ios/FirebaseAuthGooglePlugin.h" />
         <source-file src="src/ios/FirebaseAuthGooglePlugin.m" />
 
-        <framework src="Firebase/Core" type="podspec"/>
-        <framework src="Firebase/Auth" type="podspec"/>
-        <framework src="Firebase/Database" type="podspec"/>
+        <framework src="Firebase/Core" type="podspec" spec="~> 6.0.0"/>
+        <framework src="Firebase/Auth" type="podspec" spec="~> 6.0.0"/>
+        <framework src="Firebase/Database" type="podspec" spec="~> 6.0.0"/>
         <framework src="GoogleSignIn" type="podspec" spec="~> 4.4"/>
     </platform>
 
