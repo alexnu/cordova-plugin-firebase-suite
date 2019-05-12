@@ -69,6 +69,23 @@
     return pluginResult;
 }
 
+- (CDVPluginResult*)getProfileResult:(FIRUser *)user {
+    NSDictionary* result = nil;
+    if (user) {
+        result = @{
+            @"uid": user.uid,
+            @"providerId": user.providerID,
+            @"displayName": user.displayName ? user.displayName : @"",
+            @"email": user.email ? user.email : @"",
+            @"phoneNumber": user.phoneNumber ? user.phoneNumber : @"",
+            @"photoURL": user.photoURL ? user.photoURL.absoluteString : @"",
+            @"emailVerified": [NSNumber numberWithBool:user.emailVerified]
+        };
+    }
+
+    return [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:result];
+}
+
 - (void)signIn:(GIDSignIn *)signIn didDisconnectWithUser:(GIDGoogleUser *)user withError:(NSError *)error {
 
     NSDictionary *message = nil;
