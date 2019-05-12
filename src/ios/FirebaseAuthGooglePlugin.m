@@ -5,7 +5,7 @@
 
 - (void)pluginInitialize {
 
-    NSLog(@"Starting Firebase Native plugin");
+    NSLog(@"Starting Firebase Google Auth plugin");
 
     [GIDSignIn sharedInstance].clientID = [FIRApp defaultApp].options.clientID;
     [GIDSignIn sharedInstance].uiDelegate = self.viewController;
@@ -14,12 +14,8 @@
 
 - (void)signIn:(CDVInvokedUrlCommand *)command {
 
-    BOOL silent = [command.arguments[0] boolValue];
-    if(silent == YES) {
-        [[GIDSignIn sharedInstance] signInSilently];
-    } else {
-        [[GIDSignIn sharedInstance] signIn];
-    }
+    self.eventCallbackId = command.callbackId;
+    [[GIDSignIn sharedInstance] signIn];
 }
 
 - (void)signIn:(GIDSignIn *)signIn didSignInForUser:(GIDGoogleUser *)user withError:(NSError *)error {

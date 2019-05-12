@@ -6,4 +6,6 @@
 
 - (void)signIn:(CDVInvokedUrlCommand *)command;
 
+@property (nonatomic) NSString *eventCallbackId;
+
 @end
