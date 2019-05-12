@@ -1,7 +1,7 @@
 #import <Cordova/CDV.h>
 @import Firebase;
 
-@interface FirebaseNativePlugin : CDVPlugin
+@interface FirebaseDatabasePlugin : CDVPlugin
 
 - (void)once:(CDVInvokedUrlCommand *)command;
 - (void)on:(CDVInvokedUrlCommand *)command;
