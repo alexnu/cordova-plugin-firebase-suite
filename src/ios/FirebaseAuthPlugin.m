@@ -77,7 +77,7 @@
             @"code": finalCode
         }];
     } else {
-        pluginResult = [self getProfileResult:result.user];
+        pluginResult = [self getProfileResult:result.user withAdditionalUserInfo:result.additionalUserInfo];
     }
     return pluginResult;
 }
@@ -108,7 +108,7 @@
 
     self.authListener = [[FIRAuth auth]
         addAuthStateDidChangeListener:^(FIRAuth *_Nonnull auth, FIRUser *_Nullable user) {
-            CDVPluginResult *pluginResult = [self getProfileResult:user];
+            CDVPluginResult *pluginResult = [self getProfileResult:user withAdditionalUserInfo:nil];
             [pluginResult setKeepCallbackAsBool:YES];
             [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
         }];
