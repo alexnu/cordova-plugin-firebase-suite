@@ -77,23 +77,23 @@
             @"code": finalCode
         }];
     } else {
-        pluginResult = [self getProfileResult:result];
+        pluginResult = [self getProfileResult:result.user];
     }
     return pluginResult;
 }
 
-- (CDVPluginResult*)getProfileResult:(FIRAuthDataResult*)result {
+- (CDVPluginResult*)getProfileResult:(FIRUser*)user withAdditionalUserInfo:(FIRAdditionalUserInfo*_Nullable)additionalUserInfo {
     NSDictionary* response = nil;
-    if (result) {
+    if (user) {
         response = @{
-            @"uid": result.user.uid,
-            @"providerId": result.user.providerID,
-            @"displayName": result.user.displayName ? result.user.displayName : @"",
-            @"email": result.user.email ? result.user.email : @"",
-            @"phoneNumber": result.user.phoneNumber ? result.user.phoneNumber : @"",
-            @"photoURL": result.user.photoURL ? result.user.photoURL.absoluteString : @"",
-            @"emailVerified": [NSNumber numberWithBool:result.user.emailVerified],
-            @"newUser": result.additionalUserInfo.newUser ? @"true" : @"false"
+            @"uid": user.uid,
+            @"providerId": user.providerID,
+            @"displayName": user.displayName ? user.displayName : @"",
+            @"email": user.email ? user.email : @"",
+            @"phoneNumber": user.phoneNumber ? user.phoneNumber : @"",
+            @"photoURL": user.photoURL ? user.photoURL.absoluteString : @"",
+            @"emailVerified": [NSNumber numberWithBool:user.emailVerified],
+            @"newUser": additionalUserInfo && additionalUserInfo.newUser ? @YES : @NO
         };
     }
 

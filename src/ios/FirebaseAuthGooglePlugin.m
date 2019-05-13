@@ -67,7 +67,7 @@
 
 - (CDVPluginResult*)getProfileResult:(FIRAuthDataResult*)result {
     NSDictionary* response = nil;
-    if (result) {
+    if (result && result.user) {
         response = @{
             @"uid": result.user.uid,
             @"providerId": result.user.providerID,
@@ -76,7 +76,7 @@
             @"phoneNumber": result.user.phoneNumber ? result.user.phoneNumber : @"",
             @"photoURL": result.user.photoURL ? result.user.photoURL.absoluteString : @"",
             @"emailVerified": [NSNumber numberWithBool:result.user.emailVerified],
-            @"newUser": result.additionalUserInfo.newUser ? @"true" : @"false"
+            @"newUser": result.additionalUserInfo && result.additionalUserInfo.newUser ? @YES : @NO
         };
     }
 
