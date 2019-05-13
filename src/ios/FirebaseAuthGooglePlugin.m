@@ -76,7 +76,7 @@
             @"phoneNumber": result.user.phoneNumber ? result.user.phoneNumber : @"",
             @"photoURL": result.user.photoURL ? result.user.photoURL.absoluteString : @"",
             @"emailVerified": [NSNumber numberWithBool:result.user.emailVerified],
-            @"newUser": result.additionalUserInfo.newUser
+            @"newUser": result.additionalUserInfo.newUser ? @"true" : @"false"
         };
     }
 
