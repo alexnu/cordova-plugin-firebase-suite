@@ -77,26 +77,27 @@
             @"code": finalCode
         }];
     } else {
-        pluginResult = [self getProfileResult:result.user];
+        pluginResult = [self getProfileResult:result];
     }
     return pluginResult;
 }
 
-- (CDVPluginResult*)getProfileResult:(FIRUser *)user {
-    NSDictionary* result = nil;
-    if (user) {
-        result = @{
-            @"uid": user.uid,
-            @"providerId": user.providerID,
-            @"displayName": user.displayName ? user.displayName : @"",
-            @"email": user.email ? user.email : @"",
-            @"phoneNumber": user.phoneNumber ? user.phoneNumber : @"",
-            @"photoURL": user.photoURL ? user.photoURL.absoluteString : @"",
-            @"emailVerified": [NSNumber numberWithBool:user.emailVerified]
+- (CDVPluginResult*)getProfileResult:(FIRAuthDataResult*)result {
+    NSDictionary* response = nil;
+    if (result) {
+        response = @{
+            @"uid": result.user.uid,
+            @"providerId": result.user.providerID,
+            @"displayName": result.user.displayName ? result.user.displayName : @"",
+            @"email": result.user.email ? result.user.email : @"",
+            @"phoneNumber": result.user.phoneNumber ? result.user.phoneNumber : @"",
+            @"photoURL": result.user.photoURL ? result.user.photoURL.absoluteString : @"",
+            @"emailVerified": [NSNumber numberWithBool:result.user.emailVerified],
+            @"newUser": result.additionalUserInfo.newUser
         };
     }
 
-    return [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:result];
+    return [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:response];
 }
 
 - (void)addAuthStateListener:(CDVInvokedUrlCommand*)command {
