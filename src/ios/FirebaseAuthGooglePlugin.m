@@ -16,6 +16,7 @@
 - (void)signIn:(CDVInvokedUrlCommand *)command {
 
     self.eventCallbackId = command.callbackId;
+    [[GIDSignIn sharedInstance] signOut];
     [[GIDSignIn sharedInstance] signIn];
 }
 
