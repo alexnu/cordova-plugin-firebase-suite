@@ -20,3 +20,5 @@
 
     return [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:response];
 }
+
+@end
