@@ -1,7 +1,7 @@
 #import <Cordova/CDV.h>
 @import Firebase;
 
-@interface MyClass : NSObject
+@interface ProfileMapper : NSObject
 
 + (CDVPluginResult*)getProfileResult:(FIRUser*)user withInfo:(FIRAdditionalUserInfo*_Nullable)additionalUserInfo;
 
