@@ -30,7 +30,8 @@ public class AuthSignInListener implements OnCompleteListener<AuthResult> {
     public void onComplete(@NonNull Task<AuthResult> task) {
         if (task.isSuccessful()) {
             Log.d(TAG, this.action + ":success");
-            PluginResult pluginResult = AuthStatusListener.getProfileResult(task.getResult().getUser());
+            AuthResult result = task.getResult();
+            PluginResult pluginResult = ProfileMapper.getProfileResult(result.getUser(), result.getAdditionalUserInfo());
             callbackContext.sendPluginResult(pluginResult);
         } else {
             // If sign in fails, display a message to the user.

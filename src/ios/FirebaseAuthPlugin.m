@@ -1,4 +1,5 @@
 #import "FirebaseAuthPlugin.h"
+#import "ProfileMapper.h"
 @import Firebase;
 
 @implementation FirebaseAuthPlugin
@@ -77,27 +78,9 @@
             @"code": finalCode
         }];
     } else {
-        pluginResult = [self getProfileResult:result.user withAdditionalUserInfo:result.additionalUserInfo];
+        pluginResult = [ProfileMapper getProfileResult:result.user withInfo:result.additionalUserInfo];
     }
     return pluginResult;
-}
-
-- (CDVPluginResult*)getProfileResult:(FIRUser*)user withAdditionalUserInfo:(FIRAdditionalUserInfo*_Nullable)additionalUserInfo {
-    NSDictionary* response = nil;
-    if (user) {
-        response = @{
-            @"uid": user.uid,
-            @"providerId": user.providerID,
-            @"displayName": user.displayName ? user.displayName : @"",
-            @"email": user.email ? user.email : @"",
-            @"phoneNumber": user.phoneNumber ? user.phoneNumber : @"",
-            @"photoURL": user.photoURL ? user.photoURL.absoluteString : @"",
-            @"emailVerified": [NSNumber numberWithBool:user.emailVerified],
-            @"newUser": additionalUserInfo && additionalUserInfo.newUser ? @YES : @NO
-        };
-    }
-
-    return [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:response];
 }
 
 - (void)addAuthStateListener:(CDVInvokedUrlCommand*)command {
@@ -108,7 +91,7 @@
 
     self.authListener = [[FIRAuth auth]
         addAuthStateDidChangeListener:^(FIRAuth *_Nonnull auth, FIRUser *_Nullable user) {
-            CDVPluginResult *pluginResult = [self getProfileResult:user withAdditionalUserInfo:nil];
+            CDVPluginResult *pluginResult = [ProfileMapper getProfileResult:user withInfo:nil];
             [pluginResult setKeepCallbackAsBool:YES];
             [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
         }];

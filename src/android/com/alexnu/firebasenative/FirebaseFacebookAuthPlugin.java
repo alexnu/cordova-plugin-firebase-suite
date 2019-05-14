@@ -23,7 +23,7 @@ import com.facebook.FacebookException;
 import java.util.Arrays;
 
 
-public class FacebookAuthPlugin extends CordovaPlugin {
+public class FirebaseFacebookAuthPlugin extends CordovaPlugin {
 
     private static final String TAG = "FirebaseFacebookAuthPlugin";
 

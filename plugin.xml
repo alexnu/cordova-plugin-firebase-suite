@@ -30,8 +30,8 @@
             <feature name="FirebaseGoogleAuth">
                 <param name="android-package" value="com.alexnu.firebasenative.FirebaseGoogleAuthPlugin"/>
             </feature>
-            <feature name="FacebookAuth">
-                <param name="android-package" value="com.alexnu.firebasenative.FacebookAuthPlugin"/>
+            <feature name="FirebaseFacebookAuth">
+                <param name="android-package" value="com.alexnu.firebasenative.FirebaseFacebookAuthPlugin"/>
             </feature>
         </config-file>
 
@@ -45,15 +45,16 @@
         <framework src="com.facebook.android:facebook-login:4.42.0"/>
 
         <source-file src="src/android/com/alexnu/firebasenative/FirebaseDatabasePlugin.java" target-dir="src/com/alexnu/firebasenative/"/>
-        <source-file src="src/android/com/alexnu/firebasenative/AuthSignInListener.java" target-dir="src/com/alexnu/firebasenative/"/>
-        <source-file src="src/android/com/alexnu/firebasenative/AuthStatusListener.java" target-dir="src/com/alexnu/firebasenative/"/>
         <source-file src="src/android/com/alexnu/firebasenative/DatabaseReadListener.java" target-dir="src/com/alexnu/firebasenative/"/>
         <source-file src="src/android/com/alexnu/firebasenative/DatabaseWriteListener.java" target-dir="src/com/alexnu/firebasenative/"/>
-        <source-file src="src/android/com/alexnu/firebasenative/AuthTokenListener.java" target-dir="src/com/alexnu/firebasenative/"/>
 
+        <source-file src="src/android/com/alexnu/firebasenative/AuthStatusListener.java" target-dir="src/com/alexnu/firebasenative/"/>
+        <source-file src="src/android/com/alexnu/firebasenative/AuthTokenListener.java" target-dir="src/com/alexnu/firebasenative/"/>
+        <source-file src="src/android/com/alexnu/firebasenative/AuthSignInListener.java" target-dir="src/com/alexnu/firebasenative/"/>
         <source-file src="src/android/com/alexnu/firebasenative/FirebaseAuthPlugin.java" target-dir="src/com/alexnu/firebasenative/"/>
         <source-file src="src/android/com/alexnu/firebasenative/FirebaseGoogleAuthPlugin.java" target-dir="src/com/alexnu/firebasenative/"/>
-        <source-file src="src/android/com/alexnu/firebasenative/FacebookAuthPlugin.java" target-dir="src/com/alexnu/firebasenative/"/>
+        <source-file src="src/android/com/alexnu/firebasenative/FirebaseFacebookAuthPlugin.java" target-dir="src/com/alexnu/firebasenative/"/>
+        <source-file src="src/android/com/alexnu/firebasenative/ProfileMapper.java" target-dir="src/com/alexnu/firebasenative/"/>
 
         <source-file src="src/android/com/alexnu/firebasenative/facebookconnect.xml" target-dir="res/values" />
         <!-- Used for cordova-android 6 -->
@@ -96,6 +97,8 @@
         <source-file src="src/ios/FirebaseAuthPlugin.m" />
         <header-file src="src/ios/FirebaseAuthGooglePlugin.h" />
         <source-file src="src/ios/FirebaseAuthGooglePlugin.m" />
+        <header-file src="src/ios/ProfileMapper.h" />
+        <source-file src="src/ios/ProfileMapper.m" />
 
         <framework src="Firebase/Core" type="podspec" spec="~> 6.0.0"/>
         <framework src="Firebase/Auth" type="podspec" spec="~> 6.0.0"/>
