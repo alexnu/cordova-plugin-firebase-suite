@@ -89,6 +89,9 @@
             <feature name="FirebaseGoogleAuth">
                 <param name="ios-package" value="FirebaseAuthGooglePlugin" />
             </feature>
+            <feature name="FirebaseFacebookAuth">
+                <param name="ios-package" value="FirebaseFacebookAuthPlugin" />
+            </feature>
         </config-file>
 
         <config-file target="*-Info.plist" parent="CFBundleURLTypes">
