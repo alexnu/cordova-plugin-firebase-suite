@@ -5,8 +5,8 @@
 
     <name>cordova-plugin-firebase-native</name>
 
-    <preference name="APP_ID" />
-    <preference name="APP_NAME" />
+    <preference name="FB_APP_ID" />
+    <preference name="FB_APP_NAME" />
 
     <engines>
         <engine name="cordova" version=">=3.4.0"/>
@@ -44,28 +44,28 @@
         <framework src="com.google.code.gson:gson:2+"/>
         <framework src="com.facebook.android:facebook-login:4.42.0"/>
 
-        <source-file src="src/android/com/alexnu/firebasenative/FirebaseDatabasePlugin.java" target-dir="src/com/alexnu/firebasenative/"/>
-        <source-file src="src/android/com/alexnu/firebasenative/DatabaseReadListener.java" target-dir="src/com/alexnu/firebasenative/"/>
-        <source-file src="src/android/com/alexnu/firebasenative/DatabaseWriteListener.java" target-dir="src/com/alexnu/firebasenative/"/>
+        <source-file src="src/android/database/FirebaseDatabasePlugin.java" target-dir="src/com/alexnu/firebasenative/"/>
+        <source-file src="src/android/database/DatabaseReadListener.java" target-dir="src/com/alexnu/firebasenative/"/>
+        <source-file src="src/android/database/DatabaseWriteListener.java" target-dir="src/com/alexnu/firebasenative/"/>
 
-        <source-file src="src/android/com/alexnu/firebasenative/AuthStatusListener.java" target-dir="src/com/alexnu/firebasenative/"/>
-        <source-file src="src/android/com/alexnu/firebasenative/AuthTokenListener.java" target-dir="src/com/alexnu/firebasenative/"/>
-        <source-file src="src/android/com/alexnu/firebasenative/AuthSignInListener.java" target-dir="src/com/alexnu/firebasenative/"/>
-        <source-file src="src/android/com/alexnu/firebasenative/FirebaseAuthPlugin.java" target-dir="src/com/alexnu/firebasenative/"/>
-        <source-file src="src/android/com/alexnu/firebasenative/FirebaseGoogleAuthPlugin.java" target-dir="src/com/alexnu/firebasenative/"/>
-        <source-file src="src/android/com/alexnu/firebasenative/FirebaseFacebookAuthPlugin.java" target-dir="src/com/alexnu/firebasenative/"/>
-        <source-file src="src/android/com/alexnu/firebasenative/ProfileMapper.java" target-dir="src/com/alexnu/firebasenative/"/>
+        <source-file src="src/android/auth/AuthStatusListener.java" target-dir="src/com/alexnu/firebasenative/"/>
+        <source-file src="src/android/auth/AuthTokenListener.java" target-dir="src/com/alexnu/firebasenative/"/>
+        <source-file src="src/android/auth/AuthSignInListener.java" target-dir="src/com/alexnu/firebasenative/"/>
+        <source-file src="src/android/auth/FirebaseAuthPlugin.java" target-dir="src/com/alexnu/firebasenative/"/>
+        <source-file src="src/android/auth/FirebaseGoogleAuthPlugin.java" target-dir="src/com/alexnu/firebasenative/"/>
+        <source-file src="src/android/auth/FirebaseFacebookAuthPlugin.java" target-dir="src/com/alexnu/firebasenative/"/>
+        <source-file src="src/android/auth/ProfileMapper.java" target-dir="src/com/alexnu/firebasenative/"/>
 
-        <source-file src="src/android/com/alexnu/firebasenative/facebookconnect.xml" target-dir="res/values" />
+        <source-file src="src/android/auth/facebookapp.xml" target-dir="res/values" />
         <!-- Used for cordova-android 6 -->
-        <config-file target="res/values/facebookconnect.xml" parent="/*">
-            <string name="fb_app_id">$APP_ID</string>
-            <string name="fb_app_name">$APP_NAME</string>
+        <config-file target="res/values/facebookapp.xml" parent="/*">
+            <string name="fb_app_id">$FB_APP_ID</string>
+            <string name="fb_app_name">$FB_APP_NAME</string>
         </config-file>
         <!-- Used for cordova-android 7 -->
-        <config-file target="app/src/main/res/values/facebookconnect.xml" parent="/*">
-            <string name="fb_app_id">$APP_ID</string>
-            <string name="fb_app_name">$APP_NAME</string>
+        <config-file target="app/src/main/res/values/facebookapp.xml" parent="/*">
+            <string name="fb_app_id">$FB_APP_ID</string>
+            <string name="fb_app_name">$FB_APP_NAME</string>
         </config-file>
 
         <config-file target="AndroidManifest.xml" parent="application">
@@ -99,7 +99,7 @@
                 <dict>
                     <key>CFBundleURLSchemes</key>
                     <array>
-                        <string>fb$APP_ID</string>
+                        <string>fb$FB_APP_ID</string>
                     </array>
                 </dict>
             </array>
@@ -115,23 +115,24 @@
         </config-file>
 
         <config-file target="*-Info.plist" parent="FacebookAppID">
-            <string>$APP_ID</string>
+            <string>$FB_APP_ID</string>
         </config-file>
 
         <config-file target="*-Info.plist" parent="FacebookDisplayName">
-            <string>$APP_NAME</string>
+            <string>$FB_APP_NAME</string>
         </config-file>
 
-        <header-file src="src/ios/FirebaseDatabasePlugin.h" />
-        <source-file src="src/ios/FirebaseDatabasePlugin.m" />
-        <header-file src="src/ios/FirebaseAuthPlugin.h" />
-        <source-file src="src/ios/FirebaseAuthPlugin.m" />
-        <header-file src="src/ios/FirebaseAuthGooglePlugin.h" />
-        <source-file src="src/ios/FirebaseAuthGooglePlugin.m" />
+        <header-file src="src/ios/database/FirebaseDatabasePlugin.h" />
+        <source-file src="src/ios/database/FirebaseDatabasePlugin.m" />
+
+        <header-file src="src/ios/auth/FirebaseAuthPlugin.h" />
+        <source-file src="src/ios/auth/FirebaseAuthPlugin.m" />
+        <header-file src="src/ios/auth/FirebaseAuthGooglePlugin.h" />
+        <source-file src="src/ios/auth/FirebaseAuthGooglePlugin.m" />
         <header-file src="src/ios/auth/FirebaseFacebookAuthPlugin.h" />
         <source-file src="src/ios/auth/FirebaseFacebookAuthPlugin.m" />
-        <header-file src="src/ios/ProfileMapper.h" />
-        <source-file src="src/ios/ProfileMapper.m" />
+        <header-file src="src/ios/auth/ProfileMapper.h" />
+        <source-file src="src/ios/auth/ProfileMapper.m" />
 
         <framework src="Firebase/Core" type="podspec" spec="~> 6.0.0"/>
         <framework src="Firebase/Auth" type="podspec" spec="~> 6.0.0"/>
