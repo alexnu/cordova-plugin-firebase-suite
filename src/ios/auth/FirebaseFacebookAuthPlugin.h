@@ -4,7 +4,7 @@
 
 @interface FirebaseFacebookAuthPlugin : CDVPlugin
 
-- (void)login:(CDVInvokedUrlCommand *)command;
+- (void)signIn:(CDVInvokedUrlCommand *)command;
 
 @property (strong, nonatomic) FBSDKLoginManager *loginManager;
 

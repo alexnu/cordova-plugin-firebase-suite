@@ -10,7 +10,7 @@
     self.loginManager = [[FBSDKLoginManager alloc] init];
 }
 
-- (void)login:(CDVInvokedUrlCommand *)command {
+- (void)signIn:(CDVInvokedUrlCommand *)command {
     NSLog(@"Starting facebook login");
     CDVPluginResult *pluginResult;
 
