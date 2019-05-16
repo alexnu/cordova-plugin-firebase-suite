@@ -5,13 +5,13 @@
 @implementation FirebaseFacebookAuthPlugin
 
 - (void)pluginInitialize {
-    NSLog(@"Starting Facebook Connect plugin");
+    NSLog(@"Starting Firebase Facebook auth plugin");
 
     self.loginManager = [[FBSDKLoginManager alloc] init];
 }
 
 - (void)signIn:(CDVInvokedUrlCommand *)command {
-    NSLog(@"Starting facebook login");
+    NSLog(@"Login with facebook");
     CDVPluginResult *pluginResult;
 
     // this will prevent from being unable to login after updating plugin or changing permissions

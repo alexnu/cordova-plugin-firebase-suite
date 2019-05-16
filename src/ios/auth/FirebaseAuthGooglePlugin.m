@@ -6,7 +6,7 @@
 
 - (void)pluginInitialize {
 
-    NSLog(@"Starting Firebase Google Auth plugin");
+    NSLog(@"Starting Firebase Google auth plugin");
 
     [GIDSignIn sharedInstance].clientID = [FIRApp defaultApp].options.clientID;
     [GIDSignIn sharedInstance].uiDelegate = self.viewController;
