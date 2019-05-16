@@ -21,8 +21,8 @@
     [[FIRAuth auth] createUserWithEmail:email
                                password:password
                              completion:^(FIRAuthDataResult *result, NSError *error) {
-        [self.commandDelegate sendPluginResult:[self createAuthResult:result
-                                                            withError:error] callbackId:command.callbackId];
+        [self.commandDelegate sendPluginResult:[ProfileMapper createAuthResult:result
+                                                                     withError:error] callbackId:command.callbackId];
     }];
 }
 
@@ -53,34 +53,9 @@
     [[FIRAuth auth] signInWithEmail:email
                            password:password
                          completion:^(FIRAuthDataResult *result, NSError *error) {
-        [self.commandDelegate sendPluginResult:[self createAuthResult:result
-                                                            withError:error] callbackId:command.callbackId];
+        [self.commandDelegate sendPluginResult:[ProfileMapper createAuthResult:result
+                                                                     withError:error] callbackId:command.callbackId];
     }];
-}
-
-- (CDVPluginResult*) createAuthResult:(FIRAuthDataResult*)result withError:(NSError*)error {
-    CDVPluginResult *pluginResult;
-    if (error) {
-        NSLog(@"Got error: %d", error.code);
-        NSString* finalCode;
-
-        if (error.code == FIRAuthErrorCodeInvalidEmail) {
-            finalCode = @"auth/invalid-email";
-        } else if (error.code == FIRAuthErrorCodeEmailAlreadyInUse) {
-            finalCode = @"auth/email-already-in-use";
-        } else if (error.code == FIRAuthErrorCodeWeakPassword) {
-            finalCode = @"auth/weak-password";
-        } else {
-            finalCode = @"auth/unexpected";
-        }
-
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:@{
-            @"code": finalCode
-        }];
-    } else {
-        pluginResult = [ProfileMapper getProfileResult:result.user withInfo:result.additionalUserInfo];
-    }
-    return pluginResult;
 }
 
 - (void)addAuthStateListener:(CDVInvokedUrlCommand*)command {

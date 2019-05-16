@@ -3,6 +3,33 @@
 
 @implementation ProfileMapper
 
++ (CDVPluginResult*) createAuthResult:(FIRAuthDataResult*)result withError:(NSError*)error {
+    CDVPluginResult *pluginResult;
+    if (error) {
+        NSLog(@"Got error: %d", error.code);
+        NSString* finalCode;
+
+        if (error.code == FIRAuthErrorCodeInvalidEmail) {
+            finalCode = @"auth/invalid-email";
+        } else if (error.code == FIRAuthErrorCodeEmailAlreadyInUse) {
+            finalCode = @"auth/email-already-in-use";
+        } else if (error.code == FIRAuthErrorCodeWeakPassword) {
+            finalCode = @"auth/weak-password";
+        } else if (error.code == FIRAuthErrorCodeAccountExistsWithDifferentCredential) {
+            finalCode = @"auth/email-already-in-use";
+        } else {
+            finalCode = @"auth/unexpected";
+        }
+
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:@{
+            @"code": finalCode
+        }];
+    } else {
+        pluginResult = [ProfileMapper getProfileResult:result.user withInfo:result.additionalUserInfo];
+    }
+    return pluginResult;
+}
+
 + (CDVPluginResult*)getProfileResult:(FIRUser*)user withInfo:(FIRAdditionalUserInfo*_Nullable)additionalUserInfo {
     NSDictionary* response = nil;
     if (user) {

@@ -29,8 +29,8 @@
                                                                          accessToken:authentication.accessToken];
         [[FIRAuth auth] signInWithCredential:credential
                                   completion:^(FIRAuthDataResult *result, NSError *error) {
-            [self.commandDelegate sendPluginResult:[self createAuthResult:result
-                                                                withError:error] callbackId:self.eventCallbackId];
+            [self.commandDelegate sendPluginResult:[ProfileMapper createAuthResult:result
+                                                                         withError:error] callbackId:self.eventCallbackId];
         }];
     } else {
         CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:@{
@@ -44,27 +44,6 @@
         [self.commandDelegate sendPluginResult:pluginResult callbackId:self.eventCallbackId];
     }
 
-}
-
-- (CDVPluginResult*) createAuthResult:(FIRAuthDataResult*)result withError:(NSError*)error {
-    CDVPluginResult *pluginResult;
-    if (error) {
-        NSLog(@"Got error: %d", error.code);
-        NSString* finalCode;
-
-        if (error.code == FIRAuthErrorCodeAccountExistsWithDifferentCredential) {
-            finalCode = @"auth/email-already-in-use";
-        } else {
-            finalCode = @"auth/unexpected";
-        }
-
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:@{
-            @"code": finalCode
-        }];
-    } else {
-        pluginResult = [ProfileMapper getProfileResult:result.user withInfo:result.additionalUserInfo];
-    }
-    return pluginResult;
 }
 
 - (void)signIn:(GIDSignIn *)signIn didDisconnectWithUser:(GIDGoogleUser *)user withError:(NSError *)error {
