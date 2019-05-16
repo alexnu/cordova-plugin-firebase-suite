@@ -2,7 +2,7 @@
 #import "ProfileMapper.h"
 @import Firebase;
 
-@interface FirebaseFacebookAuthPlugin
+@implementation FirebaseFacebookAuthPlugin
 
 - (void)pluginInitialize {
     NSLog(@"Starting Facebook Connect plugin");
