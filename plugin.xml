@@ -114,6 +114,14 @@
             </array>
         </config-file>
 
+        <config-file target="*-Info.plist" parent="FacebookAppID">
+            <string>$APP_ID</string>
+        </config-file>
+
+        <config-file target="*-Info.plist" parent="FacebookDisplayName">
+            <string>$APP_NAME</string>
+        </config-file>
+
         <header-file src="src/ios/FirebaseDatabasePlugin.h" />
         <source-file src="src/ios/FirebaseDatabasePlugin.m" />
         <header-file src="src/ios/FirebaseAuthPlugin.h" />
