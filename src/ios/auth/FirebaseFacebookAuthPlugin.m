@@ -36,8 +36,8 @@
 
             [[FIRAuth auth] signInWithCredential:credential
                                       completion:^(FIRAuthDataResult *result, NSError *error) {
-                [self.commandDelegate sendPluginResult:[self createAuthResult:result
-                                                                    withError:error] callbackId:self.eventCallbackId];
+                [self.commandDelegate sendPluginResult:[ProfileMapper createAuthResult:result
+                                                                             withError:error] callbackId:self.eventCallbackId];
             }];
         }
     };
