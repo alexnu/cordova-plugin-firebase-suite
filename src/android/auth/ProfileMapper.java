@@ -26,7 +26,7 @@ public class ProfileMapper {
                 result.put("photoURL", user.getPhotoUrl());
                 result.put("providerId", user.getProviderId());
                 result.put("emailVerified", user.isEmailVerified());
-                result.put("newUser", info != null && info.isNewUser() : true : false);
+                result.put("newUser", info != null && info.isNewUser() ? true : false);
 
                 return new PluginResult(PluginResult.Status.OK, result);
             } catch (JSONException e) {
