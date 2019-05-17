@@ -1,4 +1,8 @@
+package com.alexnu.firebasenative;
+
 import org.apache.cordova.PluginResult;
+
+import android.util.Log;
 
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.AdditionalUserInfo;
@@ -8,6 +12,8 @@ import org.json.JSONObject;
 
 
 public class ProfileMapper {
+
+    private static final String TAG = "FirebaseProfileMapper";
 
     public static PluginResult getProfileResult(FirebaseUser user, AdditionalUserInfo info) {
             if (user == null) {
