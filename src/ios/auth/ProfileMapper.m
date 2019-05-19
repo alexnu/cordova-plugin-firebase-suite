@@ -18,7 +18,7 @@
         } else if (error.code == FIRAuthErrorCodeAccountExistsWithDifferentCredential) {
             finalCode = @"auth/email-already-in-use";
         } else {
-            finalCode = @"auth/unexpected";
+            finalCode = error.code;
         }
 
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:@{

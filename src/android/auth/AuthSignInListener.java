@@ -48,7 +48,7 @@ public class AuthSignInListener implements OnCompleteListener<AuthResult> {
                 } else if (exception instanceof FirebaseAuthUserCollisionException) {
                     error.put("code", "auth/email-already-in-use");
                 } else {
-                    error.put("code", "auth/unexpected");
+                    error.put("code", exception.getErrorCode());
                 }
             } catch (JSONException e) {
                 Log.e(TAG, e.getMessage());
