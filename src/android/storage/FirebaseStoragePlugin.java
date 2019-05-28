@@ -38,16 +38,16 @@ public class FirebaseStoragePlugin extends CordovaPlugin {
 
         if ("putFile".equals(action)) {
 
-            final String storagePath = data.getString(0);
+            final String remotePath = data.getString(0);
             final String localPath = data.getString(1);
 
             cordova.getThreadPool().execute(new Runnable() {
                 public void run() {
-                    Log.d(TAG, "Uploading file from " + localPath + " to " + storagePath);
+                    Log.d(TAG, "Uploading file from " + localPath + " to " + remotePath);
 
-                    final StorageReference storageRef = storage.getReference().child(storagePath);
+                    final StorageReference storageRef = storage.getReference().child(remotePath);
                     Uri file = Uri.fromFile(new File(localPath));
-                    UploadTask uploadTask = storageRef.child(storagePath).putFile(file);
+                    UploadTask uploadTask = storageRef.child(remotePath).putFile(file);
 
                     // Listen for state changes, errors, and completion of the upload.
                     uploadTask.addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
