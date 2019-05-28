@@ -26,7 +26,7 @@ import java.lang.reflect.Type;
 
 public class FirebaseDatabasePlugin extends CordovaPlugin {
 
-    private static final String TAG = "FirebaseNative";
+    private static final String TAG = "FirebaseDatabase";
     private final static Type settableType = new TypeToken<Map<String, Object>>() {}.getType();
 
     private FirebaseDatabase database;

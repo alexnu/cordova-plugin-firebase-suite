@@ -77,5 +77,11 @@ module.exports = {
         signOut: function (successCallback, errorCallback) {
             cordova.exec(successCallback, errorCallback, "FirebaseAuth", "signOut", []);
         }
+    },
+
+    storage: {
+        putFile: function (path, file, successCallback, errorCallback) {
+            cordova.exec(successCallback, errorCallback, "FirebaseStorage", "putFile", [path, file]);
+        }
     }
 };
