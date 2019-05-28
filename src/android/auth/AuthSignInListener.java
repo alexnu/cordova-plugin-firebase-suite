@@ -38,7 +38,7 @@ public class AuthSignInListener implements OnCompleteListener<AuthResult> {
             Log.w(TAG, this.action + ":failure", task.getException());
 
             JSONObject error = new JSONObject();
-            Exception exception = task.getException();
+            FirebaseAuthException exception = task.getException();
 
             try {
                 if (exception instanceof FirebaseAuthWeakPasswordException) {

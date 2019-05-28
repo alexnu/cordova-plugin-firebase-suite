@@ -2,6 +2,7 @@ package com.alexnu.firebasenative;
 
 import android.util.Log;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 
 import org.apache.cordova.*;
 import org.json.JSONObject;
@@ -11,12 +12,12 @@ import org.json.JSONException;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.OnProgressListener;
+import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+
+import java.io.File;
 
 
 public class FirebaseStoragePlugin extends CordovaPlugin {
@@ -46,7 +47,7 @@ public class FirebaseStoragePlugin extends CordovaPlugin {
 
                     StorageReference storageRef = storage.getReference().child(storagePath);
                     Uri file = Uri.fromFile(new File(localPath));
-                    uploadTask = storageRef.child(storagePath).putFile(file);
+                    UploadTask uploadTask = storageRef.child(storagePath).putFile(file);
 
                     // Listen for state changes, errors, and completion of the upload.
                     uploadTask.addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
