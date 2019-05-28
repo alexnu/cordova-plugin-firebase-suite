@@ -9,7 +9,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
-import com.google.firebase.auth.FirebaseAuthException;
 
 import org.json.JSONObject;
 import org.json.JSONException;
@@ -39,7 +38,7 @@ public class AuthSignInListener implements OnCompleteListener<AuthResult> {
             Log.w(TAG, this.action + ":failure", task.getException());
 
             JSONObject error = new JSONObject();
-            FirebaseAuthException exception = task.getException();
+            Exception exception = task.getException();
 
             try {
                 if (exception instanceof FirebaseAuthWeakPasswordException) {
@@ -49,7 +48,7 @@ public class AuthSignInListener implements OnCompleteListener<AuthResult> {
                 } else if (exception instanceof FirebaseAuthUserCollisionException) {
                     error.put("code", "auth/email-already-in-use");
                 } else {
-                    error.put("code", exception.getErrorCode());
+                    error.put("code", exception.getMessage());
                 }
             } catch (JSONException e) {
                 Log.e(TAG, e.getMessage());
