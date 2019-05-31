@@ -48,7 +48,7 @@ public class FirebaseStoragePlugin extends CordovaPlugin {
                 public void run() {
                     Log.d(TAG, "Uploading file from " + localPath + " to " + remotePath);
                     Log.d(TAG, "Auth status " + FirebaseAuth.getInstance().getCurrentUser() != null ?
-                    FirebaseAuth.getInstance().getCurrentUser().getUid :
+                    FirebaseAuth.getInstance().getCurrentUser().getUid() :
                     "logged out");
 
                     final StorageReference storageRef = storage.getReference().child(remotePath);
