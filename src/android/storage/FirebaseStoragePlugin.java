@@ -17,6 +17,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import com.google.firebase.auth.FirebaseAuth;
+
+
 import java.io.File;
 
 
@@ -44,6 +47,7 @@ public class FirebaseStoragePlugin extends CordovaPlugin {
             cordova.getThreadPool().execute(new Runnable() {
                 public void run() {
                     Log.d(TAG, "Uploading file from " + localPath + " to " + remotePath);
+                    Log.d(TAG, "Auth status " + FirebaseAuth.getInstance().getCurrentUser().toString());
 
                     final StorageReference storageRef = storage.getReference().child(remotePath);
                     Uri file = Uri.fromFile(new File(localPath));
