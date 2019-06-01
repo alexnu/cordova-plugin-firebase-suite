@@ -22,8 +22,8 @@ import java.util.Map;
 import java.util.HashMap;
 
 import java.lang.reflect.Type;
-
-
+pictures/Xn5tPgmtnNZfNWawiSegM36pLhI3/1559388769989.jpg
+Xn5tPgmtnNZfNWawiSegM36pLhI3
 public class FirebaseDatabasePlugin extends CordovaPlugin {
 
     private static final String TAG = "FirebaseDatabase";
