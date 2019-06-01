@@ -83,6 +83,31 @@ public class FirebaseStoragePlugin extends CordovaPlugin {
 
             return true;
 
+        } else if ("deleteFile".equals(action)) {
+
+            final String remotePath = data.getString(0);
+
+            cordova.getThreadPool().execute(new Runnable() {
+                public void run() {
+                    Log.d(TAG, "Deleting file from " + remotePath);
+
+                    final StorageReference storageRef = storage.getReference().child(remotePath);
+                    storageRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            // File deleted successfully
+                            callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK));
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            // Uh-oh, an error occurred!
+                            callbackContext.error(exception.getMessage());
+                        }
+                    });
+                }
+            });
+
         } else {
 
             return false;
