@@ -108,6 +108,8 @@ public class FirebaseStoragePlugin extends CordovaPlugin {
                 }
             });
 
+            return true;
+
         } else {
 
             return false;
