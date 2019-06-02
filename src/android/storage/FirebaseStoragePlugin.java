@@ -28,7 +28,7 @@ public class FirebaseStoragePlugin extends CordovaPlugin {
     @Override
     protected void pluginInitialize() {
         Log.d(TAG, "Starting Firebase-storage plugin");
-        storage = FirebaseStorage.getInstance("gs://updoc-server.appspot.com");
+        storage = FirebaseStorage.getInstance();
     }
 
     @Override
@@ -48,6 +48,50 @@ public class FirebaseStoragePlugin extends CordovaPlugin {
                     final StorageReference storageRef = storage.getReference().child(remotePath);
                     Uri file = Uri.fromFile(new File(localPath));
                     UploadTask uploadTask = storageRef.child(remotePath).putFile(file);
+
+                    // Listen for state changes, errors, and completion of the upload.
+                    uploadTask.addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                            callbackContext.sendPluginResult(transformProgressToResult(taskSnapshot));
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            // Handle unsuccessful uploads
+                            callbackContext.error(exception.getMessage());
+                        }
+                    }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            // Handle successful uploads on complete
+                            storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    Log.d(TAG, "putFile:onSuccess: uri= "+ uri.toString());
+                                    callbackContext.sendPluginResult(transformSuccessToResult(uri));
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+
+            PluginResult noResult = new PluginResult(PluginResult.Status.NO_RESULT);
+            noResult.setKeepCallback(true);
+            callbackContext.sendPluginResult(noResult);
+
+            return true;
+
+        } else if ("putBytes".equals(action)) {
+
+            final String remotePath = data.getString(0);
+            final String dataUrl = data.getString(1);
+
+            cordova.getThreadPool().execute(new Runnable() {
+                public void run() {
+                    Log.d(TAG, "Uploading bytes to " + remotePath);
+                    UploadTask uploadTask = storageRef.child(remotePath).putBytes(dataUrl.getBytes());
 
                     // Listen for state changes, errors, and completion of the upload.
                     uploadTask.addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
