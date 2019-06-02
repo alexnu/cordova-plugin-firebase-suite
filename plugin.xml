@@ -40,11 +40,12 @@
 
         <dependency id="cordova-support-google-services" version="~1.2.0"/>
 
-        <framework src="com.google.firebase:firebase-core:16.0.7" />
-        <framework src="com.google.firebase:firebase-auth:16.1.0" />
-        <framework src="com.google.firebase:firebase-database:16.1.0" />
-        <framework src="com.google.firebase:firebase-storage:16.1.0" />
+        <framework src="com.google.firebase:firebase-core:16.0.9" />
+        <framework src="com.google.firebase:firebase-auth:17.0.0" />
+        <framework src="com.google.firebase:firebase-database:17.0.0" />
+        <framework src="com.google.firebase:firebase-storage:17.0.0" />
         <framework src="com.google.android.gms:play-services-auth:16.0.1" />
+        <framework src="com.google.gms:google-services:4.2.0" />
         <framework src="com.google.code.gson:gson:2+"/>
         <framework src="com.facebook.android:facebook-login:4.42.0"/>
 
