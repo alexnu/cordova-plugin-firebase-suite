@@ -91,6 +91,8 @@ public class FirebaseStoragePlugin extends CordovaPlugin {
             cordova.getThreadPool().execute(new Runnable() {
                 public void run() {
                     Log.d(TAG, "Uploading bytes to " + remotePath);
+
+                    final StorageReference storageRef = storage.getReference().child(remotePath);
                     UploadTask uploadTask = storageRef.child(remotePath).putBytes(dataUrl.getBytes());
 
                     // Listen for state changes, errors, and completion of the upload.
