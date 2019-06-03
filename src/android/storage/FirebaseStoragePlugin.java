@@ -45,7 +45,7 @@ public class FirebaseStoragePlugin extends CordovaPlugin {
                 public void run() {
                     Log.d(TAG, "Uploading file from " + localPath + " to " + remotePath);
 
-                    final StorageReference storageRef = storage.getReference().child(remotePath);
+                    final StorageReference storageRef = storage.getReference();
                     Uri file = Uri.fromFile(new File(localPath));
                     UploadTask uploadTask = storageRef.child(remotePath).putFile(file);
 
