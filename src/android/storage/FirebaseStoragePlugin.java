@@ -45,9 +45,9 @@ public class FirebaseStoragePlugin extends CordovaPlugin {
                 public void run() {
                     Log.d(TAG, "Uploading file from " + localPath + " to " + remotePath);
 
-                    final StorageReference storageRef = storage.getReference();
+                    final StorageReference storageRef = storage.getReference().child(remotePath);
                     Uri file = Uri.fromFile(new File(localPath));
-                    UploadTask uploadTask = storageRef.child(remotePath).putFile(file);
+                    UploadTask uploadTask = storageRef.putFile(file);
 
                     // Listen for state changes, errors, and completion of the upload.
                     uploadTask.addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
@@ -92,8 +92,8 @@ public class FirebaseStoragePlugin extends CordovaPlugin {
                 public void run() {
                     Log.d(TAG, "Uploading bytes to " + remotePath);
 
-                    final StorageReference storageRef = storage.getReference();
-                    UploadTask uploadTask = storageRef.child(remotePath).putBytes(dataUrl.getBytes());
+                    final StorageReference storageRef = storage.getReference().child(remotePath);
+                    UploadTask uploadTask = storageRef.putBytes(dataUrl.getBytes());
 
                     // Listen for state changes, errors, and completion of the upload.
                     uploadTask.addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
