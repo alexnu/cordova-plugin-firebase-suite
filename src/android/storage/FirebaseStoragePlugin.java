@@ -114,7 +114,7 @@ public class FirebaseStoragePlugin extends CordovaPlugin {
                             storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri uri) {
-                                    Log.d(TAG, "putFile:onSuccess: uri= "+ uri.toString());
+                                    Log.d(TAG, "putBytes:onSuccess: uri= "+ uri.toString());
                                     callbackContext.sendPluginResult(transformSuccessToResult(uri));
                                 }
                             });
