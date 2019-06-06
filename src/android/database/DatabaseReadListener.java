@@ -34,7 +34,7 @@ public class DatabaseReadListener implements ValueEventListener {
 
     @Override
     public void onDataChange(DataSnapshot dataSnapshot) {
-        Log.d(TAG, "Got value from key: " + dataSnapshot.getKey());
+        Log.d(TAG, "Got value from key: " + dataSnapshot.getRef().toString());
         PluginResult result = transformToResult(dataSnapshot);
         callbackContext.sendPluginResult(result);
     }
@@ -52,7 +52,7 @@ public class DatabaseReadListener implements ValueEventListener {
 
         try {
             data.put("priority", dataSnapshot.getPriority());
-            data.put("key", dataSnapshot.getKey());
+            data.put("path", dataSnapshot.getRef().toString());
             if (value instanceof Map) {
                 value = new JSONObject(this.gson.toJson(value));
             } else if (value instanceof List) {

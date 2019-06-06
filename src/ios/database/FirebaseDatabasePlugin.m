@@ -33,7 +33,7 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             NSLog(@"Got value from path %@", path);
             CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:@{
-                @"key": snapshot.key,
+                @"path": snapshot.key,
                 @"value": snapshot.value,
                 @"priority": snapshot.priority
             }];

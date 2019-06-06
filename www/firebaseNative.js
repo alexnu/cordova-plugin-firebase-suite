@@ -83,8 +83,8 @@ module.exports = {
         putFile: function (remotePath, localPath, successCallback, errorCallback) {
             cordova.exec(successCallback, errorCallback, "FirebaseStorage", "putFile", [remotePath, localPath]);
         },
-        putBytes: function (remotePath, dataUrl, successCallback, errorCallback) {
-            cordova.exec(successCallback, errorCallback, "FirebaseStorage", "putBytes", [remotePath, dataUrl]);
+        cancelUpload: function (remotePath, successCallback, errorCallback) {
+            cordova.exec(successCallback, errorCallback, "FirebaseStorage", "cancelUpload", [remotePath]);
         },
         deleteFile: function (remotePath, successCallback, errorCallback) {
             cordova.exec(successCallback, errorCallback, "FirebaseStorage", "deleteFile", [remotePath]);

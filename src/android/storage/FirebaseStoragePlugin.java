@@ -18,17 +18,21 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
+import java.util.Map;
+import java.util.HashMap;
 
 
 public class FirebaseStoragePlugin extends CordovaPlugin {
 
     private static final String TAG = "FirebaseStorage";
     private FirebaseStorage storage;
+    private Map<String, UploadTask> uploadTasks;
 
     @Override
     protected void pluginInitialize() {
         Log.d(TAG, "Starting Firebase-storage plugin");
         storage = FirebaseStorage.getInstance();
+        this.uploadTasks = new HashMap<String, UploadTask>();
     }
 
     @Override
@@ -41,6 +45,12 @@ public class FirebaseStoragePlugin extends CordovaPlugin {
             final String remotePath = data.getString(0);
             final String fileUri = data.getString(1);
 
+            if (uploadTasks.containsKey(remotePath)) {
+                Log.d(TAG, "Upload task already exists for path " + remotePath);
+                callbackContext.error("Upload task already exists for " + remotePath);
+                return true;
+            }
+
             cordova.getThreadPool().execute(new Runnable() {
                 public void run() {
                     Log.d(TAG, "Uploading file from " + fileUri + " to " + remotePath);
@@ -48,6 +58,7 @@ public class FirebaseStoragePlugin extends CordovaPlugin {
                     final StorageReference storageRef = storage.getReference().child(remotePath);
                     Uri file = Uri.parse(fileUri);
                     UploadTask uploadTask = storageRef.putFile(file);
+                    uploadTasks.put(remotePath, uploadTask);
 
                     // Listen for state changes, errors, and completion of the upload.
                     uploadTask.addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
@@ -59,12 +70,14 @@ public class FirebaseStoragePlugin extends CordovaPlugin {
                         @Override
                         public void onFailure(@NonNull Exception exception) {
                             // Handle unsuccessful uploads
+                            uploadTasks.remove(remotePath);
                             callbackContext.error(exception.getMessage());
                         }
                     }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             // Handle successful uploads on complete
+                            uploadTasks.remove(remotePath);
                             storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri uri) {
@@ -83,49 +96,21 @@ public class FirebaseStoragePlugin extends CordovaPlugin {
 
             return true;
 
-        } else if ("putBytes".equals(action)) {
+        } else if ("cancelUpload".equals(action)) {
 
             final String remotePath = data.getString(0);
-            final String dataUrl = data.getString(1);
+            UploadTask uploadTask = uploadTasks.get(remotePath);
 
-            cordova.getThreadPool().execute(new Runnable() {
-                public void run() {
-                    Log.d(TAG, "Uploading bytes to " + remotePath);
-
-                    final StorageReference storageRef = storage.getReference().child(remotePath);
-                    UploadTask uploadTask = storageRef.putBytes(dataUrl.getBytes());
-
-                    // Listen for state changes, errors, and completion of the upload.
-                    uploadTask.addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                            callbackContext.sendPluginResult(transformProgressToResult(taskSnapshot));
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception exception) {
-                            // Handle unsuccessful uploads
-                            callbackContext.error(exception.getMessage());
-                        }
-                    }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            // Handle successful uploads on complete
-                            storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uri) {
-                                    Log.d(TAG, "putBytes:onSuccess: uri= "+ uri.toString());
-                                    callbackContext.sendPluginResult(transformSuccessToResult(uri));
-                                }
-                            });
-                        }
-                    });
-                }
-            });
-
-            PluginResult noResult = new PluginResult(PluginResult.Status.NO_RESULT);
-            noResult.setKeepCallback(true);
-            callbackContext.sendPluginResult(noResult);
+            if (uploadTask == null) {
+                Log.d(TAG, "No upload task found for " + remotePath);
+                callbackContext.error("No upload task found for " + remotePath);
+            } else {
+                Log.d(TAG, "Cancelling upload task from path: " + remotePath);
+                boolean cancelled = uploadTask.cancel();
+                uploadTasks.remove(remotePath);
+                PluginResult noResult = new PluginResult(PluginResult.Status.OK, "");
+                callbackContext.sendPluginResult(noResult);
+            }
 
             return true;
 
