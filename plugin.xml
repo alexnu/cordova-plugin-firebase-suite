@@ -143,8 +143,8 @@
         <header-file src="src/ios/auth/ProfileMapper.h" />
         <source-file src="src/ios/auth/ProfileMapper.m" />
 
-        <header-file src="src/ios/auth/FirebaseStoragePlugin.h" />
-        <source-file src="src/ios/auth/FirebaseStoragePlugin.m" />
+        <header-file src="src/ios/storage/FirebaseStoragePlugin.h" />
+        <source-file src="src/ios/storage/FirebaseStoragePlugin.m" />
 
         <framework src="Firebase/Core" type="podspec" spec="~> 6.0.0"/>
         <framework src="Firebase/Auth" type="podspec" spec="~> 6.0.0"/>
