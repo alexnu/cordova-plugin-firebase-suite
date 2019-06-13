@@ -31,7 +31,7 @@
     NSURL *localFile = [NSURL fileURLWithPath:fileUri];
 
     // Create a reference to the file you want to upload
-    FIRStorageReference *storageRef = [[storage reference] child:remotePath];
+    FIRStorageReference *storageRef = [[self.storage reference] child:remotePath];
 
     // Upload the file to the path
     FIRStorageUploadTask *uploadTask = [storageRef putFile:localFile metadata:nil completion:^(FIRStorageMetadata *metadata, NSError *error) {
@@ -51,7 +51,7 @@
           } else {
             CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:@{
                 @"progress": @100.0,
-                @"completed": YES,
+                @"completed": @YES,
                 @"downloadUrl": [URL absoluteString]
             }];
             [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
@@ -65,26 +65,26 @@
         handler:^(FIRStorageTaskSnapshot *snapshot) {
             double percentComplete = 100.0 * (snapshot.progress.completedUnitCount) / (snapshot.progress.totalUnitCount);
             CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:@{
-                @"progress": percentComplete,
-                @"completed": NO,
+                @"progress": @(percentComplete),
+                @"completed": @NO,
                 @"downloadUrl": @""
             }];
             [pluginResult setKeepCallbackAsBool:YES];
             [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
         }];
 
-    [self.uploadTasks setObject:@(uploadTask) forKey:remotePath];
+    [self.uploadTasks setObject:uploadTask forKey:remotePath];
 }
 
 - (void)cancelUpload:(CDVInvokedUrlCommand *)command {
 
     NSString *path = [command argumentAtIndex:0];
-    FIRStorageUploadTask uploadTask = [self.uploadTasks objectForKey:path];
+    FIRStorageUploadTask *uploadTask = [self.uploadTasks objectForKey:path];
 
     if (uploadTask) {
         NSLog(@"Cancelling upload task from path %@", path);
         [uploadTask cancel];
-        [self.listeners removeObjectForKey:path];
+        [self.uploadTasks removeObjectForKey:path];
         CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
@@ -99,7 +99,7 @@
     NSString *path = [command argumentAtIndex:0];
 
     // Create a reference to the file to delete
-    FIRStorageReference *storageRef = [[storage reference] child:path];
+    FIRStorageReference *storageRef = [[self.storage reference] child:path];
 
     // Delete the file
     [storageRef deleteWithCompletion:^(NSError *error){
