@@ -35,7 +35,7 @@ public class FirebaseDatabasePlugin extends CordovaPlugin {
 
     @Override
     protected void pluginInitialize() {
-        Log.d(TAG, "Starting Firebase-native plugin");
+        Log.d(TAG, "Starting FirebaseDatabase plugin");
 
         this.database = FirebaseDatabase.getInstance();
         this.database.setPersistenceEnabled(true);

@@ -4,7 +4,7 @@
 @implementation FirebaseDatabasePlugin
 
 - (void)pluginInitialize {
-    NSLog(@"Starting Firebase Native plugin");
+    NSLog(@"Starting FirebaseDatabase plugin");
 
     self.listeners = [NSMutableDictionary dictionary];
 

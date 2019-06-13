@@ -45,7 +45,6 @@
         <framework src="com.google.firebase:firebase-database:17.0.0" />
         <framework src="com.google.firebase:firebase-storage:17.0.0" />
         <framework src="com.google.android.gms:play-services-auth:16.0.1" />
-        <framework src="com.google.gms:google-services:4.2.0" />
         <framework src="com.google.code.gson:gson:2+"/>
         <framework src="com.facebook.android:facebook-login:4.42.0"/>
 
@@ -99,6 +98,9 @@
             <feature name="FirebaseFacebookAuth">
                 <param name="ios-package" value="FirebaseFacebookAuthPlugin" />
             </feature>
+            <feature name="FirebaseStorage">
+                <param name="ios-package" value="FirebaseStoragePlugin" />
+            </feature>
         </config-file>
 
         <config-file target="*-Info.plist" parent="CFBundleURLTypes">
@@ -144,6 +146,7 @@
         <framework src="Firebase/Core" type="podspec" spec="~> 6.0.0"/>
         <framework src="Firebase/Auth" type="podspec" spec="~> 6.0.0"/>
         <framework src="Firebase/Database" type="podspec" spec="~> 6.0.0"/>
+        <framework src="Firebase/Storage" type="podspec" spec="~> 6.0.0"/>
         <framework src="GoogleSignIn" type="podspec" spec="~> 4.4"/>
         <framework src="FBSDKLoginKit" type="podspec" spec="~> 5.0.0"/>
     </platform>

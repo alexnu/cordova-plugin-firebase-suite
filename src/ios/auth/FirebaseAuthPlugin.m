@@ -5,7 +5,7 @@
 @implementation FirebaseAuthPlugin
 
 - (void)pluginInitialize {
-    NSLog(@"Starting Firebase Auth plugin");
+    NSLog(@"Starting FirebaseAuth plugin");
 
     if(![FIRApp defaultApp]) {
         [FIRApp configure];

@@ -30,7 +30,7 @@ public class FirebaseStoragePlugin extends CordovaPlugin {
 
     @Override
     protected void pluginInitialize() {
-        Log.d(TAG, "Starting Firebase-storage plugin");
+        Log.d(TAG, "Starting FirebaseStorage plugin");
         storage = FirebaseStorage.getInstance();
         this.uploadTasks = new HashMap<String, UploadTask>();
     }
@@ -83,6 +83,12 @@ public class FirebaseStoragePlugin extends CordovaPlugin {
                                 public void onSuccess(Uri uri) {
                                     Log.d(TAG, "putFile:onSuccess: uri= "+ uri.toString());
                                     callbackContext.sendPluginResult(transformSuccessToResult(uri));
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception exception) {
+                                    // Handle unsuccessful calls
+                                    callbackContext.error(exception.getMessage());
                                 }
                             });
                         }
