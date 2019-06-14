@@ -159,7 +159,7 @@ public class FirebaseStoragePlugin extends CordovaPlugin {
         double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
 
         try {
-            data.put("progress", progress);
+            data.put("progress", (int) progress);
             data.put("completed", false);
             data.put("downloadUrl", null);
         } catch (JSONException e) {
@@ -175,7 +175,7 @@ public class FirebaseStoragePlugin extends CordovaPlugin {
             JSONObject data = new JSONObject();
 
             try {
-                data.put("progress", 100.0);
+                data.put("progress", 100);
                 data.put("completed", true);
                 data.put("downloadUrl", uri.toString());
             } catch (JSONException e) {

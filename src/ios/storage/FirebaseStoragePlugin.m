@@ -51,7 +51,7 @@
             [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
           } else {
             CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:@{
-                @"progress": @100.0,
+                @"progress": @100,
                 @"completed": @YES,
                 @"downloadUrl": [URL absoluteString]
             }];
@@ -66,7 +66,7 @@
         handler:^(FIRStorageTaskSnapshot *snapshot) {
             double percentComplete = 100.0 * (snapshot.progress.completedUnitCount) / (snapshot.progress.totalUnitCount);
             CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:@{
-                @"progress": @(percentComplete),
+                @"progress": @((int) percentComplete),
                 @"completed": @NO,
                 @"downloadUrl": @""
             }];
@@ -98,6 +98,7 @@
 - (void)deleteFile:(CDVInvokedUrlCommand *)command {
 
     NSString *path = [command argumentAtIndex:0];
+    NSLog(@"Deleting file from path %@", path);
 
     // Create a reference to the file to delete
     FIRStorageReference *storageRef = [[self.storage reference] child:path];
@@ -106,6 +107,7 @@
     [storageRef deleteWithCompletion:^(NSError *error){
       if (error != nil) {
         // Uh-oh, an error occurred!
+        NSLog(@"Could not delete file from path %@", path);
         CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:error.localizedDescription];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
       } else {
