@@ -38,7 +38,7 @@
       [self.uploadTasks removeObjectForKey:remotePath];
       if (error != nil) {
         // Uh-oh, an error occurred!
-        NSLog(@"Upload failed");
+        NSLog(@"Upload failed: %@", error.localizedDescription);
         CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:error.localizedDescription];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
       } else {
@@ -46,6 +46,7 @@
         [storageRef downloadURLWithCompletion:^(NSURL * _Nullable URL, NSError * _Nullable error) {
           if (error != nil) {
             // Uh-oh, an error occurred!
+            NSLog(@"Download URL failed: %@", error.localizedDescription);
             CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:error.localizedDescription];
             [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
           } else {
