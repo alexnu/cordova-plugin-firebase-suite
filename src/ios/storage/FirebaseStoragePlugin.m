@@ -28,7 +28,7 @@
     }
 
     // File located on disk
-    NSURL *localFile = [NSURL fileURLWithPath:fileUri];
+    NSURL *localFile = [NSURL URLWithString:fileUri];
 
     // Create a reference to the file you want to upload
     FIRStorageReference *storageRef = [[self.storage reference] child:remotePath];
