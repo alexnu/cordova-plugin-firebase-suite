@@ -1,15 +1,14 @@
 buildscript {
+    repositories {
+        google()
+        jcenter()
+        mavenCentral()
+    }
 
-  repositories {
-    jcenter()
-    mavenCentral()
-    google()  // Google's Maven repository
-  }
-
-  dependencies {
-    classpath 'com.android.tools.build:gradle:3.4.1'
-    classpath 'com.google.gms:google-services:4.2.0'  // Google Services plugin
-  }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:+'
+        classpath 'com.google.gms:google-services:4.2.0'
+    }
 }
 
 // use postBuildExtras to make sure the plugin is applied after
