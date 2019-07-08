@@ -41,7 +41,7 @@
             </feature>
         </config-file>
 
-        <framework src="src/android/build.gradle" custom="true" type="gradleReference" />
+<!--        <framework src="src/android/build.gradle" custom="true" type="gradleReference" />-->
 
         <framework src="com.google.firebase:firebase-core:16.0.9" />
         <framework src="com.google.firebase:firebase-auth:17.0.0" />
