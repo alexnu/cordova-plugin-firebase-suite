@@ -23,11 +23,9 @@
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="FirebaseDatabase">
                 <param name="android-package" value="com.alexnu.firebasenative.FirebaseDatabasePlugin"/>
-                <param name="onload" value="true" />
             </feature>
             <feature name="FirebaseAuth">
                 <param name="android-package" value="com.alexnu.firebasenative.FirebaseAuthPlugin"/>
-                <param name="onload" value="true" />
             </feature>
             <feature name="FirebaseGoogleAuth">
                 <param name="android-package" value="com.alexnu.firebasenative.FirebaseGoogleAuthPlugin"/>
@@ -37,24 +35,23 @@
             </feature>
             <feature name="FirebaseStorage">
                 <param name="android-package" value="com.alexnu.firebasenative.FirebaseStoragePlugin"/>
-                <param name="onload" value="true" />
             </feature>
         </config-file>
 
         <dependency id="cordova-support-google-services" version="~1.2.0"/>
-<!--        <framework src="src/android/build.gradle" custom="true" type="gradleReference" />-->
 
         <framework src="com.google.firebase:firebase-core:16.0.9" />
         <framework src="com.google.firebase:firebase-auth:17.0.0" />
         <framework src="com.google.firebase:firebase-database:17.0.0" />
         <framework src="com.google.firebase:firebase-storage:17.0.0" />
         <framework src="com.google.android.gms:play-services-auth:16.0.1" />
-        <framework src="com.facebook.android:facebook-login:4.42.0"/>
         <framework src="com.google.code.gson:gson:2+"/>
+        <framework src="com.facebook.android:facebook-login:4.42.0"/>
 
         <source-file src="src/android/database/FirebaseDatabasePlugin.java" target-dir="src/com/alexnu/firebasenative/"/>
         <source-file src="src/android/database/DatabaseReadListener.java" target-dir="src/com/alexnu/firebasenative/"/>
         <source-file src="src/android/database/DatabaseWriteListener.java" target-dir="src/com/alexnu/firebasenative/"/>
+
         <source-file src="src/android/auth/AuthStatusListener.java" target-dir="src/com/alexnu/firebasenative/"/>
         <source-file src="src/android/auth/AuthTokenListener.java" target-dir="src/com/alexnu/firebasenative/"/>
         <source-file src="src/android/auth/AuthSignInListener.java" target-dir="src/com/alexnu/firebasenative/"/>
@@ -62,6 +59,7 @@
         <source-file src="src/android/auth/FirebaseGoogleAuthPlugin.java" target-dir="src/com/alexnu/firebasenative/"/>
         <source-file src="src/android/auth/FirebaseFacebookAuthPlugin.java" target-dir="src/com/alexnu/firebasenative/"/>
         <source-file src="src/android/auth/ProfileMapper.java" target-dir="src/com/alexnu/firebasenative/"/>
+
         <source-file src="src/android/storage/FirebaseStoragePlugin.java" target-dir="src/com/alexnu/firebasenative/"/>
 
         <source-file src="src/android/auth/facebookapp.xml" target-dir="res/values" />
@@ -90,11 +88,9 @@
         <config-file target="config.xml" parent="/*">
             <feature name="FirebaseDatabase">
                 <param name="ios-package" value="FirebaseDatabasePlugin" />
-                <param name="onload" value="true" />
             </feature>
             <feature name="FirebaseAuth">
                 <param name="ios-package" value="FirebaseAuthPlugin" />
-                <param name="onload" value="true" />
             </feature>
             <feature name="FirebaseGoogleAuth">
                 <param name="ios-package" value="FirebaseAuthGooglePlugin" />
@@ -104,7 +100,6 @@
             </feature>
             <feature name="FirebaseStorage">
                 <param name="ios-package" value="FirebaseStoragePlugin" />
-                <param name="onload" value="true" />
             </feature>
         </config-file>
 
@@ -138,6 +133,7 @@
 
         <header-file src="src/ios/database/FirebaseDatabasePlugin.h" />
         <source-file src="src/ios/database/FirebaseDatabasePlugin.m" />
+
         <header-file src="src/ios/auth/FirebaseAuthPlugin.h" />
         <source-file src="src/ios/auth/FirebaseAuthPlugin.m" />
         <header-file src="src/ios/auth/FirebaseAuthGooglePlugin.h" />
@@ -146,6 +142,7 @@
         <source-file src="src/ios/auth/FirebaseFacebookAuthPlugin.m" />
         <header-file src="src/ios/auth/ProfileMapper.h" />
         <source-file src="src/ios/auth/ProfileMapper.m" />
+
         <header-file src="src/ios/storage/FirebaseStoragePlugin.h" />
         <source-file src="src/ios/storage/FirebaseStoragePlugin.m" />
 
