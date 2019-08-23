@@ -93,6 +93,7 @@ public class FirebaseAuthPlugin extends CordovaPlugin {
             this.auth.addAuthStateListener(this.authStatusListener);
 
             PluginResult okResult = new PluginResult(PluginResult.Status.OK, "");
+            okResult.setKeepCallback(true);
             callbackContext.sendPluginResult(okResult);
             return true;
 
