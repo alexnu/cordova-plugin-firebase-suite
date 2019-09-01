@@ -5,6 +5,7 @@ import android.util.Log;
 import org.apache.cordova.*;
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.content.Intent;
 import android.content.Context;
@@ -47,12 +48,22 @@ public class FirebaseFacebookAuthPlugin extends CordovaPlugin {
 
                 @Override
                 public void onCancel() {
-                     Log.d(TAG, "facebook:onCancel");
+                     Log.w(TAG, "facebook:onCancel");
+                     JSONObject error = new JSONObject();
+                     Exception exception = task.getException();
+
+                     try {
+                         error.put("code", "auth/cancelled-popup-request");
+                     } catch (JSONException e) {
+                         Log.e(TAG, e.getMessage());
+                     }
+
+                     this.callbackContext.error(error);
                 }
 
                 @Override
                 public void onError(FacebookException error) {
-                     Log.d(TAG, "facebook:onError", error);
+                     Log.e(TAG, "facebook:onError", error);
                 }
             });
     }
@@ -66,7 +77,6 @@ public class FirebaseFacebookAuthPlugin extends CordovaPlugin {
             // Set up the activity result callback to this class
             this.callbackContext = callbackContext;
             cordova.setActivityResultCallback(this);
-            LoginManager.getInstance().logOut();
             LoginManager.getInstance().logInWithReadPermissions(cordova.getActivity(),
                 Arrays.asList("email", "public_profile"));
             return true;

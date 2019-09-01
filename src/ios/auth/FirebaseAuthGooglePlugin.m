@@ -22,7 +22,6 @@
 
 - (void)signIn:(GIDSignIn *)signIn didSignInForUser:(GIDGoogleUser *)user withError:(NSError *)error {
 
-    NSDictionary *message = nil;
     if (error == nil) {
         GIDAuthentication *authentication = user.authentication;
         FIRAuthCredential *credential = [FIRGoogleAuthProvider credentialWithIDToken:authentication.idToken
@@ -33,14 +32,9 @@
                                                                          withError:error] callbackId:self.eventCallbackId];
         }];
     } else {
-        CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:@{
-                @"type": @"signinfailure",
-                @"data": @{
-                        @"code": @(error.code),
-                        @"message": error.description
-                }
-        }];
-        [pluginResult setKeepCallbackAsBool:YES];
+        CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:@{
+             @"code": @"auth/cancelled-popup-request"
+         }];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:self.eventCallbackId];
     }
 
@@ -66,7 +60,6 @@
     }
 
     CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:message];
-    [pluginResult setKeepCallbackAsBool:YES];
     [self.commandDelegate sendPluginResult:pluginResult callbackId:self.eventCallbackId];
 }
 

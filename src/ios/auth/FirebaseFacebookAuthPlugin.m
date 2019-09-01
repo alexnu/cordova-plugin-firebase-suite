@@ -27,8 +27,9 @@
             [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
             return;
         } else if (result.isCancelled) {
-            CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
-                                                              messageAsString:@"User cancelled."];
+            CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:@{
+                @"code": @"auth/cancelled-popup-request"
+            }];
             [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
         } else {
             FIRAuthCredential *credential = [FIRFacebookAuthProvider
@@ -43,7 +44,6 @@
         }
     };
 
-    [self.loginManager logOut];
     [self.loginManager logInWithReadPermissions:@[@"public_profile", @"email"]
                              fromViewController:[self topMostController]
                                         handler:loginHandler];

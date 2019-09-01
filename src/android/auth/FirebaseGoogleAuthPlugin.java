@@ -5,6 +5,7 @@ import android.util.Log;
 import org.apache.cordova.*;
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.content.Intent;
 import android.content.Context;
@@ -84,6 +85,17 @@ public class FirebaseGoogleAuthPlugin extends CordovaPlugin {
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
                 Log.w(TAG, "Google sign in failed", e);
+
+                JSONObject error = new JSONObject();
+                Exception exception = task.getException();
+
+                try {
+                    error.put("code", "auth/cancelled-popup-request");
+                } catch (JSONException e) {
+                    Log.e(TAG, e.getMessage());
+                }
+
+                this.callbackContext.error(error);
             }
         }
     }
