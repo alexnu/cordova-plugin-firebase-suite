@@ -147,13 +147,22 @@
         <header-file src="src/ios/storage/FirebaseStoragePlugin.h" />
         <source-file src="src/ios/storage/FirebaseStoragePlugin.m" />
 
-        <framework src="Firebase/Core" type="podspec" spec="~> 6.0.0"/>
-        <framework src="Firebase/Auth" type="podspec" spec="~> 6.0.0"/>
-        <framework src="Firebase/Analytics" type="podspec" spec="~> 6.0.0"/>
-        <framework src="Firebase/Database" type="podspec" spec="~> 6.0.0"/>
-        <framework src="Firebase/Storage" type="podspec" spec="~> 6.0.0"/>
-        <framework src="GoogleSignIn" type="podspec" spec="~> 4.4"/>
-        <framework src="FBSDKLoginKit" type="podspec" spec="~> 5.0.0"/>
+
+        <podspec>
+            <config>
+                <source url="https://github.com/CocoaPods/Specs.git"/>
+            </config>
+            <pods>
+                <pod name="Firebase/Core" spec="~> 6.0.0"/>
+                <pod name="Firebase/Auth" spec="~> 6.0.0"/>
+                <pod name="Firebase/Analytics" spec="~> 6.0.0"/>
+                <pod name="Firebase/Database" spec="~> 6.0.0"/>
+                <pod name="Firebase/Storage" spec="~> 6.0.0"/>
+                <pod name="GoogleSignIn" spec="~> 4.4"/>
+                <pod name="FBSDKCoreKit" spec="~> 5.0.0"/>
+                <pod name="FBSDKLoginKit" spec="~> 5.0.0"/>
+            </pods>
+        </podspec>
     </platform>
 
 </plugin>
