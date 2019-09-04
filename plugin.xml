@@ -159,7 +159,8 @@
                 <pod name="Firebase/Database" spec="~> 6.0.0"/>
                 <pod name="Firebase/Storage" spec="~> 6.0.0"/>
                 <pod name="GoogleSignIn" spec="~> 4.4"/>
-                <pod name="FBSDKLoginKit"/>
+                <pod name="FBSDKCoreKit" spec="~> 5.0.0"/>
+                <pod name="FBSDKLoginKit" spec="~> 5.0.0"/>
             </pods>
         </podspec>
     </platform>
