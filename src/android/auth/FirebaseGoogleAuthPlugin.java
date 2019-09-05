@@ -91,8 +91,8 @@ public class FirebaseGoogleAuthPlugin extends CordovaPlugin {
 
                 try {
                     error.put("code", "auth/cancelled-popup-request");
-                } catch (JSONException e) {
-                    Log.e(TAG, e.getMessage());
+                } catch (JSONException err) {
+                    Log.e(TAG, err.getMessage());
                 }
 
                 this.callbackContext.error(error);

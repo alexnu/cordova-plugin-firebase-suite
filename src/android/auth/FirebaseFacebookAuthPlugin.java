@@ -50,7 +50,6 @@ public class FirebaseFacebookAuthPlugin extends CordovaPlugin {
                 public void onCancel() {
                      Log.w(TAG, "facebook:onCancel");
                      JSONObject error = new JSONObject();
-                     Exception exception = task.getException();
 
                      try {
                          error.put("code", "auth/cancelled-popup-request");
