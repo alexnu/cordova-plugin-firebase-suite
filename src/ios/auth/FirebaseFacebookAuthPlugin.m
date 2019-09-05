@@ -44,7 +44,7 @@
         }
     };
 
-    [self.loginManager logInWithReadPermissions:@[@"public_profile", @"email"]
+    [self.loginManager logInWithPermissions:@[@"public_profile", @"email"]
                              fromViewController:[self topMostController]
                                         handler:loginHandler];
 }
