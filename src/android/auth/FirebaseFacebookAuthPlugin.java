@@ -57,7 +57,7 @@ public class FirebaseFacebookAuthPlugin extends CordovaPlugin {
                          Log.e(TAG, e.getMessage());
                      }
 
-                     this.callbackContext.error(error);
+                     callbackContext.error(error);
                 }
 
                 @Override
