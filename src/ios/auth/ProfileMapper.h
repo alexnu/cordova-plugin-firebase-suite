@@ -4,6 +4,6 @@
 @interface ProfileMapper : NSObject
 
 + (CDVPluginResult*)createAuthResult:(FIRAuthDataResult*)result withError:(NSError*)error;
-+ (CDVPluginResult*)getProfileResult:(FIRUser*)user withInfo:(FIRAdditionalUserInfo*_Nullable)additionalUserInfo;
++ (CDVPluginResult*)getProfileResult:(FIRUser*)user;
 
 @end

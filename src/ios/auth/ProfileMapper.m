@@ -25,12 +25,12 @@
             @"code": finalCode
         }];
     } else {
-        pluginResult = [ProfileMapper getProfileResult:result.user withInfo:result.additionalUserInfo];
+        pluginResult = [ProfileMapper getProfileResult:result.user];
     }
     return pluginResult;
 }
 
-+ (CDVPluginResult*)getProfileResult:(FIRUser*)user withInfo:(FIRAdditionalUserInfo*_Nullable)additionalUserInfo {
++ (CDVPluginResult*)getProfileResult:(FIRUser*)user {
     NSDictionary* response = nil;
     if (user) {
         response = @{
@@ -40,8 +40,7 @@
             @"email": user.email ? user.email : @"",
             @"phoneNumber": user.phoneNumber ? user.phoneNumber : @"",
             @"photoURL": user.photoURL ? user.photoURL.absoluteString : @"",
-            @"emailVerified": [NSNumber numberWithBool:user.emailVerified],
-            @"newUser": additionalUserInfo && additionalUserInfo.newUser ? @YES : @NO
+            @"emailVerified": [NSNumber numberWithBool:user.emailVerified]
         };
     }
 

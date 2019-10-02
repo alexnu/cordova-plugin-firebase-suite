@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
-        id="cordova-plugin-firebase-native"
-        version="1.0.0">
+        id="cordova-plugin-firebase-suite"
+        version="1.1.0">
 
-    <name>cordova-plugin-firebase-native</name>
+    <name>cordova-plugin-firebase-suite</name>
 
     <preference name="FB_APP_ID" />
     <preference name="FB_APP_NAME" />

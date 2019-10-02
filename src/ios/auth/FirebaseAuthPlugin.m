@@ -14,6 +14,13 @@
     self.auth = [FIRAuth auth];
 }
 
+- (void)getCurrentUser:(CDVInvokedUrlCommand *)command {
+    FIRUser *user = [FIRAuth auth].currentUser;
+    CDVPluginResult *pluginResult = [ProfileMapper getProfileResult:user withInfo:nil];
+    [pluginResult setKeepCallbackAsBool:YES];
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+}
+
 - (void)createUserWithEmailAndPassword:(CDVInvokedUrlCommand *)command {
     NSString* email = [command.arguments objectAtIndex:0];
     NSString* password = [command.arguments objectAtIndex:1];
@@ -66,7 +73,7 @@
 
     self.authListener = [[FIRAuth auth]
         addAuthStateDidChangeListener:^(FIRAuth *_Nonnull auth, FIRUser *_Nullable user) {
-            CDVPluginResult *pluginResult = [ProfileMapper getProfileResult:user withInfo:nil];
+            CDVPluginResult *pluginResult = [ProfileMapper getProfileResult:user];
             [pluginResult setKeepCallbackAsBool:YES];
             [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
         }];

@@ -1,28 +1,33 @@
 {
-  "name": "cordova-plugin-firebase-native",
-  "version": "0.1.0",
+  "name": "cordova-plugin-firebase-suite",
+  "version": "1.1.0",
   "description": "Cordova plugin for Firebase SDK",
   "cordova": {
-    "id": "cordova-plugin-firebase-native",
+    "id": "cordova-plugin-firebase-suite",
     "platforms": [
-      "android"
+      "android",
+      "ios"
     ]
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/alexnu/cordova-plugin-firebase-native.git"
+    "url": "git+https://github.com/alexnu/cordova-plugin-firebase-suite.git"
   },
   "keywords": [
-    "cordova",
-    "plugin",
-    "firebase",
     "ecosystem:cordova",
-    "cordova-android"
+    "cordova-android",
+    "cordova-ios"
   ],
-  "author": "Alex Nu",
-  "license": "Apache-2",
+  "engines": [
+    {
+      "name": "cordova",
+      "version": ">=3.4.0"
+    }
+  ],
+  "author": "alexnu",
+  "license": "ISC",
   "bugs": {
-    "url": "https://github.com/alexnu/cordova-plugin-firebase-native/issues"
+    "url": "https://github.com/alexnu/cordova-plugin-firebase-suite/issues"
   },
-  "homepage": "https://github.com/alexnu/cordova-plugin-firebase-native#readme"
+  "homepage": "https://github.com/alexnu/cordova-plugin-firebase-suite#readme"
 }

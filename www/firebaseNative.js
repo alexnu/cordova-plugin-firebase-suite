@@ -42,6 +42,11 @@ module.exports = {
     },
 
     auth: {
+        getCurrentUser: function (successCallback, errorCallback) {
+            return new Promise(function (resolve, reject) {
+                cordova.exec(resolve, reject, "FirebaseAuth", "getCurrentUser", []);
+            });
+        },
         onAuthStateChanged: function (successCallback, errorCallback) {
             cordova.exec(successCallback, errorCallback, "FirebaseAuth", "addAuthStateListener", []);
 

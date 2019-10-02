@@ -22,7 +22,7 @@ public class AuthStatusListener implements AuthStateListener {
     @Override
     public void onAuthStateChanged(FirebaseAuth auth) {
         Log.d(TAG, "Auth state changed");
-        PluginResult pluginResult = ProfileMapper.getProfileResult(auth.getCurrentUser(), null);
+        PluginResult pluginResult = ProfileMapper.getProfileResult(auth.getCurrentUser());
         pluginResult.setKeepCallback(true);
         this.callbackContext.sendPluginResult(pluginResult);
     }

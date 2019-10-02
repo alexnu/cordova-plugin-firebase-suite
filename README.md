@@ -1,2 +1,2 @@
-# cordova-plugin-firebase-native
+# cordova-plugin-firebase-suite
 Cordova plugin for Firebase SDK

@@ -15,7 +15,7 @@ public class ProfileMapper {
 
     private static final String TAG = "FirebaseProfileMapper";
 
-    public static PluginResult getProfileResult(FirebaseUser user, AdditionalUserInfo info) {
+    public static PluginResult getProfileResult(FirebaseUser user) {
             if (user == null) {
                 Log.d(TAG, "User is not logged in");
                 return new PluginResult(PluginResult.Status.OK, (String) null);
@@ -32,7 +32,6 @@ public class ProfileMapper {
                 result.put("photoURL", user.getPhotoUrl());
                 result.put("providerId", user.getProviderId());
                 result.put("emailVerified", user.isEmailVerified());
-                result.put("newUser", info != null && info.isNewUser() ? true : false);
 
                 return new PluginResult(PluginResult.Status.OK, result);
             } catch (JSONException e) {

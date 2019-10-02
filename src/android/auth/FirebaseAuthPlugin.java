@@ -30,7 +30,21 @@ public class FirebaseAuthPlugin extends CordovaPlugin {
 
         Log.d(TAG, "Got new action " + action);
 
-        if ("signInWithEmailAndPassword".equals(action)) {
+        if ("getCurrentUser".equals(action)) {
+
+            cordova.getThreadPool().execute(new Runnable() {
+                public void run() {
+                    Log.d(TAG, "Getting current user");
+
+                    FirebaseUser currentUser = auth.getCurrentUser();
+                    PluginResult pluginResult = ProfileMapper.getProfileResult(currentUser);
+                    callbackContext.sendPluginResult(pluginResult);
+                }
+            });
+
+            return true;
+
+        } else if ("signInWithEmailAndPassword".equals(action)) {
 
             final String email = data.getString(0);
             final String password = data.getString(1);
