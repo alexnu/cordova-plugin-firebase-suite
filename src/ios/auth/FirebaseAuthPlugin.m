@@ -16,7 +16,7 @@
 
 - (void)getCurrentUser:(CDVInvokedUrlCommand *)command {
     FIRUser *user = [FIRAuth auth].currentUser;
-    CDVPluginResult *pluginResult = [ProfileMapper getProfileResult:user withInfo:nil];
+    CDVPluginResult *pluginResult = [ProfileMapper getProfileResult:user];
     [pluginResult setKeepCallbackAsBool:YES];
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
