@@ -61,13 +61,13 @@ public class FirebaseFacebookAuthPlugin extends CordovaPlugin {
                 }
 
                 @Override
-                public void onError(FacebookException error) {
-                     Log.e(TAG, "facebook:onError", error);
+                public void onError(FacebookException ex) {
+                     Log.e(TAG, "facebook:onError", ex);
                      JSONObject error = new JSONObject();
 
                      try {
                         error.put("code", "auth/general-error");
-                        error.put("message", error.getMessage());
+                        error.put("message", ex.getMessage());
                      } catch (JSONException e) {
                         Log.e(TAG, e.getMessage());
                      }
