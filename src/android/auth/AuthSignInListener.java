@@ -35,7 +35,7 @@ public class AuthSignInListener implements OnCompleteListener<AuthResult> {
             callbackContext.sendPluginResult(pluginResult);
         } else {
             // If sign in fails, display a message to the user.
-            Log.w(TAG, this.action + ":failure", task.getException());
+            Log.e(TAG, this.action + ":failure", task.getException());
 
             JSONObject error = new JSONObject();
             Exception exception = task.getException();
@@ -43,13 +43,18 @@ public class AuthSignInListener implements OnCompleteListener<AuthResult> {
             try {
                 if (exception instanceof FirebaseAuthWeakPasswordException) {
                     error.put("code", "auth/weak-password");
-                } else if (exception instanceof FirebaseAuthInvalidCredentialsException) {
+                } else if (exception instanceof FirebaseAuthInvalidCredentialsException && "signInWithEmailAndPassword".equals(action)) {
+                    error.put("code", "auth/wrong-password");
+                } else if (exception instanceof FirebaseAuthInvalidCredentialsException && "createUserWithEmailAndPassword".equals(action)) {
                     error.put("code", "auth/invalid-email");
                 } else if (exception instanceof FirebaseAuthUserCollisionException) {
                     error.put("code", "auth/email-already-in-use");
+                } else if (exception instanceof FirebaseAuthInvalidUserException) {
+                    error.put("code", "auth/invalid-email");
                 } else {
-                    error.put("code", exception.getMessage());
+                    error.put("code", "auth/general-error");
                 }
+                error.put("message", exception.getMessage());
             } catch (JSONException e) {
                 Log.e(TAG, e.getMessage());
             }

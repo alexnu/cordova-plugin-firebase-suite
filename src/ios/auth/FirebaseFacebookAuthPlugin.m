@@ -22,10 +22,11 @@
         if (error) {
             // If the SDK has a message for the user, surface it.
             NSString *errorMessage = error.userInfo[FBSDKErrorLocalizedDescriptionKey] ?: @"There was a problem logging you in.";
-            CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
-                                                              messageAsString:errorMessage];
+            CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:@{
+                @"code": @"auth/general-error",
+                @"message": errorMessage
+            }];
             [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-            return;
         } else if (result.isCancelled) {
             CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:@{
                 @"code": @"auth/cancelled-popup-request"

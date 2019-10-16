@@ -26,7 +26,7 @@ import java.util.Arrays;
 
 public class FirebaseFacebookAuthPlugin extends CordovaPlugin {
 
-    private static final String TAG = "FirebaseFacebookAuthPlugin";
+    private static final String TAG = "FirebaseFacebookAuth";
 
     private FirebaseAuth auth;
     private CallbackManager mCallbackManager;
@@ -63,6 +63,16 @@ public class FirebaseFacebookAuthPlugin extends CordovaPlugin {
                 @Override
                 public void onError(FacebookException error) {
                      Log.e(TAG, "facebook:onError", error);
+                     JSONObject error = new JSONObject();
+
+                     try {
+                        error.put("code", "auth/general-error");
+                        error.put("message", error.getMessage());
+                     } catch (JSONException e) {
+                        Log.e(TAG, e.getMessage());
+                     }
+
+                     callbackContext.error(error);
                 }
             });
     }

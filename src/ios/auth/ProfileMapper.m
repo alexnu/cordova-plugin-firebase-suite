@@ -17,12 +17,17 @@
             finalCode = @"auth/weak-password";
         } else if (error.code == FIRAuthErrorCodeAccountExistsWithDifferentCredential) {
             finalCode = @"auth/email-already-in-use";
+        } else if (error.code == FIRAuthErrorCodeUserDisabled) {
+            finalCode = @"auth/invalid-email";
+        } else if (error.code == FIRAuthErrorCodeWrongPassword) {
+            finalCode = @"auth/wrong-password";
         } else {
-            finalCode = [@(error.code) stringValue];
+            finalCode = @"auth/general-error";
         }
 
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:@{
-            @"code": finalCode
+            @"code": finalCode,
+            @"message": error.localizedDescription
         }];
     } else {
         pluginResult = [ProfileMapper getProfileResult:result.user];

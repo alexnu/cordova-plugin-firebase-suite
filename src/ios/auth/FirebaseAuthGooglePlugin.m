@@ -31,9 +31,15 @@
             [self.commandDelegate sendPluginResult:[ProfileMapper createAuthResult:result
                                                                          withError:error] callbackId:self.eventCallbackId];
         }];
-    } else {
+    } else if (error.code == kGIDSignInErrorCodeCanceled) {
         CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:@{
              @"code": @"auth/cancelled-popup-request"
+         }];
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:self.eventCallbackId];
+    } else {
+        CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:@{
+             @"code": @"auth/general-error",
+             @"message": error.localizedDescription
          }];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:self.eventCallbackId];
     }

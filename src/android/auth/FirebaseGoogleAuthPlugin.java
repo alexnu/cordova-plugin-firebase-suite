@@ -14,6 +14,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInStatusCodes;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 
@@ -24,7 +25,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 
 public class FirebaseGoogleAuthPlugin extends CordovaPlugin {
 
-    private static final String TAG = "FirebaseGoogleAuthPlugin";
+    private static final String TAG = "FirebaseGoogleAuth";
     private static final int RC_SIGN_IN = 9001;
 
     private FirebaseAuth auth;
@@ -84,13 +85,17 @@ public class FirebaseGoogleAuthPlugin extends CordovaPlugin {
                 firebaseAuthWithGoogle(account);
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
-                Log.w(TAG, "Google sign in failed", e);
-
                 JSONObject error = new JSONObject();
-                Exception exception = task.getException();
 
                 try {
-                    error.put("code", "auth/cancelled-popup-request");
+                    if (e.getStatusCode() == GoogleSignInStatusCodes.SIGN_IN_CANCELLED) {
+                        Log.w(TAG, "Google sign in cancelled", e);
+                        error.put("code", "auth/cancelled-popup-request");
+                    } else {
+                        Log.e(TAG, "Google sign in failed", e);
+                        error.put("code", "auth/general-error");
+                        error.put("message", task.getException().toString());
+                    }
                 } catch (JSONException err) {
                     Log.e(TAG, err.getMessage());
                 }
