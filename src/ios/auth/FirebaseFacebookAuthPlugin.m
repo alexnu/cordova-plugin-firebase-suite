@@ -1,5 +1,6 @@
 #import "FirebaseFacebookAuthPlugin.h"
 #import "ProfileMapper.h"
+#import <Crashlytics/Crashlytics.h>
 @import Firebase;
 
 @implementation FirebaseFacebookAuthPlugin
@@ -21,6 +22,7 @@
     FBSDKLoginManagerLoginResultBlock loginHandler = ^void(FBSDKLoginManagerLoginResult *result, NSError *error) {
         if (error) {
             // If the SDK has a message for the user, surface it.
+            [CrashlyticsKit recordError:error];
             NSString *errorMessage = error.userInfo[FBSDKErrorLocalizedDescriptionKey] ?: @"There was a problem logging you in.";
             CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:@{
                 @"code": @"auth/general-error",

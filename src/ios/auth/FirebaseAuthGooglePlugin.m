@@ -1,5 +1,6 @@
 #import "FirebaseAuthGooglePlugin.h"
 #import "ProfileMapper.h"
+#import <Crashlytics/Crashlytics.h>
 @import Firebase;
 
 @implementation FirebaseAuthGooglePlugin
@@ -37,6 +38,7 @@
          }];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:self.eventCallbackId];
     } else {
+        [CrashlyticsKit recordError:error];
         CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:@{
              @"code": @"auth/general-error",
              @"message": error.localizedDescription

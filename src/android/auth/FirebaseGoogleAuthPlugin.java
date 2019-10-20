@@ -21,6 +21,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.crashlytics.android.Crashlytics;
 
 
 public class FirebaseGoogleAuthPlugin extends CordovaPlugin {
@@ -95,6 +96,7 @@ public class FirebaseGoogleAuthPlugin extends CordovaPlugin {
                         Log.e(TAG, "Google sign in failed", e);
                         error.put("code", "auth/general-error");
                         error.put("message", task.getException().toString());
+                        Crashlytics.logException(task.getException());
                     }
                 } catch (JSONException err) {
                     Log.e(TAG, err.getMessage());

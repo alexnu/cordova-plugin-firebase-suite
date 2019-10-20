@@ -13,6 +13,7 @@ import android.content.Context;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FacebookAuthProvider;
+import com.crashlytics.android.Crashlytics;
 
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -72,6 +73,7 @@ public class FirebaseFacebookAuthPlugin extends CordovaPlugin {
                         Log.e(TAG, e.getMessage());
                      }
 
+                     Crashlytics.logException(ex);
                      callbackContext.error(error);
                 }
             });
