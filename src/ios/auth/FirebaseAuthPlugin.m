@@ -12,6 +12,7 @@
     }
 
     self.auth = [FIRAuth auth];
+    self.responsePending = NO;
 }
 
 - (void)getCurrentUser:(CDVInvokedUrlCommand *)command {
@@ -73,10 +74,28 @@
 
     self.authListener = [[FIRAuth auth]
         addAuthStateDidChangeListener:^(FIRAuth *_Nonnull auth, FIRUser *_Nullable user) {
-            CDVPluginResult *pluginResult = [ProfileMapper getProfileResult:user];
-            [pluginResult setKeepCallbackAsBool:YES];
-            [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+            if (user) {
+                NSLog(@"User is logged in");
+                [self respondToAuthState:command withUser:user];
+            } else {
+                NSLog(@"User is logged out, registering callback");
+                self.responsePending = YES;
+                dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * 1);
+                dispatch_after(delay, dispatch_get_main_queue(), ^(void){
+                    if (self.responsePending == YES) {
+                        NSLog(@"User is still logged out, executing callback");
+                        [self respondToAuthState:command withUser:user];
+                    }
+                });
+            }
         }];
+}
+
+- (void)respondToAuthState:(CDVInvokedUrlCommand*)command withUser:(FIRUser*)user {
+    self.responsePending = NO;
+    CDVPluginResult *pluginResult = [ProfileMapper getProfileResult:user];
+    [pluginResult setKeepCallbackAsBool:YES];
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
 - (void)removeAuthStateListener:(CDVInvokedUrlCommand*)command {
