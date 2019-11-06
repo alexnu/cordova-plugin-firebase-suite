@@ -1,6 +1,6 @@
 {
   "name": "cordova-plugin-firebase-suite",
-  "version": "1.1.6",
+  "version": "1.1.7",
   "description": "Cordova plugin for Firebase SDK",
   "cordova": {
     "id": "cordova-plugin-firebase-suite",

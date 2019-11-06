@@ -1,4 +1,5 @@
 #import "AppDelegate+FirebaseFacebookAuthPlugin.h"
+#import <objc/runtime.h>
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 
 @implementation AppDelegate (FirebaseFacebookAuthPlugin)
