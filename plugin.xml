@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
         id="cordova-plugin-firebase-suite"
-        version="1.1.5">
+        version="1.1.6">
 
     <name>cordova-plugin-firebase-suite</name>
 
@@ -137,10 +137,15 @@
 
         <header-file src="src/ios/auth/FirebaseAuthPlugin.h" />
         <source-file src="src/ios/auth/FirebaseAuthPlugin.m" />
+
         <header-file src="src/ios/auth/FirebaseAuthGooglePlugin.h" />
         <source-file src="src/ios/auth/FirebaseAuthGooglePlugin.m" />
+
         <header-file src="src/ios/auth/FirebaseFacebookAuthPlugin.h" />
         <source-file src="src/ios/auth/FirebaseFacebookAuthPlugin.m" />
+        <header-file src="src/ios/auth/AppDelegate+FirebaseFacebookAuthPlugin.h" />
+        <source-file src="src/ios/auth/AppDelegate+FirebaseFacebookAuthPlugin.m" />
+
         <header-file src="src/ios/auth/ProfileMapper.h" />
         <source-file src="src/ios/auth/ProfileMapper.m" />
 
