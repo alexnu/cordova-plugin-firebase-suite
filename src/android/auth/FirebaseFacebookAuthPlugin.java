@@ -44,6 +44,18 @@ public class FirebaseFacebookAuthPlugin extends CordovaPlugin {
                 @Override
                 public void onSuccess(LoginResult loginResult) {
                     Log.d(TAG, "facebook:onSuccess:" + loginResult);
+
+                    if (loginResult.getRecentlyDeniedPermissions().size() > 0) {
+                        JSONObject error = new JSONObject();
+                        try {
+                            error.put("code", "auth/permission-not-granted");
+                        } catch (JSONException e) {
+                            Log.e(TAG, e.getMessage());
+                        }
+                        callbackContext.error(error);
+                        return;
+                    }
+
                     handleFacebookAccessToken(loginResult.getAccessToken());
                 }
 
@@ -88,6 +100,7 @@ public class FirebaseFacebookAuthPlugin extends CordovaPlugin {
             // Set up the activity result callback to this class
             this.callbackContext = callbackContext;
             cordova.setActivityResultCallback(this);
+            LoginManager.getInstance().logOut();
             LoginManager.getInstance().logInWithReadPermissions(cordova.getActivity(),
                 Arrays.asList("email", "public_profile"));
             return true;

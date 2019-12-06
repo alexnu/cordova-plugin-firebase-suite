@@ -34,6 +34,11 @@
                 @"code": @"auth/cancelled-popup-request"
             }];
             [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+         } else if (result.declinedPermissions.count > 0) {
+            CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:@{
+                @"code": @"auth/permission-not-granted"
+            }];
+            [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
         } else {
             FIRAuthCredential *credential = [FIRFacebookAuthProvider
                 credentialWithAccessToken:[FBSDKAccessToken currentAccessToken].tokenString];
@@ -47,6 +52,7 @@
         }
     };
 
+    [self.loginManager logOut];
     [self.loginManager logInWithPermissions:@[@"public_profile", @"email"]
                              fromViewController:[self topMostController]
                                         handler:loginHandler];
